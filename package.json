@@ -1,0 +1,22 @@
+{
+  "name": "mobi-fav-stations",
+  "version": "1.0.0",
+  "description": "Live demo [https://electricg.github.io/mobi-fav-stations/](https://electricg.github.io/mobi-fav-stations/)",
+  "main": "js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electricg/mobi-fav-stations.git"
+  },
+  "author": "Giulia Alfonsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/electricg/mobi-fav-stations/issues"
+  },
+  "homepage": "https://github.com/electricg/mobi-fav-stations#readme",
+  "devDependencies": {
+    "eslint": "^8.24.0"
+  }
+}

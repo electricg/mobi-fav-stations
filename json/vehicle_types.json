@@ -1,0 +1,1 @@
+{"last_updated":1664133515,"ttl":0,"version":"2.3","data":{"vehicle_types":[{"vehicle_type_id":"1","form_factor":"bicycle","propulsion_type":"human","default_reserve_time":30},{"vehicle_type_id":"2","form_factor":"bicycle","propulsion_type":"electric_assist","max_range_meters":50,"default_reserve_time":30}]}}
