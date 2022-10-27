@@ -7,10 +7,13 @@ const fileList = `
 css/main.css
 images/icon.svg
 js/app.js
+js/controller.js
 js/helpers.js
+js/model.js
 js/offline.js
 js/settings.js
 js/storage.js
+js/template.js
 manifest.webmanifest
 `
   .trim()

@@ -20,13 +20,56 @@
 </head>
 <body>
 
-<div>Mobi fav stations</div>
+<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1">
+  <defs>
+    <symbol id="icon-logo" viewBox="0 0 32 32">
+      <path d="M18.214 11.762l-1.214 3.238-1.214-3.238-2.286-0.762 2.286-0.762 1.214-3.238 1.214 3.238 2.286 0.762-2.286 0.762zM22.214 18.238l-1.214-3.238-1.214 3.238-2.286 0.762 2.286 0.762 1.214 3.238 1.214-3.238 2.286-0.762-2.286-0.762zM14.836 22.331v0c0.088-0.351 0.142-0.716 0.158-1.091-0.468 0.165-0.971 0.254-1.495 0.254-2.485 0-4.5-2.015-4.5-4.5 0-0.524 0.090-1.027 0.254-1.495-0.374 0.016-0.739 0.070-1.091 0.158-2.392 0.597-4.163 2.76-4.163 5.336 0 3.038 2.462 5.5 5.5 5.5 2.577 0 4.739-1.772 5.337-4.163zM5 20.995c0-1.961 1.255-3.63 3.005-4.246-0.004 0.081-0.005 0.163-0.005 0.246 0 3.038 2.462 5.5 5.5 5.5 0.082 0 0.164-0.002 0.246-0.005-0.616 1.751-2.284 3.005-4.246 3.005-2.485 0-4.5-2.015-4.5-4.5v0zM26.867 12.429l1.633 0.571-1.633 0.571-0.867 2.429-0.867-2.429-1.633-0.571 1.633-0.571 0.867-2.429 0.867 2.429z"></path>
+    </symbol>
+    <symbol id="icon-offline" viewBox="0 0 32 32">
+      <path d="M24 19.999l-5.713-5.713 13.713-10.286-4-4-17.141 6.858-5.397-5.397c-1.556-1.556-3.728-1.928-4.828-0.828s-0.727 3.273 0.828 4.828l5.396 5.396-6.858 17.143 4 4 10.287-13.715 5.713 5.713v7.999h4l2-6 6-2v-4l-7.999 0z"></path>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="main-header">
+  <h1 class="main-header__title"><svg class="icon main-header__title__icon" focusable="false" aria-hidden="true"><use href="#icon-logo"></use></svg>Mobi Fav Stations v<span id="version">0</span></h1>
+  <div class="main-header__status"><svg id="status-icon-offline" class="icon main-header__status__icon" focusable="false" aria-hidden="true"><use href="#icon-offline"></use></svg></div>
+</header>
+
+<main class="main-content">
+<!-- HOME -->
+  <section id="home" class="main-section main-section--home">
+    home
+    <button class="settings__option settings__button" id="delete-all">Delete all data</button>
+  </section>
+
+<!-- INFO -->
+  <section id="info" class="main-section main-section--info">
+    info
+  </section>
+
+<!-- ALERTS -->
+  <div id="alerts" class="alerts-wrapper"></div>
+</main>
+
+<footer class="main-footer">
+  <nav class="main-nav">
+    <ul class="main-nav__list">
+      <li class="main-nav__item">
+        <a class="main-nav__link" href="#/home"><svg class="icon main-nav__icon" focusable="false" aria-hidden="true"><use href="#icon-home"></use></svg>home</a></li>
+      <li class="main-nav__item">
+        <a class="main-nav__link" href="#/info"><svg class="icon main-nav__icon" focusable="false" aria-hidden="true"><use href="#icon-info"></use></svg>info</a></li>
+    </ul>
+  </nav>
+</footer>
 
 <script src="js/settings.js"></script>
 <script src="js/helpers.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/model.js"></script>
 <script src="js/template.js"></script>
+<script src="js/view.js"></script>
+<script src="js/controller.js"></script>
 <script src="js/offline.js"></script>
 <script src="js/app.js"></script>
 
