@@ -40,7 +40,37 @@
 <!-- HOME -->
   <section id="home" class="main-section main-section--home">
     home
-    <button class="settings__option settings__button" id="delete-all">Delete all data</button>
+
+    <div>
+      <input type="button" id="load-status" value="Load status">
+    </div>
+
+    <div>
+      <input type="button" id="load-information" value="Load information">
+    </div>
+
+    <div>
+      <input type="button" id="edit-favorites" value="Edit favorites">
+    </div>
+
+    <div>
+      <button id="toggle-stations"><span>Show</span><span class="hide">Hide</span> all stations</button>
+    </div>
+
+    <div>
+      <input type="button" id="delete-all" value="Delete all data">
+    </div>
+  </section>
+
+  <section id="favorites"></section>
+
+  <section id="stations" class="main-section--stations">
+    <form id="filter-stations-form">
+      <label for="filter-stations-input">Search station</label>
+      <input type="search" id="filter-stations-input" placeholder="name or id" required>
+    </form>
+
+    <div id="list-stations"></div>
   </section>
 
 <!-- INFO -->
@@ -53,14 +83,7 @@
 </main>
 
 <footer class="main-footer">
-  <nav class="main-nav">
-    <ul class="main-nav__list">
-      <li class="main-nav__item">
-        <a class="main-nav__link" href="#/home"><svg class="icon main-nav__icon" focusable="false" aria-hidden="true"><use href="#icon-home"></use></svg>home</a></li>
-      <li class="main-nav__item">
-        <a class="main-nav__link" href="#/info"><svg class="icon main-nav__icon" focusable="false" aria-hidden="true"><use href="#icon-info"></use></svg>info</a></li>
-    </ul>
-  </nav>
+  Footer
 </footer>
 
 <script src="js/settings.js"></script>

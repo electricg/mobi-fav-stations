@@ -1,4 +1,4 @@
-/* global helpers, NAMESPACE, VERSION, FILE */
+/* global app, NAMESPACE, VERSION, FILE */
 (function (window) {
   'use strict';
 
@@ -13,23 +13,11 @@
     _self.view = view;
 
     /**
-     * Show the selected section
-     * @param {string} locationHash
-     */
-    this.setSection = function (locationHash) {
-      let args = locationHash.split('/');
-      args.shift();
-      const section = args.shift();
-      _self.view.render('section', _self.model, section, args);
-    };
-
-    /**
      * Insert data into the views
      */
     this.setData = function () {
       _self.view.render('chrome');
       _self.view.render('home', _self.model);
-      _self.view.render('info');
     };
 
     this.addItem = function (item) {
@@ -68,6 +56,34 @@
       _self.view.render('success', 'Data deleted successfully');
     };
 
+    this.loadStatus = async function () {
+      const data = await app.Helpers.fetchData('station_status.json');
+      console.log(data);
+
+      _self.model.updateStationsStatus(data.data.stations, data.last_updated);
+
+      // update the ui
+      _self.setData();
+      _self.view.render('success', 'Stations status imported successfully');
+    };
+
+    this.loadInformation = async function () {
+      const data = await app.Helpers.fetchData('station_information.json');
+      console.log(data);
+
+      _self.model.updateStationsInformation(
+        data.data.stations,
+        data.last_updated
+      );
+
+      // update the ui
+      _self.setData();
+      _self.view.render(
+        'success',
+        'Stations information imported successfully'
+      );
+    };
+
     _self.view.bind('itemAdd', function (date) {
       return _self.addItem(date);
     });
@@ -84,8 +100,24 @@
       return _self.model.getById(id);
     });
 
+    _self.view.bind('toggleStations', function () {
+      return _self.model.stations;
+    });
+
     _self.view.bind('itemRemoveAll', function () {
       return _self.removeAllItem();
+    });
+
+    _self.view.bind('loadStatus', async function () {
+      return _self.loadStatus();
+    });
+
+    _self.view.bind('loadInformation', async function () {
+      return _self.loadInformation();
+    });
+
+    _self.view.bind('filterStations', function (search) {
+      return _self.model.filterStations(search);
     });
   };
 

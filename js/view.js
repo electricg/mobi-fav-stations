@@ -1,26 +1,33 @@
-/* global $, $$, helpers, VERSION */
+/* global $, $$, app, VERSION */
 (function (window) {
   'use strict';
 
   /**
    * View
    */
-  var View = function (template) {
-    var _self = this;
+  const View = function (template) {
+    const _self = this;
     _self.template = template;
 
-    var $sections = $('.main-section');
-    var $navLinks = $('.main-nav a');
+    const $loadStatus = $$('#load-status');
+    const $loadInformation = $$('#load-information');
+    const $editFavorites = $$('#edit-favorites');
+    const $deleteAll = $$('#delete-all');
+    const $toggleStations = $$('#toggle-stations');
 
-    var $deleteAll = $$('#delete-all');
+    const $stations = $$('#stations');
+    const $filterStationsForm = $$('#filter-stations-form');
+    const $filterStationsInput = $$('#filter-stations-input');
 
-    var $alerts = $$('#alerts');
+    const $listStations = $$('#list-stations');
 
-    var $statusOffline = $$('#status-icon-offline');
+    const $alerts = $$('#alerts');
 
-    var $version = $$('#version');
+    const $statusOffline = $$('#status-icon-offline');
 
-    var _viewCommands = {};
+    const $version = $$('#version');
+
+    const _viewCommands = {};
 
     _viewCommands.alert = function (type, msg) {
       $alerts.innerHTML += _self.template.alert(type, msg);
@@ -42,34 +49,19 @@
       _viewCommands.alert('warning', err);
     };
 
-    _viewCommands.section = function (model, parameter) {
-      parameter = parameter || 'home';
-      $sections.forEach(function ($el) {
-        $el.classList.remove('main-section--selected');
-      });
-      let $selectedSection = $$('#' + parameter);
-
-      if (!$selectedSection) {
-        parameter = 'not-found';
-        $selectedSection = $$('#' + parameter);
-      }
-
-      $selectedSection.classList.add('main-section--selected');
-      $navLinks.forEach(function ($el) {
-        if ($el.getAttribute('href') === '#/' + parameter) {
-          $el.classList.add('main-nav__link--selected');
-        } else {
-          $el.classList.remove('main-nav__link--selected');
-        }
-      });
-    };
-
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
     };
 
     _viewCommands.home = function (model) {
-      console.log('home');
+      // console.log('model', model);
+    };
+
+    _viewCommands.offline = function (status) {
+      $statusOffline.classList.toggle(
+        'main-header__status__icon--active',
+        status
+      );
     };
 
     this.render = function (viewCmd, model, parameter, args) {
@@ -78,22 +70,49 @@
 
     this.bind = function (event, handler) {
       if (event === 'itemAdd') {
-        console.log('itemAdd');
+        // console.log('itemAdd');
       } else if (event === 'itemRemove') {
-        console.log('itemRemove');
+        // console.log('itemRemove');
       } else if (event === 'showItemEdit') {
-        console.log('showItemEdit');
+        // console.log('showItemEdit');
       } else if (event === 'itemEdit') {
-        console.log('itemEdit');
+        // console.log('itemEdit');
+      } else if (event === 'toggleStations') {
+        $toggleStations.on('click', function () {
+          this.querySelectorAll('span').forEach(($el) => {
+            $el.classList.toggle('hide');
+          });
+          const res = $stations.classList.toggle('main-section--selected');
+          if (res) {
+            const stations = handler();
+            $listStations.innerHTML = _self.template.stations(stations);
+          } else {
+            $listStations.innerHTML = '';
+            $filterStationsForm.reset();
+          }
+        });
       } else if (event === 'itemRemoveAll') {
         $deleteAll.on('click', function () {
-          if (
-            window.confirm(
-              'Are you sure you want to delete all the entries and reset the settings?'
-            )
-          ) {
+          if (window.confirm('Are you sure you want to delete all the data?')) {
             handler();
           }
+        });
+      } else if (event === 'loadStatus') {
+        $loadStatus.on('click', async function () {
+          await handler();
+        });
+      } else if (event === 'loadInformation') {
+        $loadInformation.on('click', async function () {
+          await handler();
+        });
+      } else if (event === 'filterStations') {
+        $filterStationsInput.on('input', function (event) {
+          const stations = handler(event.target.value);
+          $listStations.innerHTML = _self.template.stations(stations);
+        });
+
+        $filterStationsForm.on('submit', function (event) {
+          app.Helpers.prev(event);
         });
       }
     };

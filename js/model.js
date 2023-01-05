@@ -1,119 +1,175 @@
-/* global */
+/* global VERSION */
 (function (window) {
   'use strict';
 
   const Model = function (storage) {
-    let _list = [];
+    const _defaultLastUpdated = {
+      information: 0,
+      status: 0,
+    };
 
-    Object.defineProperty(this, 'list', {
+    let _stations = {};
+    let _favorites = [];
+    let _lastUpdated = { ..._defaultLastUpdated };
+
+    Object.defineProperty(this, 'stations', {
       get: function () {
-        return _list;
+        return _stations;
+      },
+    });
+
+    Object.defineProperty(this, 'favorites', {
+      get: function () {
+        return _favorites;
+      },
+    });
+
+    Object.defineProperty(this, 'lastUpdatedInformation', {
+      get: function () {
+        return _lastUpdated.information;
+      },
+    });
+
+    Object.defineProperty(this, 'lastUpdatedStatus', {
+      get: function () {
+        return _lastUpdated.status;
       },
     });
 
     /**
-     * Find occurance by id
+     * Find favorite by id
      * @param {string} id - id of the occurance to find
-     * @returns {number} -1 if not found, otherwise index number of the element
+     * @returns {number} -1 if not found, otherwise the found item
      */
-    const findById = function (id) {
-      return _list.findIndex((item) => item.id === id);
+    const findFavoriteById = function (id) {
+      return _favorites.findIndex((item) => item === id);
     };
 
     /**
-     * Add single occurance
+     * Add single favorite occurance
      * @param {object} item - item to add
      * @returns {number|object} -1 if not successful, otherwise the added element
      */
-    const add = function (item) {
-      if (findById(item.id) !== -1) {
+    const addFavorite = function (item) {
+      if (findFavoriteById(item) !== -1) {
         return -1;
       }
-      _list.push(item);
+      _favorites.push(item);
       return item;
     };
 
     /**
-     * Change single occurance
-     * @param {string} id - id of the occurance to edit
-     * @param {object} newData - data to change
-     * @returns {number|object} -1 if not successful, otherwise the updated element
-     */
-    const edit = function (id, newData) {
-      const index = findById(id);
-      if (index === -1) {
-        return -1;
-      }
-
-      _list[index] = {
-        ..._list[index],
-        ...newData,
-      };
-
-      return _list[index];
-    };
-
-    /**
-     * Remove single occurance
+     * Remove single favorite occurance
      * @param {string} id - id of the occurance to remove
      * @returns {number|object} -1 if not successful, otherwise the removed element
      */
-    const remove = function (id) {
-      const index = findById(id);
+    const removeFavorite = function (id) {
+      const index = findFavoriteById(id);
       if (index === -1) {
         return -1;
       }
-      const removed = _list.splice(index, 1);
+      const removed = _favorites.splice(index, 1);
       return removed[0];
     };
 
+    const orderFavorites = function () {};
+
     /**
-     * Remove all occurances
+     * Remove all favorite occurances
      * @returns {number|object} -1 if data was already empty, otherwise the removed elements
      */
-    const clear = function () {
+    const clearFavorites = function () {
       let removed = -1;
-      if (_list.length > 0) {
-        removed = _list.splice(0);
+      if (_favorites.length > 0) {
+        removed = _favorites.splice(0);
       }
       return removed;
     };
 
     /**
-     * Replace all occurances with passed list
-     * @param {array} newList - new list of occurances
-     * @returns {array}
+     * Change single occurance
+     * @param {string} id - id of the occurance to edit
+     * @param {object} newData - string in YYYY-DD-MM format
+     * @returns {number|object} -1 if not successful, otherwise the updated element
      */
-    const update = function (newList) {
-      _list = [...newList];
-      return _list;
+    const editStation = function (id, newData) {
+      const el = _stations[id];
+      if (!el) {
+        return -1;
+      }
+      el.user = {
+        ...el.user,
+        ...newData,
+      };
+      return el;
+    };
+
+    /**
+     * Update stations information
+     * @param {array} newList - new list of station information
+     * @param {number} lastUpdated - last updated
+     */
+    const updateStationsInformation = function (newList, lastUpdated) {
+      newList.forEach((item) => {
+        const id = item.station_id;
+        if (id) {
+          if (!_stations[id]) {
+            _stations[id] = {};
+          }
+          _stations[id].information = { ...item };
+        }
+      });
+
+      _lastUpdated.information = lastUpdated;
+    };
+
+    /**
+     * Update stations status
+     * @param {array} newList - new list of station information
+     * @param {number} lastUpdated - last updated
+     */
+    const updateStationsStatus = function (newList, lastUpdated) {
+      newList.forEach((item) => {
+        const id = item.station_id;
+        if (id) {
+          if (!_stations[id]) {
+            _stations[id] = {};
+          }
+          _stations[id].status = { ...item };
+        }
+      });
+
+      _lastUpdated.status = lastUpdated;
     };
 
     /**
      * Modify occurances
      * @param {string} how - How to change
      * @param {string} id - id of the occurance
-     * @param {object} item - item
-     * @param {array} list - new list
+     * @param {object} newData - new data
+     * @param {array} newList - new list
+     * @param {number} lastUpdated - last updated
      * @returns {number|object} -1 if not successful, otherwise the affected elements
      */
-    const modify = function (how, id, item, list) {
+    const modify = function (how, id, newData, newList, lastUpdated) {
       let mod = -1;
-      if (how === 'add') {
-        mod = add(item);
+
+      if (how === 'addFavorite') {
+        mod = addFavorite(id);
+      } else if (how === 'removeFavorite') {
+        mod = removeFavorite(id);
+      } else if (how === 'orderFavorites') {
+        mod = orderFavorites();
+      } else if (how === 'clearFavorites') {
+        mod = clearFavorites();
+      } else if (how === 'editStation') {
+        mod = editStation(id, newData);
+      } else if (how === 'updateStationsInformation') {
+        mod = updateStationsInformation(newList, lastUpdated);
+      } else if (how === 'updateStationsStatus') {
+        mod = updateStationsStatus(newList, lastUpdated);
       }
-      if (how === 'edit') {
-        mod = edit(id, item);
-      }
-      if (how === 'remove') {
-        mod = remove(id);
-      }
-      if (how === 'clear') {
-        mod = clear();
-      }
-      if (how === 'update') {
-        mod = update(list);
-      }
+
       if (mod !== -1) {
         if (save()) {
           return mod;
@@ -125,10 +181,13 @@
 
     /**
      * Load from storage
-     * @returns {boolean} True if load was successful
      */
     const load = function () {
-      _list = storage.getItem('list') || [];
+      _stations = storage.getItem('stations') || {};
+      _favorites = storage.getItem('favorites') || [];
+      _lastUpdated = storage.getItem('lastUpdated') || {
+        ..._defaultLastUpdated,
+      };
     };
 
     /**
@@ -136,12 +195,16 @@
      * @returns {boolean} True if save was successful
      */
     const save = function () {
-      return storage.setItem('list', _list);
+      return (
+        storage.setItem('stations', _stations) &&
+        storage.setItem('favorites', _favorites) &&
+        storage.setItem('lastUpdated', _lastUpdated) &&
+        storage.setItem('version', VERSION)
+      );
     };
 
     /**
      * Init data
-     * @returns {array}
      */
     this.init = function () {
       load();
@@ -149,21 +212,11 @@
 
     /**
      * Add single occurance
-     * @param {object} item - item
+     * @param {string} id - id to add
      * @returns {number|object} -1 if not successful, otherwise the affected elements
      */
-    this.add = function (item) {
-      return modify('add', null, item);
-    };
-
-    /**
-     * Edit single occurance
-     * @param {string} id - id of the occurance to edit
-     * @param {object} item - item
-     * @returns {number|object} -1 if not successful, otherwise the affected elements
-     */
-    this.edit = function (id, item) {
-      return modify('edit', id, item);
+    this.addFavorite = function (id) {
+      return modify('addFavorite', id);
     };
 
     /**
@@ -171,25 +224,57 @@
      * @param {string} id - id of the occurance to remove
      * @returns {number|object} -1 if not successful, otherwise the affected elements
      */
-    this.remove = function (id) {
-      return modify('remove', id);
+    this.removeFavorite = function (id) {
+      return modify('removeFavorite', id);
     };
+
+    /**
+     *
+     */
+    this.orderFavorites = function () {};
 
     /**
      * Delete all occurances
      * @returns {number|object} -1 if not successful, otherwise the affected elements
      */
-    this.clear = function () {
-      return modify('clear');
+    this.clearFavorites = function () {
+      return modify('clearFavorites');
     };
 
     /**
-     * Replace list
-     * @param {array} list
+     * Edit single occurance
+     * @param {string} id - id of the occurance to edit
+     * @param {object} newData - new data
+     * @returns {number|object} -1 if not successful, otherwise the affected elements
+     */
+    this.editStation = function (id, newData) {
+      return modify('editStation', id, newData);
+    };
+
+    /**
+     * Replace stations information
+     * @param {array} newList
+     * @param {number} lastUpdated - last updated
      * @returns {array} -1 if not successful, otherwise the new list
      */
-    this.update = function (list) {
-      return modify('update', null, null, list);
+    this.updateStationsInformation = function (newList, lastUpdated) {
+      return modify(
+        'updateStationsInformation',
+        null,
+        null,
+        newList,
+        lastUpdated
+      );
+    };
+
+    /**
+     * Replace station status
+     * @param {array} newList
+     * @param {number} lastUpdated - last updated
+     * @returns {array} -1 if not successful, otherwise the new list
+     */
+    this.updateStationsStatus = function (newList, lastUpdated) {
+      return modify('updateStationsStatus', null, null, newList, lastUpdated);
     };
 
     /**
@@ -198,7 +283,30 @@
      * @returns {number|object} -1 if not successful, otherwise the selected item
      */
     this.getById = function (id) {
-      return findById(id);
+      return _stations[id];
+    };
+
+    /**
+     * Filter stations by name or id
+     * @param {string} search - name or id
+     * @returns {object} Stations that match the search
+     */
+    this.filterStations = function (search) {
+      const sanitizedSearch = search.trim().toLowerCase();
+      if (!sanitizedSearch) {
+        return _stations;
+      }
+      return Object.keys(_stations).reduce((acc, key) => {
+        if (key.includes(sanitizedSearch)) {
+          acc[key] = _stations[key];
+        } else {
+          const name = _stations[key]?.information?.name;
+          if (name && name.toLowerCase().includes(sanitizedSearch)) {
+            acc[key] = _stations[key];
+          }
+        }
+        return acc;
+      }, {});
     };
 
     this.init();

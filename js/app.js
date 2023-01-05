@@ -12,7 +12,7 @@ const App = function (namespace) {
 app.instance = new App(NAMESPACE);
 
 const load = function () {
-  // app.instance.controller.setData();
+  app.instance.controller.setData();
 };
 
 if (location.protocol === 'http:' && location.hostname !== 'localhost') {
@@ -27,7 +27,7 @@ window.addEventListener('load', load);
 
 if (FEATURES.offline) {
   app.instance.offline = new app.Offline({
-    // showOffline: (status) => app.instance.view.render('offline', status),
-    // showInfo: (msg) => app.instance.view.render('info', msg),
+    showOffline: (status) => app.instance.view.render('offline', status),
+    showInfo: (msg) => app.instance.view.render('info', msg),
   });
 }

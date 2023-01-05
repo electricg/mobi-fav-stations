@@ -43,7 +43,6 @@ a {
   text-decoration: none;
 }
 label, button, input[type=button], input[type=submit], input[type=reset] {
-  -webkit-appearance: none;
   cursor: pointer;
   user-select: none;
 }
@@ -54,6 +53,10 @@ label, button, input[type=button], input[type=submit], input[type=reset] {
   height: var(--l-icon-size);
   margin: 0 auto;
   width: var(--l-icon-size);
+}
+
+.hide {
+  display: none;
 }
 
 /*=== grid */
@@ -108,7 +111,7 @@ body {
 }
 
 /*=== sections */
-.main-section {
+.main-section--stations {
   display: none;
 }
 .main-section--selected {
@@ -120,4 +123,26 @@ body {
 .main-section--info {
   padding-left: var(--l-gap);
   padding-right: var(--l-gap);
+}
+
+
+table {
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid var(--c-main-text);
+}
+th, td {
+  padding: 2px;
+}
+td:nth-child(3),
+td:nth-child(6),
+td:nth-child(7),
+td:nth-child(8),
+td:nth-child(9),
+td:nth-child(10) {
+  text-align: right;
+}
+td:nth-child(4) {
+  text-align: center;
 }
