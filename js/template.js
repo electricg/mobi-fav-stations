@@ -46,7 +46,7 @@
     this.stations = function (stations) {
       const row = function (item) {
         const {
-          station_id: id,
+          station_id: id1,
           name,
           capacity,
           is_charging_station: isCharging,
@@ -61,10 +61,12 @@
           num_docks_available: numDocksAvailable,
           vehicle_types_available: vehicleTypesAvailable,
         } = item.status || {};
+        const { favorite, description = '' } = item.user || {};
+        const id = id1 || id2;
 
         const code = `
             <tr>
-              <td>${id || id2}</td>
+              <td>${id}</td>
               <td>${formatUndefined(name)}</td>
               <td>${formatUndefined(capacity)}</td>
               <td>${formatCharging(isCharging)}</td>
@@ -80,6 +82,16 @@
               <td>${formatNumber(numDocksAvailable)}</td>
               <td>${formatNumber(vehicleTypesAvailable?.[0].count)}</td>
               <td>${formatNumber(vehicleTypesAvailable?.[1].count)}</td>
+              <td>
+                <button type="button" aria-pressed="${
+                  favorite ? 'true' : 'false'
+                }" data-id="${id}" class="favorite-toggle js-toggle-favorite">
+                  <span class="visually-hidden">Favorite</span>
+                  <span class="favorite-toggle__add" aria-hidden="true" title="Add to favorites">☆</span>
+                  <span class="favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
+                </button>
+              </td>
+              <td>${description}</td>
             </tr>
           `;
 
@@ -92,7 +104,7 @@
               <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th title="Capacity">Ca</th>
+                <th title="Capacity">C</th>
                 <th title="Charging">⚡️</th>
                 <th title="Status">S</th>
                 <th title="Bikes Available Total">BA</th>
@@ -100,6 +112,8 @@
                 <th title="Docks Available">DA</th>
                 <th title="Bikes Available">1</th>
                 <th title="E-bikes Available">2</th>
+                <th title="Favorites">⭐️</th>
+                <th title="Description">D</th>
               </tr>
             </thead>
             <tbody>

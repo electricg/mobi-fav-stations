@@ -7,7 +7,7 @@ const NAMESPACE = 'mobiFavStations';
 
 const FEATURES = {
   offline: false,
-  local: true,
+  local: false,
 };
 
 Object.freeze(FEATURES);

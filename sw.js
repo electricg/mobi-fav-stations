@@ -5,7 +5,7 @@ const cacheName = `v${VERSION}::static`;
 const fileList = `
 ./
 css/main.css
-images/icon.svg
+images/logo/icon.svg
 js/app.js
 js/controller.js
 js/helpers.js

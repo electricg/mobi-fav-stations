@@ -10,6 +10,8 @@
 - [ ] show favourites
 - [ ] search station
 
+Documentation for the API https://gbfs.mobilitydata.org/specification/reference/
+
 ```
 open app
     ⬇

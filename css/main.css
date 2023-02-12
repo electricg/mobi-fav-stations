@@ -59,6 +59,72 @@ label, button, input[type=button], input[type=submit], input[type=reset] {
   display: none;
 }
 
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+}
+
+/*=== alert */
+.alerts-wrapper {
+  bottom: var(--l-height-bottom);
+  left: var(--l-gap);
+  position: fixed;
+  width: calc(100% - var(--l-gap) * 2);
+}
+.alert {
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: var(--l-border-radius);
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+  padding: .25em .5em;
+  width: 100%;
+  background: var(--c-bg-alert);
+  color: var(--c-fg-alert);
+}
+.alert__close {
+  background: transparent;
+  border: 0 none;
+  border-radius: 100%;
+  color: inherit;
+  font-size: inherit;
+  height: 2em;
+  margin-left: var(--l-gap);
+  padding: 0;
+}
+.alert__close__icon {
+  --l-icon-size: 2em;
+}
+.alert .alert__close:hover,
+.alert .alert__close:focus,
+.alert .alert__close:active {
+  background: var(--c-fg-alert);
+  box-shadow: 0px 0px 0px 2px var(--c-fg-alert);
+  color: var(--c-bg-alert);
+}
+.alert--info {
+  --c-bg-alert: var(--c-alert-info-light);
+  --c-fg-alert: var(--c-alert-info-dark);
+}
+.alert--error {
+  --c-bg-alert: var(--c-alert-error-light);
+  --c-fg-alert: var(--c-alert-error-dark);
+}
+.alert--success {
+  --c-bg-alert: var(--c-alert-success-light);
+  --c-fg-alert: var(--c-alert-success-dark);
+}
+.alert--warning {
+  --c-bg-alert: var(--c-alert-warning-light);
+  --c-fg-alert: var(--c-alert-warning-dark);
+}
+
 /*=== grid */
 html, body {
   height: 100%;
@@ -90,6 +156,7 @@ body {
 .main-header__title__icon {
   --l-icon-size: var(--l-height-top);
   display: inline;
+  margin-right: var(--l-gap);
   vertical-align: middle;
 }
 .main-header__status {
@@ -145,4 +212,18 @@ td:nth-child(10) {
 }
 td:nth-child(4) {
   text-align: center;
+}
+
+
+.favorite-toggle .favorite-toggle__add {
+  display: block;
+}
+.favorite-toggle .favorite-toggle__remove {
+  display: none;
+}
+.favorite-toggle[aria-pressed='true'] .favorite-toggle__add {
+  display: none;
+}
+.favorite-toggle[aria-pressed='true'] .favorite-toggle__remove {
+  display: block;
 }

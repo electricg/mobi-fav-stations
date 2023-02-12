@@ -54,26 +54,13 @@ NodeList.prototype.forEach = Array.prototype.forEach;
       target.addEventListener(type, dispatchEvent, !!useCapture);
     };
 
-    const localFetch = async (url) => {
-      const base = 'http://localhost:8080/mobi-fav-stations/json/';
+    this.fetchData = async (url) => {
+      const base = FEATURES.local
+        ? 'http://localhost:8080/mobi-fav-stations/json/'
+        : 'https://giulia.dev/mobi-api/';
       const response = await fetch(`${base}${url}`);
       const data = await response.json();
       return data;
-    };
-
-    const remoteFetch = async (url) => {
-      const base =
-        'https://api.allorigins.win/get?url=https://vancouver-gbfs.smoove.pro/gbfs/2/en/';
-      const response = await fetch(`${base}${url}`);
-      const data = await response.json();
-      return JSON.parse(data.contents);
-    };
-
-    this.fetchData = async (url) => {
-      if (FEATURES.local) {
-        return localFetch(url);
-      }
-      return remoteFetch(url);
     };
   };
 

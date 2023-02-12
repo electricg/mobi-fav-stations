@@ -51,7 +51,7 @@
     };
 
     this.removeAllItem = function () {
-      _self.model.clear();
+      _self.model.clear(); // TODO
       _self.setData();
       _self.view.render('success', 'Data deleted successfully');
     };
@@ -118,6 +118,13 @@
 
     _self.view.bind('filterStations', function (search) {
       return _self.model.filterStations(search);
+    });
+
+    _self.view.bind('toggleFavorite', function (id, pressed) {
+      if (!pressed) {
+        return _self.model.addFavorite(id);
+      }
+      return _self.model.removeFavorite(id);
     });
   };
 

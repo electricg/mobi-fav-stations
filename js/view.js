@@ -114,6 +114,26 @@
         $filterStationsForm.on('submit', function (event) {
           app.Helpers.prev(event);
         });
+      } else if (event === 'toggleFavorite') {
+        app.Helpers.$delegate(
+          $listStations,
+          '.js-toggle-favorite',
+          'click',
+          function () {
+            const id = this.getAttribute('data-id');
+            const pressed = this.getAttribute('aria-pressed') === 'true';
+            const res = handler(id, pressed);
+
+            if (res === -1) {
+              const msg = pressed
+                ? 'The station you are trying to remove from your favorite is not present in the list'
+                : 'The station you are trying to add to your favorite is already present in the list';
+              _self.render('error', msg);
+            } else {
+              this.setAttribute('aria-pressed', !pressed);
+            }
+          }
+        );
       }
     };
   };

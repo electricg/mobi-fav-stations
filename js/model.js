@@ -3,14 +3,13 @@
   'use strict';
 
   const Model = function (storage) {
-    const _defaultLastUpdated = {
-      information: 0,
-      status: 0,
-    };
-
+    let _information = []; // copy of the api data
+    let _status = []; // copy of the api data
+    let _user = {}; // user data for the stations
     let _stations = {};
-    let _favorites = [];
-    let _lastUpdated = { ..._defaultLastUpdated };
+    let _favorites = []; // it's an array (of IDs) because I want to choose the order
+    let _lastUpdatedInformation = 0;
+    let _lastUpdatedStatus = 0;
 
     Object.defineProperty(this, 'stations', {
       get: function () {
@@ -20,19 +19,19 @@
 
     Object.defineProperty(this, 'favorites', {
       get: function () {
-        return _favorites;
+        return [..._favorites];
       },
     });
 
     Object.defineProperty(this, 'lastUpdatedInformation', {
       get: function () {
-        return _lastUpdated.information;
+        return _lastUpdatedInformation;
       },
     });
 
     Object.defineProperty(this, 'lastUpdatedStatus', {
       get: function () {
-        return _lastUpdated.status;
+        return _lastUpdatedStatus;
       },
     });
 
@@ -47,15 +46,19 @@
 
     /**
      * Add single favorite occurance
-     * @param {object} item - item to add
+     * @param {object} id - id to add
      * @returns {number|object} -1 if not successful, otherwise the added element
      */
-    const addFavorite = function (item) {
-      if (findFavoriteById(item) !== -1) {
+    const addFavorite = function (id) {
+      if (findFavoriteById(id) !== -1) {
         return -1;
       }
-      _favorites.push(item);
-      return item;
+      _favorites.push(id);
+      if (!_stations[id].user) {
+        _stations[id].user = {};
+      }
+      _stations[id].user.favorite = true;
+      return id;
     };
 
     /**
@@ -69,10 +72,14 @@
         return -1;
       }
       const removed = _favorites.splice(index, 1);
+      if (!_stations[id].user) {
+        _stations[id].user = {};
+      }
+      _stations[id].user.favorite = false;
       return removed[0];
     };
 
-    const orderFavorites = function () {};
+    const orderFavorites = function () {}; // TODO
 
     /**
      * Remove all favorite occurances
@@ -89,7 +96,7 @@
     /**
      * Change single occurance
      * @param {string} id - id of the occurance to edit
-     * @param {object} newData - string in YYYY-DD-MM format
+     * @param {object} newData - TODO
      * @returns {number|object} -1 if not successful, otherwise the updated element
      */
     const editStation = function (id, newData) {
@@ -105,12 +112,12 @@
     };
 
     /**
-     * Update stations information
-     * @param {array} newList - new list of station information
-     * @param {number} lastUpdated - last updated
+     * TODO
      */
-    const updateStationsInformation = function (newList, lastUpdated) {
-      newList.forEach((item) => {
+    const updateStations = function () {
+      _stations = {};
+
+      _information.forEach((item) => {
         const id = item.station_id;
         if (id) {
           if (!_stations[id]) {
@@ -120,16 +127,7 @@
         }
       });
 
-      _lastUpdated.information = lastUpdated;
-    };
-
-    /**
-     * Update stations status
-     * @param {array} newList - new list of station information
-     * @param {number} lastUpdated - last updated
-     */
-    const updateStationsStatus = function (newList, lastUpdated) {
-      newList.forEach((item) => {
+      _status.forEach((item) => {
         const id = item.station_id;
         if (id) {
           if (!_stations[id]) {
@@ -139,7 +137,42 @@
         }
       });
 
-      _lastUpdated.status = lastUpdated;
+      Object.keys(_user).forEach((id) => {
+        if (_stations[id]) {
+          _stations[id].user = { ..._user[id] };
+        }
+      });
+
+      _favorites.forEach((id) => {
+        if (_stations[id]) {
+          if (!_stations[id].user) {
+            _stations[id].user = {};
+          }
+          _stations[id].user.favorite = true;
+        }
+      });
+    };
+
+    /**
+     * Update stations information
+     * @param {array} newList - new list of station information
+     * @param {number} lastUpdated - last updated
+     */
+    const updateStationsInformation = function (newList, lastUpdated) {
+      _information = newList;
+      _lastUpdatedInformation = lastUpdated;
+      updateStations();
+    };
+
+    /**
+     * Update stations status
+     * @param {array} newList - new list of station information
+     * @param {number} lastUpdated - last updated
+     */
+    const updateStationsStatus = function (newList, lastUpdated) {
+      _status = newList;
+      _lastUpdatedStatus = lastUpdated;
+      updateStations();
     };
 
     /**
@@ -183,11 +216,12 @@
      * Load from storage
      */
     const load = function () {
-      _stations = storage.getItem('stations') || {};
+      _status = storage.getItem('status') || [];
+      _information = storage.getItem('information') || [];
+      _user = storage.getItem('user') || {};
       _favorites = storage.getItem('favorites') || [];
-      _lastUpdated = storage.getItem('lastUpdated') || {
-        ..._defaultLastUpdated,
-      };
+      _lastUpdatedInformation = storage.getItem('lastUpdatedInformation') || 0;
+      _lastUpdatedStatus = storage.getItem('lastUpdatedStatus') || 0;
     };
 
     /**
@@ -196,9 +230,12 @@
      */
     const save = function () {
       return (
-        storage.setItem('stations', _stations) &&
+        storage.setItem('status', _status) &&
+        storage.setItem('information', _information) &&
+        storage.setItem('user', _user) &&
         storage.setItem('favorites', _favorites) &&
-        storage.setItem('lastUpdated', _lastUpdated) &&
+        storage.setItem('lastUpdatedInformation', _lastUpdatedInformation) &&
+        storage.setItem('lastUpdatedStatus', _lastUpdatedStatus) &&
         storage.setItem('version', VERSION)
       );
     };
@@ -208,6 +245,7 @@
      */
     this.init = function () {
       load();
+      updateStations();
     };
 
     /**
@@ -229,7 +267,7 @@
     };
 
     /**
-     *
+     * TODO
      */
     this.orderFavorites = function () {};
 
