@@ -12,11 +12,11 @@
     const $loadStatus = $$('#load-status');
     const $loadInformation = $$('#load-information');
     const $editFavorites = $$('#edit-favorites');
-    const $deleteAll = $$('#delete-all');
     const $toggleStations = $$('#toggle-stations');
 
+    const $favorites = $$('#favorites');
+
     const $stations = $$('#stations');
-    const $filterStationsForm = $$('#filter-stations-form');
     const $filterStationsInput = $$('#filter-stations-input');
 
     const $listStations = $$('#list-stations');
@@ -26,6 +26,8 @@
     const $statusOffline = $$('#status-icon-offline');
 
     const $version = $$('#version');
+
+    let _showStations = false;
 
     const _viewCommands = {};
 
@@ -54,7 +56,12 @@
     };
 
     _viewCommands.home = function (model) {
-      // console.log('model', model);
+      const { stations, favorites, lastUpdatedStatus } = model;
+      $favorites.innerHTML = _self.template.favorites(
+        favorites,
+        stations,
+        lastUpdatedStatus
+      );
     };
 
     _viewCommands.offline = function (status) {
@@ -69,32 +76,26 @@
     };
 
     this.bind = function (event, handler) {
-      if (event === 'itemAdd') {
-        // console.log('itemAdd');
-      } else if (event === 'itemRemove') {
-        // console.log('itemRemove');
-      } else if (event === 'showItemEdit') {
+      if (event === 'showItemEdit') {
         // console.log('showItemEdit');
       } else if (event === 'itemEdit') {
         // console.log('itemEdit');
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
+          _showStations = !_showStations;
           this.querySelectorAll('span').forEach(($el) => {
-            $el.classList.toggle('hide');
+            $el.classList.toggle('hide'); // TODO
           });
-          const res = $stations.classList.toggle('main-section--selected');
-          if (res) {
-            const stations = handler();
-            $listStations.innerHTML = _self.template.stations(stations);
+          $stations.classList.toggle('main-section--selected', _showStations);
+          if (_showStations) {
+            const { stations, lastUpdate } = handler();
+            $listStations.innerHTML = _self.template.stations(
+              stations,
+              lastUpdate
+            );
           } else {
             $listStations.innerHTML = '';
-            $filterStationsForm.reset();
-          }
-        });
-      } else if (event === 'itemRemoveAll') {
-        $deleteAll.on('click', function () {
-          if (window.confirm('Are you sure you want to delete all the data?')) {
-            handler();
+            $filterStationsInput.value = '';
           }
         });
       } else if (event === 'loadStatus') {
@@ -109,10 +110,6 @@
         $filterStationsInput.on('input', function (event) {
           const stations = handler(event.target.value);
           $listStations.innerHTML = _self.template.stations(stations);
-        });
-
-        $filterStationsForm.on('submit', function (event) {
-          app.Helpers.prev(event);
         });
       } else if (event === 'toggleFavorite') {
         app.Helpers.$delegate(

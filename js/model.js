@@ -6,8 +6,8 @@
     let _information = []; // copy of the api data
     let _status = []; // copy of the api data
     let _user = {}; // user data for the stations
-    let _stations = {};
     let _favorites = []; // it's an array (of IDs) because I want to choose the order
+    let _stations = {}; // merge of all the above data
     let _lastUpdatedInformation = 0;
     let _lastUpdatedStatus = 0;
 
@@ -82,21 +82,9 @@
     const orderFavorites = function () {}; // TODO
 
     /**
-     * Remove all favorite occurances
-     * @returns {number|object} -1 if data was already empty, otherwise the removed elements
-     */
-    const clearFavorites = function () {
-      let removed = -1;
-      if (_favorites.length > 0) {
-        removed = _favorites.splice(0);
-      }
-      return removed;
-    };
-
-    /**
      * Change single occurance
      * @param {string} id - id of the occurance to edit
-     * @param {object} newData - TODO
+     * @param {object} newData - object of the data to change, doesn't need all the props as it is a merge
      * @returns {number|object} -1 if not successful, otherwise the updated element
      */
     const editStation = function (id, newData) {
@@ -108,7 +96,14 @@
         ...el.user,
         ...newData,
       };
-      return el;
+      if (!_user[id]) {
+        _user[id] = {};
+      }
+      _user[id] = {
+        ..._user[id],
+        ...newData,
+      };
+      return el; // TODO is this what I want/need?
     };
 
     /**
@@ -193,8 +188,6 @@
         mod = removeFavorite(id);
       } else if (how === 'orderFavorites') {
         mod = orderFavorites();
-      } else if (how === 'clearFavorites') {
-        mod = clearFavorites();
       } else if (how === 'editStation') {
         mod = editStation(id, newData);
       } else if (how === 'updateStationsInformation') {
@@ -270,14 +263,6 @@
      * TODO
      */
     this.orderFavorites = function () {};
-
-    /**
-     * Delete all occurances
-     * @returns {number|object} -1 if not successful, otherwise the affected elements
-     */
-    this.clearFavorites = function () {
-      return modify('clearFavorites');
-    };
 
     /**
      * Edit single occurance

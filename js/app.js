@@ -12,7 +12,7 @@ const App = function (namespace) {
 app.instance = new App(NAMESPACE);
 
 const load = function () {
-  app.instance.controller.setData();
+  app.instance.controller.init();
 };
 
 if (location.protocol === 'http:' && location.hostname !== 'localhost') {

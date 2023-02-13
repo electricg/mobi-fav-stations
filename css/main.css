@@ -171,6 +171,27 @@ body {
   display: block;
 }
 
+#strike {
+  fill: inherit;
+}
+.main-header__title__icon {
+  fill: transparent;
+}
+.test {
+  display: inline-block;
+  --l-icon-size: 2em;
+}
+.test1 {
+  color: var(--c-theme-first);
+  fill: transparent;
+}
+.test2 {
+  fill: #ffe074;
+}
+.test3 {
+  --l-icon-size: 1.4em;
+}
+
 /*=== footer */
 .main-footer {
   background: var(--c-theme-first);

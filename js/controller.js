@@ -13,31 +13,20 @@
     _self.view = view;
 
     /**
+     * Init app
+     */
+    this.init = function () {
+      console.log('init');
+      _self.view.render('chrome');
+      _self.setData();
+      // _self.loadStatus(); // TODO
+    };
+
+    /**
      * Insert data into the views
      */
     this.setData = function () {
-      _self.view.render('chrome');
       _self.view.render('home', _self.model);
-    };
-
-    this.addItem = function (item) {
-      const res = _self.model.add(item);
-      if (res !== -1) {
-        _self.setData();
-      } else {
-        _self.view.render('error', 'Error adding entry');
-      }
-      return res;
-    };
-
-    this.removeItem = function (id) {
-      const res = _self.model.remove(id);
-      if (res !== -1) {
-        _self.setData();
-      } else {
-        _self.view.render('error', 'Error removing entry');
-      }
-      return res;
     };
 
     this.editItem = function (id, item) {
@@ -48,12 +37,6 @@
         _self.view.render('error', 'Error editing entry');
       }
       return res;
-    };
-
-    this.removeAllItem = function () {
-      _self.model.clear(); // TODO
-      _self.setData();
-      _self.view.render('success', 'Data deleted successfully');
     };
 
     this.loadStatus = async function () {
@@ -84,14 +67,6 @@
       );
     };
 
-    _self.view.bind('itemAdd', function (date) {
-      return _self.addItem(date);
-    });
-
-    _self.view.bind('itemRemove', function (id) {
-      return _self.removeItem(id);
-    });
-
     _self.view.bind('itemEdit', function (id, date) {
       return _self.editItem(id, date);
     });
@@ -101,11 +76,10 @@
     });
 
     _self.view.bind('toggleStations', function () {
-      return _self.model.stations;
-    });
-
-    _self.view.bind('itemRemoveAll', function () {
-      return _self.removeAllItem();
+      return {
+        stations: _self.model.stations,
+        lastUpdate: _self.model.lastUpdatedInformation,
+      };
     });
 
     _self.view.bind('loadStatus', async function () {
