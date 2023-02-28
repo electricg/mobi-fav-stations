@@ -171,6 +171,7 @@ body {
   display: block;
 }
 
+
 #strike {
   fill: inherit;
 }
@@ -192,6 +193,72 @@ body {
   --l-icon-size: 1.4em;
 }
 
+/*=== station */
+.stations {
+  --val: 6;
+  display: grid;
+  grid-template-columns: repeat(var(--val), 1fr);
+  gap: 1rem .5rem;
+}
+.station {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+.station__title {
+  font-weight: bold;
+  grid-column: span var(--val);
+}
+.station__id {
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+.station__description {
+  grid-column: span var(--val);
+}
+.station__kpis {
+  display: grid;
+  grid-column: span var(--val);
+  grid-template-columns: subgrid;
+}
+.station__kpi {
+  display: grid;
+  grid-column: span calc(var(--val) / 3);
+  grid-template-areas:
+  "count icon" 
+  "type  type";
+  grid-template-columns: subgrid;
+  justify-items: center;
+}
+.station__kpi__count {
+  font-size: 1.8rem;
+  font-weight: bold;
+  grid-area: count;
+  justify-self: right;
+  line-height: 2rem;
+}
+.station__kpi__icon {
+  grid-area: icon;
+  height: 2rem;
+  justify-self: left;
+  margin: 0;
+}
+.station__kpi__type {
+  font-size: 0.6rem;
+  grid-area: type;
+}
+.station__status {
+  grid-column: span var(--val);
+}
+.station__status[data-status="✅✅✅"] {
+  display: none;
+}
+.station__status span:after {
+  content: attr(title);
+  font-size: 0.6rem;
+  padding-left: 0.1rem;
+}
+
 /*=== footer */
 .main-footer {
   background: var(--c-theme-first);
@@ -208,6 +275,7 @@ body {
 
 .main-header,
 .main-section--home,
+.main-section--favorites,
 .main-section--info {
   padding-left: var(--l-gap);
   padding-right: var(--l-gap);

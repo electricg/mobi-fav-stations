@@ -1,4 +1,4 @@
-/* global FEATURES */
+/* global */
 /* exported $, $$ */
 'use strict';
 
@@ -55,10 +55,7 @@ NodeList.prototype.forEach = Array.prototype.forEach;
     };
 
     this.fetchData = async (url) => {
-      const base = FEATURES.local
-        ? 'http://localhost:8080/mobi-fav-stations/json/'
-        : 'https://giulia.dev/mobi-api/';
-      const response = await fetch(`${base}${url}`);
+      const response = await fetch(url);
       const data = await response.json();
       return data;
     };

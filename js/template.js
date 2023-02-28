@@ -17,7 +17,7 @@
 
     const formatStatus = (value) => {
       if (value === undefined) {
-        return '';
+        return '?';
       }
       if (value) {
         return '✅';
@@ -59,21 +59,37 @@
       const id = id1 || id2;
 
       const code = `
-          <div>
-            <div>${description}</div>
-            <div>${name}</div>
-            <div>${id}</div>
-            <div><svg class="icon test test1" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>${
-              vehicleTypesAvailable?.[0].count
-            }</div>
-            <div><svg class="icon test test2" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>${
-              vehicleTypesAvailable?.[1].count
-            }</div>
-            <div><svg class="icon test test3" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>${numDocksAvailable}</div>
-            <div>
+          <div class="station">
+            <div class="station__title"><span class="station__id">${id}</span> ${name}</div>
+            <div class="station__description">${description}</div>
+            <div class="station__status" data-status="${formatStatus(
+              isInstalled
+            )}${formatStatus(isRenting)}${formatStatus(isReturning)}">
               <span title="Installed">${formatStatus(isInstalled)}</span>
               <span title="Renting">${formatStatus(isRenting)}</span>
-              <span title="Returning">${formatStatus(isReturning)}</span></div>
+              <span title="Returning">${formatStatus(isReturning)}</span>
+            </div>
+            <div class="station__kpis">
+              <div class="station__kpi">
+                <span class="station__kpi__count">${
+                  vehicleTypesAvailable?.[0].count
+                }</span>
+                <svg class="station__kpi__icon icon test test1" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <span class="station__kpi__type">Classics</span>
+              </div>
+              <div class="station__kpi">
+                <span class="station__kpi__count">${
+                  vehicleTypesAvailable?.[1].count
+                }</span>
+                <svg class="station__kpi__icon icon test test2" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <span class="station__kpi__type">E-Bikes</span>
+              </div>
+              <div class="station__kpi">
+                <span class="station__kpi__count">${numDocksAvailable}</span>
+                <svg class="station__kpi__icon icon test test3" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                <span class="station__kpi__type">Docks</span>
+              </div>
+            </div>
           </div>
         `;
 
@@ -82,8 +98,8 @@
 
     this.favorites = function (favorites, stations, lastUpdated) {
       const code = `
-          <div>
-            <div>${formatLastUpdate(lastUpdated)}</div>
+          <div>${formatLastUpdate(lastUpdated)}</div>
+          <div class="stations">
             ${favorites.map((id) => favorite(stations[id])).join('')}
           </div>
         `;

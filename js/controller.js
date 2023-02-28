@@ -1,4 +1,4 @@
-/* global app, NAMESPACE, VERSION, FILE */
+/* global app, URL_BASE */
 (function (window) {
   'use strict';
 
@@ -11,6 +11,10 @@
     const _self = this;
     _self.model = model;
     _self.view = view;
+
+    const fetchData = async (url) => {
+      return await app.Helpers.fetchData(`${URL_BASE}${url}`);
+    };
 
     /**
      * Init app
@@ -40,18 +44,23 @@
     };
 
     this.loadStatus = async function () {
-      const data = await app.Helpers.fetchData('station_status.json');
-      console.log(data);
+      try {
+        const data = await fetchData('station_status.json');
+        console.log(data);
 
-      _self.model.updateStationsStatus(data.data.stations, data.last_updated);
+        _self.model.updateStationsStatus(data.data.stations, data.last_updated);
 
-      // update the ui
-      _self.setData();
-      _self.view.render('success', 'Stations status imported successfully');
+        // update the ui
+        _self.setData();
+        _self.view.render('success', 'Stations status imported successfully');
+      } catch (e) {
+        console.log(e);
+        _self.view.render('error', e);
+      }
     };
 
     this.loadInformation = async function () {
-      const data = await app.Helpers.fetchData('station_information.json');
+      const data = await fetchData('station_information.json');
       console.log(data);
 
       _self.model.updateStationsInformation(
