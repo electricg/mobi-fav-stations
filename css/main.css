@@ -195,10 +195,10 @@ body {
 
 /*=== station */
 .stations {
-  --val: 6;
+  --col: 6;
   display: grid;
-  grid-template-columns: repeat(var(--val), 1fr);
   gap: 1rem .5rem;
+  grid-template-columns: repeat(var(--col), 1fr);
 }
 .station {
   display: grid;
@@ -207,23 +207,23 @@ body {
 }
 .station__title {
   font-weight: bold;
-  grid-column: span var(--val);
+  grid-column: span var(--col);
 }
 .station__id {
   font-size: 0.8rem;
   font-weight: normal;
 }
 .station__description {
-  grid-column: span var(--val);
+  grid-column: span var(--col);
 }
 .station__kpis {
   display: grid;
-  grid-column: span var(--val);
+  grid-column: span var(--col);
   grid-template-columns: subgrid;
 }
 .station__kpi {
   display: grid;
-  grid-column: span calc(var(--val) / 3);
+  grid-column: span calc(var(--col) / 3);
   grid-template-areas:
   "count icon" 
   "type  type";
@@ -248,7 +248,7 @@ body {
   grid-area: type;
 }
 .station__status {
-  grid-column: span var(--val);
+  grid-column: span var(--col);
 }
 .station__status[data-status="✅✅✅"] {
   display: none;
@@ -257,6 +257,14 @@ body {
   content: attr(title);
   font-size: 0.6rem;
   padding-left: 0.1rem;
+}
+@supports not (grid-template-columns: subgrid) {
+  .station__kpis {
+    grid-template-columns: repeat(var(--col), 1fr);
+  }
+  .station__kpi {
+    column-gap: .5rem;
+  }
 }
 
 /*=== footer */
