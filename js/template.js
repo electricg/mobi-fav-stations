@@ -26,6 +26,12 @@
       }
     };
 
+    const formatStatusSpan = (value, label) => {
+      return `<span${
+        value ? '' : ' tabindex="0"'
+      } title="${label}">${formatStatus(value)}</span>`;
+    };
+
     const formatCharging = (value) => (value ? 'Y' : '');
 
     const formatLastUpdate = (value) => new Date(value * 1000);
@@ -130,14 +136,13 @@
       const code = `
           <tr>
             <td>${id}</td>
-            <td>${formatUndefined(name)}</td>
+            <th>${formatUndefined(name)}</th>
             <td>${formatUndefined(capacity)}</td>
             <td>${formatCharging(isCharging)}</td>
-            <td><span title="Installed">${formatStatus(
-              isInstalled
-            )}</span><span title="Renting">${formatStatus(
-        isRenting
-      )}</span><span title="Returning">${formatStatus(isReturning)}</span></td>
+            <td>${formatStatusSpan(isInstalled, 'Installed')}${formatStatusSpan(
+        isRenting,
+        'Renting'
+      )}${formatStatusSpan(isReturning, 'Returning')}</td>
             <td>${formatNumber(numBikesAvailable)}</td>
             <td>${formatNumber(numBikesDisabled)}</td>
             <td>${formatNumber(numDocksAvailable)}</td>
@@ -147,7 +152,6 @@
               <button type="button" aria-pressed="${
                 favorite ? 'true' : 'false'
               }" data-id="${id}" class="favorite-toggle js-toggle-favorite">
-                <span class="visually-hidden">Favorite</span>
                 <span class="favorite-toggle__add" aria-hidden="true" title="Add to favorites">☆</span>
                 <span class="favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
               </button>
@@ -165,18 +169,18 @@
           <table>
             <thead>
               <tr>
-                <th>Id</th>
+                <th>N&deg;</th>
                 <th>Name</th>
-                <th title="Capacity">C</th>
-                <th title="Charging">⚡️</th>
-                <th title="Status">S</th>
-                <th title="Bikes Available Total">BA</th>
-                <th title="Bikes Disabled">BD</th>
-                <th title="Docks Available">DA</th>
-                <th title="Bikes Available">1</th>
-                <th title="E-bikes Available">2</th>
-                <th title="Favorites">⭐️</th>
-                <th title="Description">D</th>
+                <th tabindex="0" title="Capacity">C</th>
+                <th tabindex="0" title="Charging">⚡️</th>
+                <th>Status</th>
+                <th tabindex="0" title="Bikes Available Total">BA</th>
+                <th tabindex="0" title="Bikes Disabled">BD</th>
+                <th tabindex="0" title="Docks Available">DA</th>
+                <th tabindex="0" title="Bikes Available">1</th>
+                <th tabindex="0" title="E-bikes Available">2</th>
+                <th tabindex="0" title="Favorites">⭐️</th>
+                <th>Description</th>
               </tr>
             </thead>
             <tbody>

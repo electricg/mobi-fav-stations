@@ -84,6 +84,8 @@
 <main class="main-content">
 <!-- HOME -->
   <section id="home" class="main-section main-section--home">
+    <div id="favorites"></div>
+
     <div class="actions">
       <input type="button" id="load-status" value="Load status">
 
@@ -95,27 +97,29 @@
     </div>
   </section>
 
-  <section id="favorites" class="main-section main-section--favorites"></section>
-
   <section id="stations" class="main-section--stations">
-    <label for="filter-stations-input">Search station</label>
-    <input type="search" id="filter-stations-input" placeholder="Name or Id">
+    <div class="stations-search">
+      <label for="filter-stations-input">Search station</label>
+      <input type="search" id="filter-stations-input" placeholder="Name or Id">
+    </div>
 
     <div id="list-stations"></div>
   </section>
 
 <!-- INFO -->
   <section id="info" class="main-section main-section--info">
-    info
+    <p>
+      Developed by <a href="https://github.com/electricg" target="_blank">Giulia Alfonsi</a>.<br>
+      This is just a personal app with minimal functionalities.<br>
+      Live demo at <a href="https://electricg.github.io/mobi-fav-stations/" target="_blank">electricg.github.io/mobi-fav-stations/</a> and source code on <a href="https://github.com/electricg/mobi-fav-stations" target="_blank">GitHub</a>
+    </p>
   </section>
 
 <!-- ALERTS -->
   <div id="alerts" class="alerts-wrapper"></div>
 </main>
 
-<footer class="main-footer">
-  Footer
-</footer>
+<footer class="main-footer"></footer>
 
 <script src="js/settings.js"></script>
 <script src="js/helpers.js"></script>
