@@ -34,7 +34,7 @@
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
-    const formatLastUpdate = (value) => new Date(value * 1000);
+    const formatLastUpdate = (value) => new Date(value * 1000).toLocaleString();
 
     this.alert = function (type, msg) {
       const code = `
@@ -102,13 +102,18 @@
       return code;
     };
 
-    this.favorites = function (favorites, stations, lastUpdated) {
+    this.favorites = function (favorites, stations) {
       const code = `
-          <div>${formatLastUpdate(lastUpdated)}</div>
           <div class="stations">
             ${favorites.map((id) => favorite(stations[id])).join('')}
           </div>
         `;
+
+      return code;
+    };
+
+    this.lastUpdated = function (lastUpdated) {
+      const code = `<time>${formatLastUpdate(lastUpdated)}</time>`;
 
       return code;
     };
@@ -163,9 +168,8 @@
       return code;
     };
 
-    this.stations = function (stations, lastUpdated) {
+    this.stations = function (stations) {
       const code = `
-          <div>${formatLastUpdate(lastUpdated)}</div>
           <table>
             <thead>
               <tr>

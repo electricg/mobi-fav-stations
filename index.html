@@ -78,7 +78,7 @@
 
 <header class="main-header">
   <h1 class="main-header__title"><svg class="icon main-header__title__icon" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>Mobi Fav Stations v<span id="version">0</span></h1>
-  <div class="main-header__status"><svg id="status-icon-offline" class="icon main-header__status__icon" focusable="false" aria-hidden="true"><use href="#icon-offline"></use></svg></div>
+  <div class="main-header__status"><svg id="status-icon-offline" class="icon main-header__status__icon hide" focusable="false" aria-hidden="true"><use href="#icon-offline"></use></svg></div>
 </header>
 
 <main class="main-content">
@@ -97,7 +97,7 @@
     </div>
   </section>
 
-  <section id="stations" class="main-section--stations">
+  <section id="stations" class="main-section--stations hide">
     <div class="stations-search">
       <label for="filter-stations-input">Search station</label>
       <input type="search" id="filter-stations-input" placeholder="Name or Id">
@@ -119,7 +119,9 @@
   <div id="alerts" class="alerts-wrapper"></div>
 </main>
 
-<footer class="main-footer"></footer>
+<footer class="main-footer">
+  Status updated: <span id="last-updated"></span>
+</footer>
 
 <script src="js/settings.js"></script>
 <script src="js/helpers.js"></script>

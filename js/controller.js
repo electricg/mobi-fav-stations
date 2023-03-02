@@ -16,87 +16,71 @@
       return await app.Helpers.fetchData(`${URL_BASE}${url}`);
     };
 
-    /**
-     * Init app
-     */
-    this.init = function () {
-      console.log('init');
-      _self.view.render('chrome');
-      _self.setData();
-      _self.loadStatus(); // TODO
+    const getData = function (search) {
+      return {
+        stations: _self.model.stations,
+        favorites: _self.model.favorites,
+        lastUpdated: _self.model.lastUpdatedStatus,
+        filteredStations: _self.model.filterStations(search),
+      };
     };
 
     /**
      * Insert data into the views
      */
-    this.setData = function () {
-      _self.view.render('home', _self.model);
+    const setData = function () {
+      _self.view.bind('home', function (search) {
+        return getData(search);
+      });
     };
 
-    this.editItem = function (id, item) {
-      const res = _self.model.edit(id, item);
-      if (res !== -1) {
-        _self.setData();
-      } else {
-        _self.view.render('error', 'Error editing entry');
-      }
-      return res;
+    const loadStatus = async function (search) {
+      const data = await fetchData('station_status.json');
+
+      _self.model.updateStationsStatus(data.data.stations, data.last_updated);
+
+      return getData(search);
     };
 
-    this.loadStatus = async function () {
-      try {
-        const data = await fetchData('station_status.json');
-        console.log(data);
-
-        _self.model.updateStationsStatus(data.data.stations, data.last_updated);
-
-        // update the ui
-        _self.setData();
-        _self.view.render('success', 'Stations status imported successfully');
-      } catch (e) {
-        console.log(e);
-        _self.view.render('error', e);
-      }
-    };
-
-    this.loadInformation = async function () {
+    const loadInformation = async function (search) {
       const data = await fetchData('station_information.json');
-      console.log(data);
 
       _self.model.updateStationsInformation(
         data.data.stations,
         data.last_updated
       );
 
-      // update the ui
-      _self.setData();
-      _self.view.render(
-        'success',
-        'Stations information imported successfully'
-      );
+      return getData(search);
     };
 
-    _self.view.bind('itemEdit', function (id, date) {
-      return _self.editItem(id, date);
-    });
+    const editItem = function (id, item) {
+      const res = _self.model.edit(id, item);
+      if (res !== -1) {
+        setData();
+      } else {
+        _self.view.render('error', 'Error editing entry'); // TODO
+      }
+      return res;
+    };
 
     _self.view.bind('showItemEdit', function (id) {
       return _self.model.getById(id);
     });
 
+    _self.view.bind('itemEdit', function (id, date) {
+      return editItem(id, date);
+    });
+
     _self.view.bind('toggleStations', function () {
-      return {
-        stations: _self.model.stations,
-        lastUpdate: _self.model.lastUpdatedInformation,
-      };
+      return _self.model.stations;
     });
 
-    _self.view.bind('loadStatus', async function () {
-      return _self.loadStatus();
+    _self.view.bind('loadStatus', async function (search) {
+      return loadStatus(search);
     });
 
-    _self.view.bind('loadInformation', async function () {
-      return _self.loadInformation();
+    _self.view.bind('loadInformation', async function (search) {
+      return loadInformation(search);
     });
 
     _self.view.bind('filterStations', function (search) {
@@ -109,6 +93,16 @@
       }
       return _self.model.removeFavorite(id);
     });
+
+    /**
+     * Init app
+     */
+    this.init = function () {
+      console.log('init');
+      _self.view.render('chrome');
+      setData();
+      // _self.loadStatus(); // TODO
+    };
   };
 
   // export to window

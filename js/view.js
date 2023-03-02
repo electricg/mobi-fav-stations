@@ -1,4 +1,4 @@
-/* global $, $$, app, VERSION */
+/* global $$, app, VERSION */
 (function (window) {
   'use strict';
 
@@ -21,6 +21,8 @@
 
     const $listStations = $$('#list-stations');
 
+    const $lastUpdated = $$('#last-updated');
+
     const $alerts = $$('#alerts');
 
     const $statusOffline = $$('#status-icon-offline');
@@ -28,6 +30,7 @@
     const $version = $$('#version');
 
     let _showStations = false;
+    let _filter = '';
 
     const _viewCommands = {};
 
@@ -35,48 +38,48 @@
       $alerts.innerHTML += _self.template.alert(type, msg);
     };
 
-    _viewCommands.info = function (err) {
-      _viewCommands.alert('info', err);
+    _viewCommands.info = function (msg) {
+      _viewCommands.alert('info', msg);
     };
 
-    _viewCommands.error = function (err) {
-      _viewCommands.alert('error', err);
+    _viewCommands.error = function (msg) {
+      _viewCommands.alert('error', msg);
     };
 
-    _viewCommands.success = function (err) {
-      _viewCommands.alert('success', err);
+    _viewCommands.success = function (msg) {
+      _viewCommands.alert('success', msg);
     };
 
-    _viewCommands.warning = function (err) {
-      _viewCommands.alert('warning', err);
+    _viewCommands.warning = function (msg) {
+      _viewCommands.alert('warning', msg);
     };
 
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
     };
 
-    _viewCommands.home = function (model) {
-      const { stations, favorites, lastUpdatedStatus } = model;
-      $favorites.innerHTML = _self.template.favorites(
-        favorites,
-        stations,
-        lastUpdatedStatus
-      );
-    };
-
     _viewCommands.offline = function (status) {
-      $statusOffline.classList.toggle(
-        'main-header__status__icon--active',
-        status
-      );
+      $statusOffline.classList.toggle('hide', status);
     };
 
-    this.render = function (viewCmd, model, parameter, args) {
-      _viewCommands[viewCmd](model, parameter, args);
+    _viewCommands.home = function (data) {
+      const { stations, favorites, lastUpdated, filteredStations } = data;
+      $favorites.innerHTML = _self.template.favorites(favorites, stations);
+      $lastUpdated.innerHTML = _self.template.lastUpdated(lastUpdated);
+      if (_showStations) {
+        $listStations.innerHTML = _self.template.stations(filteredStations);
+      }
+    };
+
+    this.render = function (viewCmd, data) {
+      _viewCommands[viewCmd](data);
     };
 
     this.bind = function (event, handler) {
-      if (event === 'showItemEdit') {
+      if (event === 'home') {
+        const data = handler(_filter);
+        _self.render('home', data);
+      } else if (event === 'showItemEdit') {
         // console.log('showItemEdit');
       } else if (event === 'itemEdit') {
         // console.log('itemEdit');
@@ -86,13 +89,10 @@
           this.querySelectorAll('span').forEach(($el) => {
             $el.classList.toggle('hide'); // TODO
           });
-          $stations.classList.toggle('main-section--selected', _showStations);
+          $stations.classList.toggle('hide', !_showStations);
           if (_showStations) {
-            const { stations, lastUpdate } = handler();
-            $listStations.innerHTML = _self.template.stations(
-              stations,
-              lastUpdate
-            );
+            const stations = handler();
+            $listStations.innerHTML = _self.template.stations(stations);
           } else {
             $listStations.innerHTML = '';
             $filterStationsInput.value = '';
@@ -100,15 +100,33 @@
         });
       } else if (event === 'loadStatus') {
         $loadStatus.on('click', async function () {
-          await handler();
+          try {
+            const data = await handler(_filter);
+            _self.render('home', data);
+            _self.render('success', 'Stations status updated successfully');
+          } catch (e) {
+            console.log(e);
+            _self.render('error', e);
+          }
         });
       } else if (event === 'loadInformation') {
         $loadInformation.on('click', async function () {
-          await handler();
+          try {
+            const data = await handler(_filter);
+            _self.render('home', data);
+            _self.render(
+              'success',
+              'Stations information updated successfully'
+            );
+          } catch (e) {
+            console.log(e);
+            _self.render('error', e);
+          }
         });
       } else if (event === 'filterStations') {
         $filterStationsInput.on('input', function (event) {
-          const stations = handler(event.target.value);
+          _filter = event.target.value;
+          const stations = handler(_filter);
           $listStations.innerHTML = _self.template.stations(stations);
         });
       } else if (event === 'toggleFavorite') {
