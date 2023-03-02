@@ -23,7 +23,7 @@
       console.log('init');
       _self.view.render('chrome');
       _self.setData();
-      // _self.loadStatus(); // TODO
+      _self.loadStatus(); // TODO
     };
 
     /**
