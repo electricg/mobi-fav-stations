@@ -149,6 +149,42 @@
             }
           }
         );
+      } else if (event === 'toggleDescription') {
+        app.Helpers.$delegate(
+          document,
+          '.js-toggle-description',
+          'dblclick',
+          function () {
+            const id = this.getAttribute('data-id');
+            const text = this.innerHTML;
+            const input = document.createElement('textarea');
+            input.setAttribute('class', 'js-edit-description');
+            input.setAttribute('data-id', id);
+            input.value = text;
+            this.innerHTML = '';
+            this.appendChild(input);
+            input.focus();
+          }
+        );
+      } else if (event === 'editDescription') {
+        app.Helpers.$delegate(
+          document,
+          '.js-edit-description',
+          'blur',
+          function () {
+            const id = this.getAttribute('data-id');
+            const value = this.value;
+            const res = handler(id, value);
+            if (res !== -1) {
+              this.parentNode.innerHTML = res;
+            } else {
+              _self.render(
+                'error',
+                'Error in updating this station description'
+              );
+            }
+          }
+        );
       }
     };
   };

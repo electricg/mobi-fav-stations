@@ -67,7 +67,7 @@
       const code = `
           <div class="station">
             <div class="station__title"><span class="station__id">${id}</span> ${name}</div>
-            <div class="station__description">${description}</div>
+            <div class="station__description js-toggle-description" data-id="${id}">${description}</div>
             <div class="station__status" data-status="${formatStatus(
               isInstalled
             )}${formatStatus(isRenting)}${formatStatus(isReturning)}">
@@ -161,7 +161,7 @@
                 <span class="favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
               </button>
             </td>
-            <td>${description}</td>
+            <td><span class="js-toggle-description description" data-id="${id}">${description}</span></td>
           </tr>
         `;
 

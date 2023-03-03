@@ -48,6 +48,9 @@ label, button, input[type=button], input[type=submit], input[type=reset] {
   cursor: pointer;
   user-select: none;
 }
+button, input, textarea {
+  font-size: inherit;
+}
 
 .icon {
   display: block;
@@ -298,7 +301,6 @@ body {
 }
 .stations-search input {
   flex: 1;
-  font-size: 1rem;
 }
 
 table {
@@ -354,4 +356,18 @@ td:nth-child(4) {
 .favorite-toggle .favorite-toggle__remove,
 .favorite-toggle[aria-pressed='true'] .favorite-toggle__add {
   display: none;
+}
+
+table .description {
+  display: block;
+  width: 100%;
+}
+table .description:empty {
+  background: red;
+  height: 1rem;
+}
+
+table input {
+  display: block;
+  width: 100%;
 }

@@ -94,6 +94,16 @@
       return _self.model.removeFavorite(id);
     });
 
+    _self.view.bind('toggleDescription', function () {});
+
+    _self.view.bind('editDescription', function (id, newDesc) {
+      const res = _self.model.editStation(id, { description: newDesc }); // TODO
+      if (res !== -1) {
+        return res.user.description;
+      }
+      return res;
+    });
+
     /**
      * Init app
      */
