@@ -66,15 +66,22 @@
 
       const code = `
           <div class="station">
+            <div class="station__actions">
+              <input type="button" data-id="${id}" data-action="up" class="station__up js-edit-favorites" value="▲" />
+              <input type="button" data-id="${id}" data-action="down" class="station__down js-edit-favorites" value="▼" />
+              <input type="button" data-id="${id}" data-action="remove" class="station__remove js-edit-favorites" value="✕" />
+            </div>
             <div class="station__title"><span class="station__id">${id}</span> ${name}</div>
             <div class="station__description js-toggle-description" data-id="${id}">${description}</div>
-            <div class="station__status" data-status="${formatStatus(
-              isInstalled
-            )}${formatStatus(isRenting)}${formatStatus(isReturning)}">
-              <span title="Installed">${formatStatus(isInstalled)}</span>
-              <span title="Renting">${formatStatus(isRenting)}</span>
-              <span title="Returning">${formatStatus(isReturning)}</span>
-            </div>
+            ${
+              !(isInstalled && isRenting && isReturning)
+                ? `<div class="station__status">
+                <span title="Installed">${formatStatus(isInstalled)}</span>
+                <span title="Renting">${formatStatus(isRenting)}</span>
+                <span title="Returning">${formatStatus(isReturning)}</span>
+              </div>`
+                : ``
+            }
             <div class="station__kpis">
               <div class="station__kpi">
                 <span class="station__kpi__count">${

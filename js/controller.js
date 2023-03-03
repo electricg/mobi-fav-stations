@@ -104,6 +104,20 @@
       return res;
     });
 
+    _self.view.bind('editFavorite', function (id, action, search) {
+      console.log(id, action);
+      let res;
+      if (action === 'remove') {
+        res = _self.model.removeFavorite(id);
+      } else if (action === 'up' || action === 'down') {
+        res = _self.model.orderFavorite(id, action);
+      }
+      if (res === -1) {
+        return res;
+      }
+      return getData(search);
+    });
+
     /**
      * Init app
      */

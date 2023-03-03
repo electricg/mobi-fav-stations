@@ -47,7 +47,7 @@
     /**
      * Add single favorite occurance
      * @param {object} id - id to add
-     * @returns {number|object} -1 if not successful, otherwise the added element
+     * @returns {number} -1 if not successful, otherwise the added element
      */
     const addFavorite = function (id) {
       if (findFavoriteById(id) !== -1) {
@@ -64,7 +64,7 @@
     /**
      * Remove single favorite occurance
      * @param {string} id - id of the occurance to remove
-     * @returns {number|object} -1 if not successful, otherwise the removed element
+     * @returns {number} -1 if not successful, otherwise the removed element
      */
     const removeFavorite = function (id) {
       const index = findFavoriteById(id);
@@ -79,7 +79,25 @@
       return removed[0];
     };
 
-    const orderFavorites = function () {}; // TODO
+    /**
+     * Move favorite up or down in the list
+     * @param {string} id - id of the occurance to move
+     * @param {["up"|"down"]} dir - direction of the move [up|down]
+     * @returns {number|object} -1 if not successful, otherwise the affected element
+     */
+    const orderFavorite = function (id, dir) {
+      const index = findFavoriteById(id);
+      if (index === -1) {
+        return -1;
+      }
+      if (index === 0 && dir === 'up') {
+        return id;
+      }
+      const newIndex = dir === 'up' ? index - 1 : index + 1;
+      _favorites.splice(index, 1);
+      _favorites.splice(newIndex, 0, id);
+      return id;
+    };
 
     /**
      * Change single occurance
@@ -186,8 +204,8 @@
         mod = addFavorite(id);
       } else if (how === 'removeFavorite') {
         mod = removeFavorite(id);
-      } else if (how === 'orderFavorites') {
-        mod = orderFavorites();
+      } else if (how === 'orderFavorite') {
+        mod = orderFavorite(id, newData);
       } else if (how === 'editStation') {
         mod = editStation(id, newData);
       } else if (how === 'updateStationsInformation') {
@@ -244,7 +262,7 @@
     /**
      * Add single occurance
      * @param {string} id - id to add
-     * @returns {number|object} -1 if not successful, otherwise the affected elements
+     * @returns {number} -1 if not successful, otherwise the affected element
      */
     this.addFavorite = function (id) {
       return modify('addFavorite', id);
@@ -253,16 +271,21 @@
     /**
      * Delete single occurance
      * @param {string} id - id of the occurance to remove
-     * @returns {number|object} -1 if not successful, otherwise the affected elements
+     * @returns {number} -1 if not successful, otherwise the affected element
      */
     this.removeFavorite = function (id) {
       return modify('removeFavorite', id);
     };
 
     /**
-     * TODO
+     * Move favorite up or down in the list
+     * @param {string} id - id of the occurance to move
+     * @param {['up'|'down']} dir - direction of the move [up|down]
+     * @returns {number} -1 if not successful, otherwise the affected element
      */
-    this.orderFavorites = function () {};
+    this.orderFavorite = function (id, dir) {
+      return modify('orderFavorite', id, dir);
+    };
 
     /**
      * Edit single occurance

@@ -243,6 +243,22 @@ body {
 .station__description {
   grid-column: span var(--col);
 }
+.station__actions {
+
+}
+.station__up {
+
+}
+.station__down {
+
+}
+.station:first-child .station__up,
+.station:last-child .station__down {
+  visibility: hidden;
+}
+.station__remove {
+
+}
 .station__kpis {
   display: grid;
   grid-column: span var(--col);
@@ -276,9 +292,6 @@ body {
 }
 .station__status {
   grid-column: span var(--col);
-}
-.station__status[data-status="✅✅✅"] {
-  display: none;
 }
 .station__status span:after {
   content: attr(title);

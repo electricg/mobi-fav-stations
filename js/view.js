@@ -185,6 +185,22 @@
             }
           }
         );
+      } else if (event === 'editFavorite') {
+        app.Helpers.$delegate(
+          $favorites,
+          '.js-edit-favorites',
+          'click',
+          function () {
+            const id = this.getAttribute('data-id');
+            const action = this.getAttribute('data-action');
+            const res = handler(id, action, _filter);
+            if (res !== -1) {
+              _self.render('home', res);
+            } else {
+              _self.render('error', 'Error in updating the favorites order');
+            }
+          }
+        );
       }
     };
   };
