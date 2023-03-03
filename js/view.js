@@ -11,15 +11,16 @@
 
     const $loadStatus = $$('#load-status');
     const $loadInformation = $$('#load-information');
-    const $editFavorites = $$('#edit-favorites');
+    const $toggleEdit = $$('#toggle-edit');
     const $toggleStations = $$('#toggle-stations');
+
+    const $body = document.body;
 
     const $favorites = $$('#favorites');
 
     const $stations = $$('#stations');
-    const $filterStationsInput = $$('#filter-stations-input');
-
-    const $listStations = $$('#list-stations');
+    const $stationsFilterInput = $$('#stations-filter-input');
+    const $stationsList = $$('#stations-list');
 
     const $lastUpdated = $$('#last-updated');
 
@@ -67,7 +68,7 @@
       $favorites.innerHTML = _self.template.favorites(favorites, stations);
       $lastUpdated.innerHTML = _self.template.lastUpdated(lastUpdated);
       if (_showStations) {
-        $listStations.innerHTML = _self.template.stations(filteredStations);
+        $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
     };
 
@@ -79,10 +80,6 @@
       if (event === 'home') {
         const data = handler(_filter);
         _self.render('home', data);
-      } else if (event === 'showItemEdit') {
-        // console.log('showItemEdit');
-      } else if (event === 'itemEdit') {
-        // console.log('itemEdit');
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
           _showStations = !_showStations;
@@ -92,10 +89,10 @@
           $stations.classList.toggle('hide', !_showStations);
           if (_showStations) {
             const stations = handler();
-            $listStations.innerHTML = _self.template.stations(stations);
+            $stationsList.innerHTML = _self.template.stations(stations);
           } else {
-            $listStations.innerHTML = '';
-            $filterStationsInput.value = '';
+            $stationsList.innerHTML = '';
+            $stationsFilterInput.value = '';
           }
         });
       } else if (event === 'loadStatus') {
@@ -124,14 +121,14 @@
           }
         });
       } else if (event === 'filterStations') {
-        $filterStationsInput.on('input', function (event) {
+        $stationsFilterInput.on('input', function (event) {
           _filter = event.target.value;
           const stations = handler(_filter);
-          $listStations.innerHTML = _self.template.stations(stations);
+          $stationsList.innerHTML = _self.template.stations(stations);
         });
       } else if (event === 'toggleFavorite') {
         app.Helpers.$delegate(
-          $listStations,
+          $stationsList,
           '.js-toggle-favorite',
           'click',
           function () {
@@ -151,7 +148,7 @@
         );
       } else if (event === 'toggleDescription') {
         app.Helpers.$delegate(
-          document,
+          $stations,
           '.js-toggle-description',
           'dblclick',
           function () {
@@ -168,7 +165,7 @@
         );
       } else if (event === 'editDescription') {
         app.Helpers.$delegate(
-          document,
+          $stations,
           '.js-edit-description',
           'blur',
           function () {
@@ -201,6 +198,13 @@
             }
           }
         );
+      } else if (event === 'toggleEdit') {
+        $toggleEdit.on('click', function () {
+          $body.classList.toggle('edit');
+          this.querySelectorAll('span').forEach(($el) => {
+            $el.classList.toggle('hide'); // TODO
+          });
+        });
       }
     };
   };

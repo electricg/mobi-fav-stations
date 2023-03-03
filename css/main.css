@@ -220,51 +220,70 @@ body {
   --l-icon-size: 1.4em;
 }
 
-/*=== station */
-.stations {
+/*=== favorite */
+.favorites {
   --col: 6;
   display: grid;
   gap: 1rem .5rem;
   grid-template-columns: repeat(var(--col), 1fr);
 }
-.station {
+.favorite {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: subgrid;
 }
-.station__title {
+.favorite__title {
   font-weight: bold;
   grid-column: span var(--col);
 }
-.station__id {
+.favorite__id {
   font-size: 0.8rem;
   font-weight: normal;
 }
-.station__description {
+.favorite__description {
   grid-column: span var(--col);
 }
-.station__actions {
+.favorite__description__text {
+  white-space: break-spaces;
+}
+.edit .favorite__description__text {
+  display: none;
+}
+.favorite__description__form {
+  display: none;
+  gap: 5px;
+}
+.edit .favorite__description__form {
+  display: flex;
+}
+.favorite__description__form textarea {
+  flex: 1;
+}
+.favorite__actions {
+  display: none;
+}
+.edit .favorite__actions {
+  display: block;
+}
+.favorite__up {
 
 }
-.station__up {
+.favorite__down {
 
 }
-.station__down {
-
-}
-.station:first-child .station__up,
-.station:last-child .station__down {
+.favorite:first-child .favorite__up,
+.favorite:last-child .favorite__down {
   visibility: hidden;
 }
-.station__remove {
+.favorite__remove {
 
 }
-.station__kpis {
+.favorite__kpis {
   display: grid;
   grid-column: span var(--col);
   grid-template-columns: subgrid;
 }
-.station__kpi {
+.favorite__kpi {
   display: grid;
   grid-column: span calc(var(--col) / 3);
   grid-template-areas:
@@ -273,47 +292,47 @@ body {
   grid-template-columns: subgrid;
   justify-items: center;
 }
-.station__kpi__count {
+.favorite__kpi__count {
   font-size: 1.8rem;
   font-weight: bold;
   grid-area: count;
   justify-self: right;
   line-height: 2rem;
 }
-.station__kpi__icon {
+.favorite__kpi__icon {
   grid-area: icon;
   height: 2rem;
   justify-self: left;
   margin: 0;
 }
-.station__kpi__type {
+.favorite__kpi__type {
   font-size: 0.6rem;
   grid-area: type;
 }
-.station__status {
+.favorite__status {
   grid-column: span var(--col);
 }
-.station__status span:after {
+.favorite__status span:after {
   content: attr(title);
   font-size: 0.6rem;
   padding-left: 0.1rem;
 }
 @supports not (grid-template-columns: subgrid) {
-  .station__kpis {
+  .favorite__kpis {
     grid-template-columns: repeat(var(--col), 1fr);
   }
-  .station__kpi {
+  .favorite__kpi {
     column-gap: .5rem;
   }
 }
 
 /*=== stations table */
 .stations-search {
-  display: flex;
-  gap: 2px;
+  padding: 1rem 0;
 }
 .stations-search input {
-  flex: 1;
+  display: block;
+  width: 100%;
 }
 
 table {
@@ -358,29 +377,38 @@ td:nth-child(4) {
   text-align: center;
 }
 
-.favorite-toggle span {
+.station__favorite-toggle {
+  border-color: transparent;
+  pointer-events: none;
+}
+.edit .station__favorite-toggle {
+  border-color: revert;
+  pointer-events: revert;
+}
+.station__favorite-toggle span {
   font-size: 1.2rem;
   line-height: 1;
 }
-.favorite-toggle .favorite-toggle__add,
-.favorite-toggle[aria-pressed='true'] .favorite-toggle__remove {
+.station__favorite-toggle .station__favorite-toggle__add,
+.station__favorite-toggle[aria-pressed='true'] .station__favorite-toggle__remove {
   display: block;
 }
-.favorite-toggle .favorite-toggle__remove,
-.favorite-toggle[aria-pressed='true'] .favorite-toggle__add {
+.station__favorite-toggle .station__favorite-toggle__remove,
+.station__favorite-toggle[aria-pressed='true'] .station__favorite-toggle__add {
   display: none;
 }
 
-table .description {
+.station__description {
   display: block;
+  pointer-events: none;
+  white-space: break-spaces;
   width: 100%;
 }
-table .description:empty {
+.edit .station__description {
+  cursor: pointer;
+  pointer-events: revert;
+}
+.edit .station__description:empty {
   background: red;
   height: 1rem;
-}
-
-table input {
-  display: block;
-  width: 100%;
 }

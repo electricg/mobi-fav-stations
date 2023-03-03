@@ -65,42 +65,49 @@
       const id = id1 || id2;
 
       const code = `
-          <div class="station">
-            <div class="station__actions">
-              <input type="button" data-id="${id}" data-action="up" class="station__up js-edit-favorites" value="▲" />
-              <input type="button" data-id="${id}" data-action="down" class="station__down js-edit-favorites" value="▼" />
-              <input type="button" data-id="${id}" data-action="remove" class="station__remove js-edit-favorites" value="✕" />
+          <div class="favorite">
+            <div class="favorite__actions">
+              <input type="button" data-id="${id}" data-action="up" class="favorite__up js-edit-favorites" value="▲" />
+              <input type="button" data-id="${id}" data-action="down" class="favorite__down js-edit-favorites" value="▼" />
+              <input type="button" data-id="${id}" data-action="remove" class="favorite__remove js-edit-favorites" value="✕" />
             </div>
-            <div class="station__title"><span class="station__id">${id}</span> ${name}</div>
-            <div class="station__description js-toggle-description" data-id="${id}">${description}</div>
+            <div class="favorite__title"><span class="favorite__id">${id}</span> ${name}</div>
+            <div class="favorite__description">
+              ${
+                description
+                  ? `<span class="favorite__description__text">${description}</span>`
+                  : ``
+              }
+              <label class="favorite__description__form">Description: <textarea data-id="${id}">${description}</textarea></label>
+            </div>
             ${
               !(isInstalled && isRenting && isReturning)
-                ? `<div class="station__status">
+                ? `<div class="favorite__status">
                 <span title="Installed">${formatStatus(isInstalled)}</span>
                 <span title="Renting">${formatStatus(isRenting)}</span>
                 <span title="Returning">${formatStatus(isReturning)}</span>
               </div>`
                 : ``
             }
-            <div class="station__kpis">
-              <div class="station__kpi">
-                <span class="station__kpi__count">${
+            <div class="favorite__kpis">
+              <div class="favorite__kpi">
+                <span class="favorite__kpi__count">${
                   vehicleTypesAvailable?.[0].count
                 }</span>
-                <svg class="station__kpi__icon icon test test1" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
-                <span class="station__kpi__type">Classics</span>
+                <svg class="favorite__kpi__icon icon test test1" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <span class="favorite__kpi__type">Classics</span>
               </div>
-              <div class="station__kpi">
-                <span class="station__kpi__count">${
+              <div class="favorite__kpi">
+                <span class="favorite__kpi__count">${
                   vehicleTypesAvailable?.[1].count
                 }</span>
-                <svg class="station__kpi__icon icon test test2" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
-                <span class="station__kpi__type">E-Bikes</span>
+                <svg class="favorite__kpi__icon icon test test2" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <span class="favorite__kpi__type">E-Bikes</span>
               </div>
-              <div class="station__kpi">
-                <span class="station__kpi__count">${numDocksAvailable}</span>
-                <svg class="station__kpi__icon icon test test3" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
-                <span class="station__kpi__type">Docks</span>
+              <div class="favorite__kpi">
+                <span class="favorite__kpi__count">${numDocksAvailable}</span>
+                <svg class="favorite__kpi__icon icon test test3" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                <span class="favorite__kpi__type">Docks</span>
               </div>
             </div>
           </div>
@@ -111,7 +118,7 @@
 
     this.favorites = function (favorites, stations) {
       const code = `
-          <div class="stations">
+          <div class="favorites">
             ${favorites.map((id) => favorite(stations[id])).join('')}
           </div>
         `;
@@ -163,12 +170,12 @@
             <td>
               <button type="button" aria-pressed="${
                 favorite ? 'true' : 'false'
-              }" data-id="${id}" class="favorite-toggle js-toggle-favorite">
-                <span class="favorite-toggle__add" aria-hidden="true" title="Add to favorites">☆</span>
-                <span class="favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
+              }" data-id="${id}" class="station__favorite-toggle js-toggle-favorite">
+                <span class="station__favorite-toggle__add" aria-hidden="true" title="Add to favorites">☆</span>
+                <span class="station__favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
               </button>
             </td>
-            <td><span class="js-toggle-description description" data-id="${id}">${description}</span></td>
+            <td><span class="js-toggle-description station__description" data-id="${id}">${description}</span></td>
           </tr>
         `;
 

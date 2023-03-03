@@ -93,17 +93,16 @@
 
       <button id="toggle-stations"><span>Show</span><span class="hide">Hide</span> all stations</button>
 
-      <input type="button" id="edit-favorites" value="Edit favorites">
+      <button id="toggle-edit"><span>Start</span><span class="hide">Finish</span> editing stations</button>
     </div>
   </section>
 
   <section id="stations" class="main-section--stations hide">
     <div class="stations-search">
-      <label for="filter-stations-input">Search station</label>
-      <input type="search" id="filter-stations-input" placeholder="Name or Id">
+      <input type="search" id="stations-filter-input" placeholder="Search station by name or number">
     </div>
 
-    <div id="list-stations"></div>
+    <div id="stations-list"></div>
   </section>
 
 <!-- INFO -->

@@ -53,24 +53,6 @@
       return getData(search);
     };
 
-    const editItem = function (id, item) {
-      const res = _self.model.edit(id, item);
-      if (res !== -1) {
-        setData();
-      } else {
-        _self.view.render('error', 'Error editing entry'); // TODO
-      }
-      return res;
-    };
-
-    _self.view.bind('showItemEdit', function (id) {
-      return _self.model.getById(id);
-    });
-
-    _self.view.bind('itemEdit', function (id, date) {
-      return editItem(id, date);
-    });
-
     _self.view.bind('toggleStations', function () {
       return _self.model.stations;
     });
@@ -94,7 +76,9 @@
       return _self.model.removeFavorite(id);
     });
 
-    _self.view.bind('toggleDescription', function () {});
+    _self.view.bind('toggleDescription', function () {}); // TODO
+
+    _self.view.bind('toggleEdit', function () {}); // TODO
 
     _self.view.bind('editDescription', function (id, newDesc) {
       const res = _self.model.editStation(id, { description: newDesc }); // TODO
