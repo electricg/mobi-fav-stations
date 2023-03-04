@@ -83,9 +83,7 @@
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
           _showStations = !_showStations;
-          this.querySelectorAll('span').forEach(($el) => {
-            $el.classList.toggle('hide'); // TODO
-          });
+          this.setAttribute('aria-pressed', _showStations);
           $stations.classList.toggle('hide', !_showStations);
           if (_showStations) {
             const stations = handler();
@@ -200,10 +198,9 @@
         );
       } else if (event === 'toggleEdit') {
         $toggleEdit.on('click', function () {
-          $body.classList.toggle('edit');
-          this.querySelectorAll('span').forEach(($el) => {
-            $el.classList.toggle('hide'); // TODO
-          });
+          const pressed = this.getAttribute('aria-pressed') === 'true';
+          this.setAttribute('aria-pressed', !pressed);
+          $body.classList.toggle('edit', !pressed);
         });
       }
     };

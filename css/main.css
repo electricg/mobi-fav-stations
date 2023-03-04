@@ -49,6 +49,7 @@ label, button, input[type=button], input[type=submit], input[type=reset] {
   user-select: none;
 }
 button, input, textarea {
+  font-family: inherit;
   font-size: inherit;
 }
 
@@ -62,6 +63,15 @@ button, input, textarea {
 
 .hide {
   display: none !important;
+}
+
+.button-toggle span:first-child,
+.button-toggle[aria-pressed='true'] span:last-child {
+  display: revert;
+}
+.button-toggle span:last-child,
+.button-toggle[aria-pressed='true'] span:first-child {
+  display: none;
 }
 
 /*=== alert */
@@ -251,7 +261,7 @@ body {
 }
 .favorite__description__form {
   display: none;
-  gap: 5px;
+  flex-direction: column;
 }
 .edit .favorite__description__form {
   display: flex;
@@ -332,6 +342,7 @@ body {
 }
 .stations-search input {
   display: block;
+  line-height: 1.6;
   width: 100%;
 }
 
@@ -388,14 +399,6 @@ td:nth-child(4) {
 .station__favorite-toggle span {
   font-size: 1.2rem;
   line-height: 1;
-}
-.station__favorite-toggle .station__favorite-toggle__add,
-.station__favorite-toggle[aria-pressed='true'] .station__favorite-toggle__remove {
-  display: block;
-}
-.station__favorite-toggle .station__favorite-toggle__remove,
-.station__favorite-toggle[aria-pressed='true'] .station__favorite-toggle__add {
-  display: none;
 }
 
 .station__description {

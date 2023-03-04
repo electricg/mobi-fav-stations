@@ -170,9 +170,9 @@
             <td>
               <button type="button" aria-pressed="${
                 favorite ? 'true' : 'false'
-              }" data-id="${id}" class="station__favorite-toggle js-toggle-favorite">
-                <span class="station__favorite-toggle__add" aria-hidden="true" title="Add to favorites">☆</span>
-                <span class="station__favorite-toggle__remove" aria-hidden="true" title="Remove from favorites">★</span>
+              }" data-id="${id}" class="button-toggle station__favorite-toggle js-toggle-favorite">
+                <span aria-hidden="true" title="Add to favorites">☆</span>
+                <span aria-hidden="true" title="Remove from favorites">★</span>
               </button>
             </td>
             <td><span class="js-toggle-description station__description" data-id="${id}">${description}</span></td>
