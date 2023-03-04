@@ -408,7 +408,7 @@ td:nth-child(4) {
   width: 100%;
 }
 .edit .station__description {
-  cursor: pointer;
+  cursor: text;
   pointer-events: revert;
 }
 .edit .station__description:empty {

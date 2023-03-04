@@ -78,7 +78,7 @@
                   ? `<span class="favorite__description__text">${description}</span>`
                   : ``
               }
-              <label class="favorite__description__form">Description: <textarea data-id="${id}">${description}</textarea></label>
+              <label class="favorite__description__form">Description: <textarea data-id="${id}" class="js-edit-description">${description}</textarea></label>
             </div>
             ${
               !(isInstalled && isRenting && isReturning)

@@ -180,6 +180,22 @@
             }
           }
         );
+        app.Helpers.$delegate(
+          $favorites,
+          '.js-edit-description',
+          'input',
+          function () {
+            const id = this.getAttribute('data-id');
+            const value = this.value;
+            const res = handler(id, value);
+            if (res === -1) {
+              _self.render(
+                'error',
+                'Error in updating this station description'
+              );
+            }
+          }
+        );
       } else if (event === 'editFavorite') {
         app.Helpers.$delegate(
           $favorites,
@@ -188,11 +204,17 @@
           function () {
             const id = this.getAttribute('data-id');
             const action = this.getAttribute('data-action');
-            const res = handler(id, action, _filter);
-            if (res !== -1) {
-              _self.render('home', res);
-            } else {
-              _self.render('error', 'Error in updating the favorites order');
+
+            if (
+              action !== 'remove' ||
+              window.confirm(`Are you sure you want to remove station ${id}?`)
+            ) {
+              const res = handler(id, action, _filter);
+              if (res !== -1) {
+                _self.render('home', res);
+              } else {
+                _self.render('error', 'Error in updating the favorites order');
+              }
             }
           }
         );
@@ -201,6 +223,10 @@
           const pressed = this.getAttribute('aria-pressed') === 'true';
           this.setAttribute('aria-pressed', !pressed);
           $body.classList.toggle('edit', !pressed);
+          if (pressed) {
+            const data = handler(_filter);
+            _self.render('home', data);
+          }
         });
       }
     };
