@@ -91,7 +91,6 @@
     });
 
     _self.view.bind('editFavorite', function (id, action, search) {
-      console.log(id, action);
       let res;
       if (action === 'remove') {
         res = _self.model.removeFavorite(id);
@@ -108,10 +107,8 @@
      * Init app
      */
     this.init = function () {
-      console.log('init');
-      _self.view.render('chrome');
       setData();
-      // _self.loadStatus(); // TODO
+      _self.view.init();
     };
   };
 

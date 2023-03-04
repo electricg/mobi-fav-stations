@@ -55,10 +55,6 @@
       _viewCommands.alert('warning', msg);
     };
 
-    _viewCommands.chrome = function () {
-      $version.innerHTML = VERSION;
-    };
-
     _viewCommands.offline = function (status) {
       $statusOffline.classList.toggle('hide', status);
     };
@@ -95,14 +91,17 @@
         });
       } else if (event === 'loadStatus') {
         $loadStatus.on('click', async function () {
+          $loadStatus.classList.toggle('success', false);
+          $loadStatus.classList.toggle('rotating', true);
           try {
             const data = await handler(_filter);
+            $loadStatus.classList.toggle('success', true);
             _self.render('home', data);
-            _self.render('success', 'Stations status updated successfully');
           } catch (e) {
             console.log(e);
             _self.render('error', e);
           }
+          $loadStatus.classList.toggle('rotating', false);
         });
       } else if (event === 'loadInformation') {
         $loadInformation.on('click', async function () {
@@ -229,6 +228,11 @@
           }
         });
       }
+    };
+
+    this.init = function () {
+      $version.innerHTML = VERSION;
+      $loadStatus.click(); // TODO
     };
   };
 
