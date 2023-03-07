@@ -180,6 +180,7 @@
     };
 
     this.stations = function (stations) {
+      // TODO add last updated date
       const code = `
           <table>
             <thead>

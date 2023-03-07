@@ -121,7 +121,21 @@
         ..._user[id],
         ...newData,
       };
-      return el; // TODO is this what I want/need?
+      return el.user;
+    };
+
+    /**
+     * Change user description for the selected station
+     * @param {string} id - id of the occurance to edit
+     * @param {string} newDesc - new description
+     * @returns {number|string} -1 if not successful, otherwise the updated description
+     */
+    const editDescription = function (id, newDesc) {
+      const res = editStation(id, { description: newDesc });
+      if (res !== -1) {
+        return newDesc;
+      }
+      return res;
     };
 
     /**
@@ -192,7 +206,7 @@
      * Modify occurances
      * @param {string} how - How to change
      * @param {string} id - id of the occurance
-     * @param {object} newData - new data
+     * @param {object|string} newData - new data
      * @param {array} newList - new list
      * @param {number} lastUpdated - last updated
      * @returns {number|object} -1 if not successful, otherwise the affected elements
@@ -208,6 +222,8 @@
         mod = orderFavorite(id, newData);
       } else if (how === 'editStation') {
         mod = editStation(id, newData);
+      } else if (how === 'editDescription') {
+        mod = editDescription(id, newData);
       } else if (how === 'updateStationsInformation') {
         mod = updateStationsInformation(newList, lastUpdated);
       } else if (how === 'updateStationsStatus') {
@@ -298,6 +314,16 @@
     };
 
     /**
+     * Edit user description for the selected station
+     * @param {string} id - id of the occurance to edit
+     * @param {string} newData - new description
+     * @returns {number|string} -1 if not successful, otherwise the updated description
+     */
+    this.editDescription = function (id, newData) {
+      return modify('editDescription', id, newData);
+    };
+
+    /**
      * Replace stations information
      * @param {array} newList
      * @param {number} lastUpdated - last updated
@@ -321,15 +347,6 @@
      */
     this.updateStationsStatus = function (newList, lastUpdated) {
       return modify('updateStationsStatus', null, null, newList, lastUpdated);
-    };
-
-    /**
-     * Return item selected by id
-     * @param {string} id
-     * @returns {number|object} -1 if not successful, otherwise the selected item
-     */
-    this.getById = function (id) {
-      return _stations[id];
     };
 
     /**

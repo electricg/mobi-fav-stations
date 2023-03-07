@@ -76,18 +76,16 @@
       return _self.model.removeFavorite(id);
     });
 
-    _self.view.bind('toggleDescription', function () {}); // TODO
+    _self.view.bind('toggleDescription', function () {
+      return;
+    });
 
     _self.view.bind('toggleEdit', function (search) {
       return getData(search);
     });
 
     _self.view.bind('editDescription', function (id, newDesc) {
-      const res = _self.model.editStation(id, { description: newDesc }); // TODO
-      if (res !== -1) {
-        return res.user.description;
-      }
-      return res;
+      return _self.model.editDescription(id, newDesc);
     });
 
     _self.view.bind('editFavorite', function (id, action, search) {
