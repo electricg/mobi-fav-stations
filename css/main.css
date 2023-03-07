@@ -405,6 +405,9 @@ td:nth-child(10) {
 td:nth-child(4) {
   text-align: center;
 }
+td[colspan="12"] {
+  text-align: center;
+}
 
 .station__favorite-toggle {
   background: transparent;

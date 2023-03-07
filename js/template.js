@@ -179,6 +179,12 @@
     };
 
     this.stations = function (stations) {
+      const body = Object.keys(stations).length
+        ? Object.keys(stations)
+            .map((id) => stationRow(stations[id]))
+            .join('')
+        : `<tr><td colspan="12">No station found</td></tr>`;
+
       const code = `
           <table>
             <thead>
@@ -198,9 +204,7 @@
               </tr>
             </thead>
             <tbody>
-              ${Object.keys(stations)
-                .map((id) => stationRow(stations[id]))
-                .join('')}
+              ${body}
             </tbody>
           </table>
         `;

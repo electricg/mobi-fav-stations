@@ -115,6 +115,7 @@
           $loadStatus.classList.toggle('rotating', false);
         });
       } else if (event === 'loadInformation') {
+        // TODO show visual
         $loadInformation.on('click', async function () {
           try {
             const data = await handler(_filter);
