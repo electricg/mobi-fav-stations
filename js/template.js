@@ -151,7 +151,7 @@
       const code = `
           <tr>
             <td>${id}</td>
-            <th>${formatUndefined(name)}</th>
+            <th scope="row">${formatUndefined(name)}</th>
             <td>${formatUndefined(capacity)}</td>
             <td>${formatCharging(isCharging)}</td>
             <td>${formatStatusSpan(isInstalled, 'Installed')}${formatStatusSpan(
@@ -189,18 +189,18 @@
           <table>
             <thead>
               <tr>
-                <th>N&deg;</th>
-                <th>Name</th>
-                <th tabindex="0" title="Capacity">C</th>
-                <th tabindex="0" title="Charging">⚡️</th>
-                <th>Status</th>
-                <th tabindex="0" title="Bikes Available Total">BA</th>
-                <th tabindex="0" title="Bikes Disabled">BD</th>
-                <th tabindex="0" title="Docks Available">DA</th>
-                <th tabindex="0" title="Bikes Available">1</th>
-                <th tabindex="0" title="E-bikes Available">2</th>
-                <th tabindex="0" title="Favorites">⭐️</th>
-                <th>Description</th>
+                <th scope="col">N&deg;</th>
+                <th scope="col">Name</th>
+                <th scope="col" tabindex="0" title="Capacity">C</th>
+                <th scope="col" tabindex="0" title="Charging">⚡️</th>
+                <th scope="col">Status</th>
+                <th scope="col" tabindex="0" title="Bikes Available Total">BA</th>
+                <th scope="col" tabindex="0" title="Bikes Disabled">BD</th>
+                <th scope="col" tabindex="0" title="Docks Available">DA</th>
+                <th scope="col" tabindex="0" title="Bikes Available">1</th>
+                <th scope="col" tabindex="0" title="E-bikes Available">2</th>
+                <th scope="col" tabindex="0" title="Favorites">⭐️</th>
+                <th scope="col">Description</th>
               </tr>
             </thead>
             <tbody>
