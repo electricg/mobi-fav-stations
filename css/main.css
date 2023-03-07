@@ -1,8 +1,12 @@
 :root {
-  --c-main-text: #333;
-  --c-main-bg: #EEE;
+  --c-main-text: #3b3f45;
+  --c-main-bg: #f8fafc;
   --c-theme-first: #007fb3;
   --c-theme-second: #00abdf;
+  --c-bike: #0075b0;
+  --c-ebike: #000;
+  --c-ebike-strike: #ffe074;
+  --c-dock: #1E4B70;
 
   --c-tooltip-bg: #FFF;
 
@@ -17,7 +21,7 @@
   --c-alert-warning-light: #fcf8e3;
   --c-alert-warning-dark: #8a6d3b;
 
-  --l-border-radius: 12px;
+  --l-border-radius: 3px;
   --l-gap: .5rem;
   --l-height-top: 2rem;
   --l-height-bottom: 2.8rem;
@@ -33,12 +37,13 @@ html {
 }
 body {
   background: var(--c-main-bg);
-  line-height: 1.4;
   margin: 0;
 }
-body, input, button {
+body, input, button, textarea {
   color: var(--c-main-text);
   font-family: Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 a {
   color: var(--c-theme-first);
@@ -47,10 +52,6 @@ a {
 label, button, input[type=button], input[type=submit], input[type=reset] {
   cursor: pointer;
   user-select: none;
-}
-button, input, textarea {
-  font-family: inherit;
-  font-size: inherit;
 }
 
 .icon {
@@ -72,6 +73,10 @@ button, input, textarea {
 .button-toggle span:last-child,
 .button-toggle[aria-pressed='true'] span:first-child {
   display: none;
+}
+
+.icon-bike-strike {
+  fill: inherit;
 }
 
 /*=== alert */
@@ -110,7 +115,7 @@ button, input, textarea {
 .alert .alert__close:focus,
 .alert .alert__close:active {
   background: var(--c-fg-alert);
-  box-shadow: 0px 0px 0px 2px var(--c-fg-alert);
+  box-shadow: 0 0 0 2px var(--c-fg-alert);
   color: var(--c-bg-alert);
 }
 .alert--info {
@@ -138,7 +143,7 @@ button, input, textarea {
 *[tabindex="0"][title]:focus:after {
   background: var(--c-tooltip-bg);
   border: 2px solid var(--c-main-text);
-  border-radius: 3px;
+  border-radius: var(--l-border-radius);
   color: var(--c-main-text);
   content: attr(title);
   left: -100%;
@@ -167,19 +172,19 @@ body {
   align-items: center;
   background: var(--c-theme-first);
   background: linear-gradient(to right, var(--c-theme-first) 0%, var(--c-theme-second) 100%);
-  /* color: var(--c-main-bg); */
   display: flex;
   justify-content: space-between;
   user-select: none;
 }
 .main-header__title {
-  font-size: 1rem;
+  font-size: inherit;
   height: inherit;
   margin: 0;
 }
 .main-header__title__icon {
   --l-icon-size: var(--l-height-top);
   display: inline;
+  fill: transparent; /* to hide the strike */
   margin-right: var(--l-gap);
   vertical-align: middle;
 }
@@ -238,34 +243,13 @@ body {
   padding-right: var(--l-gap);
 }
 
-
-#strike {
-  fill: inherit;
-}
-.main-header__title__icon {
-  fill: transparent;
-}
-.test {
-  display: inline-block;
-  --l-icon-size: 2em;
-}
-.test1 {
-  color: var(--c-theme-first);
-  fill: transparent;
-}
-.test2 {
-  fill: #ffe074;
-}
-.test3 {
-  --l-icon-size: 1.4em;
-}
-
 /*=== favorite */
 .favorites {
   --col: 6;
   display: grid;
-  gap: 1rem .5rem;
+  gap: calc(var(--l-gap) * 2) var(--l-gap);
   grid-template-columns: repeat(var(--col), 1fr);
+  margin: calc(var(--l-gap) * 2) 0;
 }
 .favorite {
   display: grid;
@@ -331,10 +315,23 @@ body {
   line-height: 2rem;
 }
 .favorite__kpi__icon {
+  --l-icon-size: 2em;
   grid-area: icon;
-  height: 2rem;
   justify-self: left;
   margin: 0;
+}
+.favorite__kpi__icon--bike {
+  color: var(--c-bike);
+  fill: transparent;
+}
+.favorite__kpi__icon--ebike {
+  color: var(--c-ebike);
+  fill: var(--c-ebike-strike);
+}
+.favorite__kpi__icon--dock {
+  --l-icon-size: 1.4em;
+  color: var(--c-dock);
+  height: 2rem;
 }
 .favorite__kpi__type {
   font-size: 0.6rem;
@@ -353,13 +350,13 @@ body {
     grid-template-columns: repeat(var(--col), 1fr);
   }
   .favorite__kpi {
-    column-gap: .5rem;
+    column-gap: var(--l-gap);
   }
 }
 
 /*=== stations table */
 .stations-search {
-  padding: 1rem 0;
+  margin: calc(var(--l-gap) * 2) 0;
 }
 .stations-search input {
   display: block;
@@ -410,10 +407,12 @@ td:nth-child(4) {
 }
 
 .station__favorite-toggle {
+  background: transparent;
   border-color: transparent;
   pointer-events: none;
 }
 .edit .station__favorite-toggle {
+  background: revert;
   border-color: revert;
   pointer-events: revert;
 }
@@ -433,6 +432,13 @@ td:nth-child(4) {
   pointer-events: revert;
 }
 .edit .station__description:empty {
-  background: red;
+  background: red; /* TODO */
   height: 1rem;
+}
+
+/*=== actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--l-gap) * 2);
 }

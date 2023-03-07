@@ -94,19 +94,19 @@
                 <span class="favorite__kpi__count">${
                   vehicleTypesAvailable?.[0].count
                 }</span>
-                <svg class="favorite__kpi__icon icon test test1" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">Classics</span>
               </div>
               <div class="favorite__kpi">
                 <span class="favorite__kpi__count">${
                   vehicleTypesAvailable?.[1].count
                 }</span>
-                <svg class="favorite__kpi__icon icon test test2" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">E-Bikes</span>
               </div>
               <div class="favorite__kpi">
                 <span class="favorite__kpi__count">${numDocksAvailable}</span>
-                <svg class="favorite__kpi__icon icon test test3" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
                 <span class="favorite__kpi__type">Docks</span>
               </div>
             </div>
@@ -117,17 +117,20 @@
     };
 
     this.favorites = function (favorites, stations) {
-      const code = `
+      const favs = `
           <div class="favorites">
             ${favorites.map((id) => favorite(stations[id])).join('')}
           </div>
         `;
+      const noFavs = `<p>Add your favorites from the stations list below</p>`;
 
-      return code;
+      return favorites.length ? favs : noFavs;
     };
 
     this.lastUpdated = function (lastUpdated) {
-      const code = `<time>${formatLastUpdate(lastUpdated)}</time>`;
+      const code = lastUpdated
+        ? `<time>${formatLastUpdate(lastUpdated)}</time>`
+        : `no data`;
 
       return code;
     };

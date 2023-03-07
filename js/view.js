@@ -232,7 +232,7 @@
 
     this.init = function () {
       $version.innerHTML = VERSION;
-      $loadStatus.click(); // TODO
+      // $loadStatus.click(); // TODO
     };
   };
 
