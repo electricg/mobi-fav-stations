@@ -41,18 +41,16 @@
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
-    const favorite = function (item) {
-      const { station_id: id1, name } = item.information || {};
+    const favorite = function (id, item) {
+      const { name } = item?.information || {};
       const {
-        station_id: id2,
         is_installed: isInstalled,
         is_renting: isRenting,
         is_returning: isReturning,
         num_docks_available: numDocksAvailable,
         vehicle_types_available: vehicleTypesAvailable,
-      } = item.status || {};
-      const { description = '' } = item.user || {};
-      const id = id1 || id2;
+      } = item?.status || {};
+      const { description = '' } = item?.user || {};
 
       const code = `
           <div class="favorite">
@@ -61,7 +59,9 @@
               <input type="button" data-id="${id}" data-action="down" class="favorite__down js-edit-favorites" value="▼" />
               <input type="button" data-id="${id}" data-action="remove" class="favorite__remove js-edit-favorites" value="✕" />
             </div>
-            <div class="favorite__title"><span class="favorite__id">${id}</span> ${name}</div>
+            <div class="favorite__title"><span class="favorite__id">${id}</span> ${
+        name || ''
+      }</div>
             <div class="favorite__description">
               ${
                 description
@@ -111,7 +111,7 @@
     this.favorites = function (favorites, stations) {
       const favs = `
           <div class="favorites">
-            ${favorites.map((id) => favorite(stations[id])).join('')}
+            ${favorites.map((id) => favorite(id, stations[id])).join('')}
           </div>
         `;
       const noFavs = `<p>Add your favorites from the stations list below</p>`;
