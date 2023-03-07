@@ -26,6 +26,13 @@
       }
     };
 
+    const formatKpiNumber = (value) => {
+      if (value == null) {
+        return '_';
+      }
+      return value;
+    };
+
     const formatStatusSpan = (value, label) => {
       return `<span${
         value ? '' : ' tabindex="0"'
@@ -35,21 +42,6 @@
     const formatCharging = (value) => (value ? 'Y' : '');
 
     const formatLastUpdate = (value) => new Date(value * 1000).toLocaleString();
-
-    this.alert = function (type, msg) {
-      const code = `
-          <div class="alert alert--${type}">
-            <span>${msg}</span>
-            <button class="alert__close js-close" title="Close" aria-label="Close" onClick="this.parentNode.remove()">
-              <svg class="icon alert__close__icon" focusable="false" aria-hidden="true">
-                <use href="#icon-cancel-circle"></use>
-              </svg>
-            </button>
-          </div>
-        `;
-
-      return code;
-    };
 
     const favorite = function (item) {
       const { station_id: id1, name } = item.information || {};
@@ -91,21 +83,23 @@
             }
             <div class="favorite__kpis">
               <div class="favorite__kpi">
-                <span class="favorite__kpi__count">${
+                <span class="favorite__kpi__count">${formatKpiNumber(
                   vehicleTypesAvailable?.[0].count
-                }</span>
+                )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">Classics</span>
               </div>
               <div class="favorite__kpi">
-                <span class="favorite__kpi__count">${
+                <span class="favorite__kpi__count">${formatKpiNumber(
                   vehicleTypesAvailable?.[1].count
-                }</span>
+                )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">E-Bikes</span>
               </div>
               <div class="favorite__kpi">
-                <span class="favorite__kpi__count">${numDocksAvailable}</span>
+                <span class="favorite__kpi__count">${formatKpiNumber(
+                  numDocksAvailable
+                )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
                 <span class="favorite__kpi__type">Docks</span>
               </div>
@@ -210,6 +204,21 @@
                 .join('')}
             </tbody>
           </table>
+        `;
+
+      return code;
+    };
+
+    this.alert = function (type, msg) {
+      const code = `
+          <div class="alert alert--${type}">
+            <span>${msg}</span>
+            <button class="alert__close js-close" title="Close" aria-label="Close" onClick="this.parentNode.remove()">
+              <svg class="icon alert__close__icon" focusable="false" aria-hidden="true">
+                <use href="#icon-cancel-circle"></use>
+              </svg>
+            </button>
+          </div>
         `;
 
       return code;
