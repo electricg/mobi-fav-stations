@@ -139,7 +139,7 @@
     };
 
     /**
-     * TODO
+     * Merge all the data (information, status, user) into the station object
      */
     const updateStations = function () {
       _stations = {};

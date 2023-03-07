@@ -22,7 +22,8 @@
     const $stationsFilterInput = $$('#stations-filter-input');
     const $stationsList = $$('#stations-list');
 
-    const $lastUpdated = $$('#last-updated');
+    const $lastUpdatedStatus = $$('#last-updated-status');
+    const $lastUpdatedInformation = $$('#last-updated-information');
 
     const $alerts = $$('#alerts');
 
@@ -60,9 +61,19 @@
     };
 
     _viewCommands.home = function (data) {
-      const { stations, favorites, lastUpdated, filteredStations } = data;
+      const {
+        stations,
+        favorites,
+        lastUpdatedInformation,
+        lastUpdatedStatus,
+        filteredStations,
+      } = data;
       $favorites.innerHTML = _self.template.favorites(favorites, stations);
-      $lastUpdated.innerHTML = _self.template.lastUpdated(lastUpdated);
+      $lastUpdatedStatus.innerHTML =
+        _self.template.lastUpdated(lastUpdatedStatus);
+      $lastUpdatedInformation.innerHTML = _self.template.lastUpdated(
+        lastUpdatedInformation
+      );
       if (_showStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }

@@ -41,8 +41,6 @@
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
-    const formatLastUpdate = (value) => new Date(value * 1000).toLocaleString();
-
     const favorite = function (item) {
       const { station_id: id1, name } = item.information || {};
       const {
@@ -122,8 +120,9 @@
     };
 
     this.lastUpdated = function (lastUpdated) {
+      const date = new Date(lastUpdated * 1000);
       const code = lastUpdated
-        ? `<time>${formatLastUpdate(lastUpdated)}</time>`
+        ? `<time datetime="${date.toISOString()}">${date.toLocaleString()}</time>`
         : `no data`;
 
       return code;
@@ -180,7 +179,6 @@
     };
 
     this.stations = function (stations) {
-      // TODO add last updated date
       const code = `
           <table>
             <thead>

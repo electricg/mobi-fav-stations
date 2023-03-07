@@ -20,7 +20,8 @@
       return {
         stations: _self.model.stations,
         favorites: _self.model.favorites,
-        lastUpdated: _self.model.lastUpdatedStatus,
+        lastUpdatedInformation: _self.model.lastUpdatedInformation,
+        lastUpdatedStatus: _self.model.lastUpdatedStatus,
         filteredStations: _self.model.filterStations(search),
       };
     };
