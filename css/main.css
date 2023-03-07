@@ -85,6 +85,7 @@ label, button, input[type=button], input[type=submit], input[type=reset] {
   left: var(--l-gap);
   position: fixed;
   width: calc(100% - var(--l-gap) * 2);
+  z-index: 1;
 }
 .alert {
   align-items: center;
