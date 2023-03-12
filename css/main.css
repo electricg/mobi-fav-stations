@@ -430,11 +430,13 @@ td[colspan="12"] {
   border-color: transparent;
   display: block;
   pointer-events: none;
+  resize: none;
 }
 .edit .station__description {
   background: revert;
   border-color: revert;
   pointer-events: revert;
+  resize: revert;
 }
 
 /*=== actions */
