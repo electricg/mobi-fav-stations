@@ -426,18 +426,15 @@ td[colspan="12"] {
 }
 
 .station__description {
+  background: transparent;
+  border-color: transparent;
   display: block;
   pointer-events: none;
-  white-space: break-spaces;
-  width: 100%;
 }
 .edit .station__description {
-  cursor: text;
+  background: revert;
+  border-color: revert;
   pointer-events: revert;
-}
-.edit .station__description:empty {
-  background: red; /* TODO */
-  height: 1rem;
 }
 
 /*=== actions */

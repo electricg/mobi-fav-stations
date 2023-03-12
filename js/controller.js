@@ -77,10 +77,6 @@
       return _self.model.removeFavorite(id);
     });
 
-    _self.view.bind('toggleDescription', function () {
-      return;
-    });
-
     _self.view.bind('toggleEdit', function (search) {
       return getData(search);
     });

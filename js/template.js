@@ -171,7 +171,7 @@
                 <span aria-hidden="true" title="Remove from favorites">★</span>
               </button>
             </td>
-            <td><span class="js-toggle-description station__description" data-id="${id}">${description}</span></td>
+            <td><textarea class="station__description js-edit-description" data-id="${id}">${description}</textarea></td>
           </tr>
         `;
 
