@@ -170,16 +170,12 @@ body {
 
 /*=== header */
 .main-header {
-  align-items: center;
   background: var(--c-theme-first);
   background: linear-gradient(to right, var(--c-theme-first) 0%, var(--c-theme-second) 100%);
-  display: flex;
-  justify-content: space-between;
   user-select: none;
 }
 .main-header__title {
   font-size: inherit;
-  height: inherit;
   margin: 0;
 }
 .main-header__title__icon {
@@ -188,14 +184,6 @@ body {
   fill: transparent; /* to hide the strike */
   margin-right: var(--l-gap);
   vertical-align: middle;
-}
-.main-header__status {
-  display: flex;
-}
-.main-header__status__icon {
-  --l-icon-size: 0.8em;
-  display: block;
-  margin: 0 1px;
 }
 
 /*=== footer */

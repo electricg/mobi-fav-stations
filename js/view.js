@@ -27,8 +27,6 @@
 
     const $alerts = $$('#alerts');
 
-    const $statusOffline = $$('#status-icon-offline');
-
     const $version = $$('#version');
 
     let _showStations = false;
@@ -54,10 +52,6 @@
 
     _viewCommands.warning = function (msg) {
       _viewCommands.alert('warning', msg);
-    };
-
-    _viewCommands.offline = function (status) {
-      $statusOffline.classList.toggle('hide', status);
     };
 
     _viewCommands.home = function (data) {

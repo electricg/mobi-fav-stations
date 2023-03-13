@@ -27,7 +27,6 @@ window.addEventListener('load', load);
 
 if (FEATURES.offline) {
   app.instance.offline = new app.Offline({
-    showOffline: (status) => app.instance.view.render('offline', status),
     showInfo: (msg) => app.instance.view.render('info', msg),
   });
 }
