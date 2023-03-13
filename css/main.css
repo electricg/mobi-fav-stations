@@ -1,25 +1,25 @@
 :root {
-  --c-main-text: #3b3f45;
-  --c-main-bg: #f8fafc;
-  --c-theme-first: #007fb3;
-  --c-theme-second: #00abdf;
-  --c-bike: #0075b0;
+  --c-main-text: #3B3F45;
+  --c-main-bg: #F8FAFC;
+  --c-theme-first: #0075B0;
+  --c-theme-second: #00ABDF;
+  --c-bike: #0075B0;
   --c-ebike: #000;
-  --c-ebike-strike: #ffe074;
+  --c-ebike-strike: #FFE074;
   --c-dock: #1E4B70;
 
   --c-tooltip-bg: #FFF;
 
   --c-bg-alert: unset;
   --c-fg-alert: unset;
-  --c-alert-info-light: #d9edf7;
-  --c-alert-info-dark: #31708f;
-  --c-alert-error-light: #f2dede;
-  --c-alert-error-dark: #a94442;
-  --c-alert-success-light: #dff0d8;
-  --c-alert-success-dark: #3c763d;
-  --c-alert-warning-light: #fcf8e3;
-  --c-alert-warning-dark: #8a6d3b;
+  --c-alert-info-light: #D9EDF7;
+  --c-alert-info-dark: #31708F;
+  --c-alert-error-light: #F2DEDE;
+  --c-alert-error-dark: #A94442;
+  --c-alert-success-light: #DFF0D8;
+  --c-alert-success-dark: #3C763D;
+  --c-alert-warning-light: #FCF8E3;
+  --c-alert-warning-dark: #8A6D3B;
 
   --l-border-radius: 3px;
   --l-gap: .5rem;
@@ -171,7 +171,8 @@ body {
 /*=== header */
 .main-header {
   background: var(--c-theme-first);
-  background: linear-gradient(to right, var(--c-theme-first) 0%, var(--c-theme-second) 100%);
+  /* background: linear-gradient(to right, var(--c-theme-first) 0%, var(--c-theme-second) 100%); */
+  color: var(--c-main-bg);
   user-select: none;
 }
 .main-header__title {
