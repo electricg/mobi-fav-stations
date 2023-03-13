@@ -166,12 +166,12 @@
             <td>
               <button type="button" aria-pressed="${
                 favorite ? 'true' : 'false'
-              }" data-id="${id}" class="button-toggle station__favorite-toggle js-toggle-favorite">
+              }" data-id="${id}" class="button-toggle station__favorite-toggle js-toggle-favorite" aria-label="Add to favorites">
                 <span aria-hidden="true" title="Add to favorites">☆</span>
                 <span aria-hidden="true" title="Remove from favorites">★</span>
               </button>
             </td>
-            <td><textarea class="station__description js-edit-description" data-id="${id}">${description}</textarea></td>
+            <td><textarea class="station__description js-edit-description" data-id="${id}" aria-label="Description">${description}</textarea></td>
           </tr>
         `;
 
