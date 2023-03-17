@@ -14,6 +14,7 @@ js/offline.js
 js/settings.js
 js/storage.js
 js/template.js
+js/view.js
 manifest.webmanifest
 `
   .trim()
