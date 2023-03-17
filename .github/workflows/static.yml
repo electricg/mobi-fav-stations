@@ -37,13 +37,13 @@ jobs:
         with:
           # Upload entire repository
           path: |
-            css/
-            images/
-            js/
-            browserconfig.xml
-            index.html
-            manifest.webmanifest
-            sw.js
+            ./css/
+            ./images/
+            ./js/
+            ./browserconfig.xml
+            ./index.html
+            ./manifest.webmanifest
+            ./sw.js
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
