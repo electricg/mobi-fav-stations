@@ -50,9 +50,13 @@ self.addEventListener('fetch', (event) => {
           return (
             res ||
             fetch(url).then((response) => {
+              const requestURL = new URL(url.url);
               // check if request is made by chrome extensions or web page, because of some installed chrome extension, service worker throws the error `TypeError: Request scheme 'chrome-extension' is unsupported`
               // https://stackoverflow.com/questions/49157622/service-worker-typeerror-when-opening-chrome-extension
-              if (url.url.startsWith('http')) {
+              if (
+                url.url.startsWith('http') &&
+                requestURL.origin === location.origin
+              ) {
                 cache.put(url, response.clone());
               }
               return response;
