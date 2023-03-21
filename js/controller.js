@@ -26,15 +26,6 @@
       };
     };
 
-    /**
-     * Insert data into the views
-     */
-    const setData = function () {
-      _self.view.bind('home', function (search) {
-        return getData(search);
-      });
-    };
-
     const loadStatus = async function (search) {
       const data = await fetchData('station_status.json');
 
@@ -54,55 +45,62 @@
       return getData(search);
     };
 
-    _self.view.bind('toggleStations', function () {
-      return _self.model.stations;
-    });
+    const bindAll = function () {
+      _self.view.bind('updateData', function (search) {
+        return getData(search);
+      });
 
-    _self.view.bind('loadStatus', async function (search) {
-      return loadStatus(search);
-    });
+      _self.view.bind('toggleStations', function () {
+        return _self.model.stations;
+      });
 
-    _self.view.bind('loadInformation', async function (search) {
-      return loadInformation(search);
-    });
+      _self.view.bind('loadStatus', async function (search) {
+        return loadStatus(search);
+      });
 
-    _self.view.bind('filterStations', function (search) {
-      return _self.model.filterStations(search);
-    });
+      _self.view.bind('loadInformation', async function (search) {
+        return loadInformation(search);
+      });
 
-    _self.view.bind('toggleFavorite', function (id, pressed) {
-      if (!pressed) {
-        return _self.model.addFavorite(id);
-      }
-      return _self.model.removeFavorite(id);
-    });
+      _self.view.bind('filterStations', function (search) {
+        return _self.model.filterStations(search);
+      });
 
-    _self.view.bind('toggleEdit', function (search) {
-      return getData(search);
-    });
+      _self.view.bind('toggleFavorite', function (id, pressed) {
+        if (!pressed) {
+          return _self.model.addFavorite(id);
+        }
+        return _self.model.removeFavorite(id);
+      });
 
-    _self.view.bind('editDescription', function (id, newDesc) {
-      return _self.model.editDescription(id, newDesc);
-    });
+      _self.view.bind('toggleEdit', function (search) {
+        return getData(search);
+      });
 
-    _self.view.bind('editFavorite', function (id, action, search) {
-      let res;
-      if (action === 'remove') {
-        res = _self.model.removeFavorite(id);
-      } else if (action === 'up' || action === 'down') {
-        res = _self.model.orderFavorite(id, action);
-      }
-      if (res === -1) {
-        return res;
-      }
-      return getData(search);
-    });
+      _self.view.bind('editDescription', function (id, newDesc) {
+        return _self.model.editDescription(id, newDesc);
+      });
+
+      _self.view.bind('editFavorite', function (id, action, search) {
+        let res;
+        if (action === 'remove') {
+          res = _self.model.removeFavorite(id);
+        } else if (action === 'up' || action === 'down') {
+          res = _self.model.orderFavorite(id, action);
+        }
+        if (res === -1) {
+          return res;
+        }
+        return getData(search);
+      });
+    };
 
     /**
-     * Init app
+     * Start controller
      */
     this.init = function () {
-      setData();
+      _self.model.init();
+      bindAll();
       _self.view.init();
     };
   };

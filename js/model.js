@@ -268,7 +268,7 @@
     };
 
     /**
-     * Init data
+     * Start data
      */
     this.init = function () {
       load();
@@ -371,8 +371,6 @@
         return acc;
       }, {});
     };
-
-    this.init();
   };
 
   // export to window

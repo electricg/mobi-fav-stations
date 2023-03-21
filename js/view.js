@@ -29,6 +29,8 @@
 
     const $version = $$('#version');
 
+    const $install = $$('#install');
+
     let _showStations = false;
     let _filter = '';
 
@@ -54,7 +56,40 @@
       _viewCommands.alert('warning', msg);
     };
 
-    _viewCommands.home = function (data) {
+    _viewCommands.chrome = function () {
+      $version.innerHTML = VERSION;
+
+      // Initialize deferredPrompt for use later to show browser install prompt.
+      let deferredPrompt;
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Update UI notify the user they can install the PWA
+        // showInstallPromotion();
+        // Optionally, send analytics event that PWA install promo was shown.
+        console.log(`'beforeinstallprompt' event was fired.`);
+      });
+
+      $install.on('click', async function () {
+        console.log('install');
+
+        if (deferredPrompt) {
+          // Show the install prompt
+          deferredPrompt.prompt();
+          // Wait for the user to respond to the prompt
+          const { outcome } = await deferredPrompt.userChoice;
+          // Optionally, send analytics event with outcome of user choice
+          console.log(`User response to the install prompt: ${outcome}`);
+          // We've used the prompt, and can't use it again, throw it away
+          deferredPrompt = null;
+        }
+      });
+    };
+
+    _viewCommands.data = function (data) {
       const {
         stations,
         favorites,
@@ -78,9 +113,9 @@
     };
 
     this.bind = function (event, handler) {
-      if (event === 'home') {
+      if (event === 'updateData') {
         const data = handler(_filter);
-        _self.render('home', data);
+        _self.render('data', data);
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
           _showStations = !_showStations;
@@ -101,7 +136,7 @@
           try {
             const data = await handler(_filter);
             $loadStatus.classList.toggle('success', true);
-            _self.render('home', data);
+            _self.render('data', data);
           } catch (e) {
             console.log(e);
             _self.render('error', e);
@@ -113,7 +148,7 @@
         $loadInformation.on('click', async function () {
           try {
             const data = await handler(_filter);
-            _self.render('home', data);
+            _self.render('data', data);
             _self.render(
               'success',
               'Stations information updated successfully'
@@ -181,7 +216,7 @@
             ) {
               const res = handler(id, action, _filter);
               if (res !== -1) {
-                _self.render('home', res);
+                _self.render('data', res);
               } else {
                 _self.render('error', 'Error in updating the favorites order');
               }
@@ -194,15 +229,16 @@
           this.setAttribute('aria-pressed', !pressed);
           $body.classList.toggle('edit', !pressed);
           if (pressed) {
+            // finished editing, rerender with the updated data
             const data = handler(_filter);
-            _self.render('home', data);
+            _self.render('data', data);
           }
         });
       }
     };
 
     this.init = function () {
-      $version.innerHTML = VERSION;
+      _self.render('chrome');
       $loadStatus.click(); // TODO
     };
   };

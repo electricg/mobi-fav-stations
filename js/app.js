@@ -1,4 +1,4 @@
-/* global app, NAMESPACE, FEATURES */
+/* global app, NAMESPACE */
 'use strict';
 
 const App = function (namespace) {
@@ -7,13 +7,13 @@ const App = function (namespace) {
   this.template = new app.Template();
   this.view = new app.View(this.template);
   this.controller = new app.Controller(this.model, this.view);
+  this.offline = new app.Offline({
+    showInfo: (msg) => this.view.render('info', msg),
+  });
+  this.init = this.controller.init;
 };
 
 app.instance = new App(NAMESPACE);
-
-const load = function () {
-  app.instance.controller.init();
-};
 
 if (location.protocol === 'http:' && location.hostname !== 'localhost') {
   const newUrl = location.href.replace('http://', 'https://');
@@ -23,10 +23,4 @@ if (location.protocol === 'http:' && location.hostname !== 'localhost') {
   );
 }
 
-window.addEventListener('load', load);
-
-if (FEATURES.offline) {
-  app.instance.offline = new app.Offline({
-    showInfo: (msg) => app.instance.view.render('info', msg),
-  });
-}
+window.addEventListener('load', app.instance.init);

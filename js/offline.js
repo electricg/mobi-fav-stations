@@ -2,8 +2,8 @@
   'use strict';
 
   const Offline = function ({
-    showOffline = () => {},
-    showInfo = () => {},
+    showOffline = (status) => status,
+    showInfo = (msg) => msg,
     debug = false,
     registerFile = 'sw.js',
     msgInstalled = 'This app is now available offline!',
@@ -87,7 +87,7 @@
       }
     };
 
-    const init = function () {
+    this.init = function () {
       if ('serviceWorker' in navigator) {
         isSWInstalled = swCheckStatus();
 
@@ -133,8 +133,6 @@
         type: 'clear',
       });
     };
-
-    init();
   };
 
   // export to window

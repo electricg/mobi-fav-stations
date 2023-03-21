@@ -9,3 +9,4 @@ Documentation for the API https://gbfs.mobilitydata.org/specification/reference/
 - [ ] show loading visual in the "load information" button
 - [ ] better "first time" experience
 - [ ] check all the "empties"
+- [ ] install offline sw only when clicking the "install" button
