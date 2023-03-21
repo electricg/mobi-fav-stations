@@ -1,6 +1,6 @@
 {
   "name": "mobi-fav-stations",
-  "version": "0.7.15",
+  "version": "0.7.16",
   "description": "Live demo [https://electricg.github.io/mobi-fav-stations/](https://electricg.github.io/mobi-fav-stations/)",
   "main": "js/app.js",
   "scripts": {

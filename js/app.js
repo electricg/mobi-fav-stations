@@ -10,7 +10,10 @@ const App = function (namespace) {
   this.offline = new app.Offline({
     showInfo: (msg) => this.view.render('info', msg),
   });
-  this.init = this.controller.init;
+  this.init = () => {
+    this.controller.init();
+    // this.offline.init(); // TODO
+  };
 };
 
 app.instance = new App(NAMESPACE);

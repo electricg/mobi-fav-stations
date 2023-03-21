@@ -46,10 +46,6 @@
     };
 
     const bindAll = function () {
-      _self.view.bind('updateData', function (search) {
-        return getData(search);
-      });
-
       _self.view.bind('toggleStations', function () {
         return _self.model.stations;
       });
@@ -93,6 +89,11 @@
         }
         return getData(search);
       });
+
+      // This goes last for now
+      _self.view.bind('start', function (search) {
+        return getData(search);
+      });
     };
 
     /**
@@ -101,7 +102,6 @@
     this.init = function () {
       _self.model.init();
       bindAll();
-      _self.view.init();
     };
   };
 
