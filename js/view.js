@@ -56,41 +56,12 @@
       _viewCommands.alert('warning', msg);
     };
 
-    // const showInstallPromotion = async function (deferredPrompt) {
-    //   if (deferredPrompt) {
-    //     // Show the install prompt
-    //     deferredPrompt.prompt();
-    //     // Wait for the user to respond to the prompt
-    //     const { outcome } = await deferredPrompt.userChoice;
-    //     // Optionally, send analytics event with outcome of user choice
-    //     console.log(`User response to the install prompt: ${outcome}`);
-    //     // We've used the prompt, and can't use it again, throw it away
-    //     deferredPrompt = null;
-    //   }
-    // };
-
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
 
-      // Initialize deferredPrompt for use later to show browser install prompt.
-      // let deferredPrompt;
-
-      // window.addEventListener('beforeinstallprompt', (e) => {
-      //   // Prevent the mini-infobar from appearing on mobile
-      //   // e.preventDefault();
-      //   // Stash the event so it can be triggered later.
-      //   // deferredPrompt = e;
-      //   // Update UI notify the user they can install the PWA
-      //   // showInstallPromotion(deferredPrompt);
-      //   // Optionally, send analytics event that PWA install promo was shown.
-      //   console.log(`'beforeinstallprompt' event was fired.`);
-      //   console.log(e);
-      //   e.prompt();
-      // });
-
       $install.on('click', async function () {
         console.log('install');
-        // window.app.instance.offline.init();
+        // window.app.instance.offline.init(); // TODO
       });
     };
 

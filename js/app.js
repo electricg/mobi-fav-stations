@@ -12,7 +12,6 @@ const App = function (namespace) {
   });
   this.init = () => {
     this.controller.init();
-    // this.offline.init(); // TODO
   };
 };
 
