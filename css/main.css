@@ -8,6 +8,9 @@
   --c-ebike-strike: #FFE074;
   --c-dock: #1E4B70;
 
+  --c-table-stripe: #FFF;
+  --c-table-border: #DDD;
+
   --c-tooltip-bg: #FFF;
 
   --c-bg-alert: unset;
@@ -363,21 +366,30 @@ table {
   user-select: none;
 }
 table, th, td {
-  border: .5px solid var(--c-main-text);
+  border: .5px solid var(--c-table-border);
 }
 th, td {
   padding: 2px;
+  vertical-align: text-top;
 }
 th {
-  background: var(--c-main-bg);
+  background: inherit;
   position: sticky;
 }
 thead th {
+  background: var(--c-theme-second);
+  border-color: var(--c-theme-first);
   top: 0;
 }
 thead th:nth-child(2) {
   left: 0;
   z-index: 1;
+}
+tr {
+  background: var(--c-main-bg);
+}
+tr:nth-child(even) {
+  background: var(--c-table-stripe);
 }
 tbody th {
   font-weight: normal;
