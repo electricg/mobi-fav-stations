@@ -239,7 +239,7 @@ body {
 
 /*=== favorite */
 .favorites {
-  --col: calc(var(--items, 3) * 2);
+  --col: calc(var(--items) * 2);
   display: grid;
   gap: calc(var(--l-gap) * 2) var(--l-gap);
   grid-template-columns: repeat(var(--col), 1fr);
@@ -249,6 +249,10 @@ body {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: subgrid;
+}
+.compact .favorite {
+  border: 1px dotted var(--c-theme-first);
+  grid-column: span var(--items);
 }
 .favorite__title {
   font-weight: bold;

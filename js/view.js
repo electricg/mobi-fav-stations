@@ -29,6 +29,8 @@
     const $settingsShowEbikes = $$('#settings-show-ebikes');
     const $settingsShowDocks = $$('#settings-show-docks');
 
+    const $settingsCompactLayout = $$('#settings-compact-layout');
+
     const $alerts = $$('#alerts');
 
     const $version = $$('#version');
@@ -95,6 +97,9 @@
       $settingsShowClassics.checked = config.showClassics;
       $settingsShowEbikes.checked = config.showEbikes;
       $settingsShowDocks.checked = config.showDocks;
+      $settingsCompactLayout.checked = config.compactLayout;
+
+      $body.classList.toggle('compact', config.compactLayout);
     };
 
     this.render = function (viewCmd, data) {
@@ -232,6 +237,7 @@
           $settingsShowClassics,
           $settingsShowEbikes,
           $settingsShowDocks,
+          $settingsCompactLayout,
         ].forEach(($el) =>
           $el.on('change', function () {
             opts[this.value] = this.checked;
