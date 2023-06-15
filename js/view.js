@@ -25,6 +25,10 @@
     const $lastUpdatedStatus = $$('#last-updated-status');
     const $lastUpdatedInformation = $$('#last-updated-information');
 
+    const $settingsShowClassics = $$('#settings-show-classics');
+    const $settingsShowEbikes = $$('#settings-show-ebikes');
+    const $settingsShowDocks = $$('#settings-show-docks');
+
     const $alerts = $$('#alerts');
 
     const $version = $$('#version');
@@ -72,8 +76,13 @@
         lastUpdatedInformation,
         lastUpdatedStatus,
         filteredStations,
+        config,
       } = data;
-      $favorites.innerHTML = _self.template.favorites(favorites, stations);
+      $favorites.innerHTML = _self.template.favorites(
+        favorites,
+        stations,
+        config
+      );
       $lastUpdatedStatus.innerHTML =
         _self.template.lastUpdated(lastUpdatedStatus);
       $lastUpdatedInformation.innerHTML = _self.template.lastUpdated(
@@ -82,6 +91,10 @@
       if (_showStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
+      // settings
+      $settingsShowClassics.checked = config.showClassics;
+      $settingsShowEbikes.checked = config.showEbikes;
+      $settingsShowDocks.checked = config.showDocks;
     };
 
     this.render = function (viewCmd, data) {
@@ -212,6 +225,20 @@
             _self.render('data', data);
           }
         });
+      } else if (event === 'settingsUpdate') {
+        const opts = {};
+
+        [
+          $settingsShowClassics,
+          $settingsShowEbikes,
+          $settingsShowDocks,
+        ].forEach(($el) =>
+          $el.on('change', function () {
+            opts[this.value] = this.checked;
+            const data = handler(opts, _filter);
+            _self.render('data', data);
+          })
+        );
       }
     };
   };

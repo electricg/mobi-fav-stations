@@ -1,4 +1,4 @@
-const VERSION = '0.7.20';
+const VERSION = '0.7.21';
 const cacheName = `v${VERSION}::static`;
 
 const fileList = `
@@ -6,6 +6,7 @@ const fileList = `
 css/main.css
 images/logo/icon.svg
 js/app.js
+js/config.js
 js/controller.js
 js/helpers.js
 js/model.js

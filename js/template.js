@@ -41,7 +41,7 @@
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
-    const favorite = function (id, item) {
+    const favorite = function (id, item, config) {
       const { name } = item?.information || {};
       const {
         is_installed: isInstalled,
@@ -51,6 +51,7 @@
         vehicle_types_available: vehicleTypesAvailable,
       } = item?.status || {};
       const { description = '' } = item?.user || {};
+      const { showClassics, showEbikes, showDocks } = config;
 
       const code = `
           <div class="favorite">
@@ -80,27 +81,42 @@
                 : ``
             }
             <div class="favorite__kpis">
-              <div class="favorite__kpi">
+
+            ${
+              showClassics
+                ? `<div class="favorite__kpi">
                 <span class="favorite__kpi__count">${formatKpiNumber(
                   vehicleTypesAvailable?.[0].count
                 )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">Classics</span>
-              </div>
-              <div class="favorite__kpi">
+              </div>`
+                : ``
+            }
+
+            ${
+              showEbikes
+                ? `<div class="favorite__kpi">
                 <span class="favorite__kpi__count">${formatKpiNumber(
                   vehicleTypesAvailable?.[1].count
                 )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 <span class="favorite__kpi__type">E-Bikes</span>
-              </div>
-              <div class="favorite__kpi">
+              </div>`
+                : ``
+            }
+
+            ${
+              showDocks
+                ? `<div class="favorite__kpi">
                 <span class="favorite__kpi__count">${formatKpiNumber(
                   numDocksAvailable
                 )}</span>
                 <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
                 <span class="favorite__kpi__type">Docks</span>
-              </div>
+              </div>`
+                : ``
+            }
             </div>
           </div>
         `;
@@ -108,10 +124,15 @@
       return code;
     };
 
-    this.favorites = function (favorites, stations) {
+    this.favorites = function (favorites, stations, config) {
+      const { showClassics, showEbikes, showDocks } = config;
+      const items = showClassics + showEbikes + showDocks;
+
       const favs = `
-          <div class="favorites">
-            ${favorites.map((id) => favorite(id, stations[id])).join('')}
+          <div class="favorites" style="--items:${items}">
+            ${favorites
+              .map((id) => favorite(id, stations[id], config))
+              .join('')}
           </div>
         `;
       const noFavs = `<p>Add your favorites from the stations list below</p>`;

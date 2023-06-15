@@ -6,11 +6,13 @@
    * Take a model and view and acts as the controller between them
    * @param {object} model The model instance
    * @param {object} view The view instance
+   * @param {object} config The config instance
    */
-  const Controller = function (model, view) {
+  const Controller = function (model, view, config) {
     const _self = this;
     _self.model = model;
     _self.view = view;
+    _self.config = config;
 
     const fetchData = async (url) => {
       return await app.Helpers.fetchData(`${URL_BASE}${url}`);
@@ -23,6 +25,7 @@
         lastUpdatedInformation: _self.model.lastUpdatedInformation,
         lastUpdatedStatus: _self.model.lastUpdatedStatus,
         filteredStations: _self.model.filterStations(search),
+        config: _self.config.getAll(),
       };
     };
 
@@ -43,6 +46,10 @@
       );
 
       return getData(search);
+    };
+
+    const updateSettings = function (data) {
+      _self.config.update(data);
     };
 
     const bindAll = function () {
@@ -87,6 +94,11 @@
         if (res === -1) {
           return res;
         }
+        return getData(search);
+      });
+
+      _self.view.bind('settingsUpdate', function (data, search) {
+        updateSettings(data);
         return getData(search);
       });
 

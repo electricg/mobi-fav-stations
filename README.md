@@ -10,5 +10,5 @@ Documentation for the API https://gbfs.mobilitydata.org/specification/reference/
 - [ ] better "first time" experience
 - [ ] check all the "empties"
 - [ ] install offline sw only when clicking the "install" button
-- [ ] personal configuration to show/hide classics/ebikes/docks
+- [x] personal configuration to show/hide classics/ebikes/docks
 - [ ] personal configuration for a more compact layout

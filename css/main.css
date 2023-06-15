@@ -52,7 +52,7 @@ a {
   color: var(--c-theme-first);
   text-decoration: none;
 }
-label, button, input[type=button], input[type=submit], input[type=reset] {
+label, button, input[type=button], input[type=submit], input[type=reset], summary {
   cursor: pointer;
   user-select: none;
 }
@@ -231,6 +231,7 @@ body {
 .main-header,
 .main-section--home,
 .main-section--stations,
+.main-section--settings,
 .main-section--info {
   padding-left: var(--l-gap);
   padding-right: var(--l-gap);
@@ -238,7 +239,7 @@ body {
 
 /*=== favorite */
 .favorites {
-  --col: 6;
+  --col: calc(var(--items, 3) * 2);
   display: grid;
   gap: calc(var(--l-gap) * 2) var(--l-gap);
   grid-template-columns: repeat(var(--col), 1fr);
@@ -293,7 +294,7 @@ body {
 }
 .favorite__kpi {
   display: grid;
-  grid-column: span calc(var(--col) / 3);
+  grid-column: span 2;
   grid-template-areas:
   "count icon" 
   "type  type";
@@ -441,8 +442,53 @@ td[colspan="12"] {
 }
 
 /*=== actions */
-.actions {
+.actions, .settings {
   display: flex;
   flex-direction: column;
   gap: calc(var(--l-gap) * 2);
+  margin-bottom: calc(var(--l-gap) * 2);
+}
+
+/*=== settings */
+.settings {
+  margin-top: calc(var(--l-gap) * 2);
+}
+
+/*=== input checkbox with svg icons */
+.input-checkbox__label {
+  align-items: center;
+  display: flex;
+  gap: var(--l-gap);
+  position: relative;
+  width: fit-content;
+}
+.input-checkbox__check {
+  cursor: inherit;
+  font-size: 100%;
+  height: var(--l-icon-size);
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  right: 1em;
+  width: var(--l-icon-size);
+}
+.input-checkbox__icon {
+  margin: 0;
+}
+/* visually show focus outline when the SVG receives focus */
+.input-checkbox__check:focus ~ .input-checkbox__icon {
+  outline: 2px solid var(--c-theme-first);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+/* hide the focus styles for mouse users */
+.input-checkbox__check:focus:not(:focus-visible) ~ .input-checkbox__icon {
+  outline: none;
+}
+.input-checkbox__icon__checked {
+  display: none;
+}
+.input-checkbox__check:checked ~ .input-checkbox__icon .input-checkbox__icon__checked {
+  display: block;
 }
