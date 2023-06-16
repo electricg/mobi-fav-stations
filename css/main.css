@@ -239,31 +239,35 @@ body {
 
 /*=== favorite */
 .favorites {
-  --col: calc(var(--items) * 2);
+  --favs: 1;
+  --kpi-col: 2;
+  --fav-col: calc(var(--items) * var(--kpi-col));
+  --col: calc(var(--fav-col) * var(--favs));
   display: grid;
   gap: calc(var(--l-gap) * 2) var(--l-gap);
   grid-template-columns: repeat(var(--col), 1fr);
   margin: 0 0 calc(var(--l-gap) * 2);
 }
+.compact .favorites {
+  --favs: 2;
+}
 .favorite {
   display: grid;
-  grid-column: 1 / -1;
+  grid-column: span var(--fav-col);
   grid-template-columns: subgrid;
+}
+.favorite > * {
+  grid-column: span var(--col);
 }
 .compact .favorite {
   border: 1px dotted var(--c-theme-first);
-  grid-column: span var(--items);
 }
 .favorite__title {
   font-weight: bold;
-  grid-column: span var(--col);
 }
 .favorite__id {
   font-size: 0.8rem;
   font-weight: normal;
-}
-.favorite__description {
-  grid-column: span var(--col);
 }
 .favorite__description__text {
   white-space: break-spaces;
@@ -293,12 +297,11 @@ body {
 }
 .favorite__kpis {
   display: grid;
-  grid-column: span var(--col);
   grid-template-columns: subgrid;
 }
 .favorite__kpi {
   display: grid;
-  grid-column: span 2;
+  grid-column: span var(--kpi-col);
   grid-template-areas:
   "count icon" 
   "type  type";
@@ -335,9 +338,6 @@ body {
   font-size: 0.6rem;
   grid-area: type;
 }
-.favorite__status {
-  grid-column: span var(--col);
-}
 .favorite__status span:after {
   content: attr(title);
   font-size: 0.6rem;
@@ -345,7 +345,7 @@ body {
 }
 @supports not (grid-template-columns: subgrid) {
   .favorite__kpis {
-    grid-template-columns: repeat(var(--col), 1fr);
+    grid-template-columns: repeat(var(--fav-col), 1fr);
   }
   .favorite__kpi {
     column-gap: var(--l-gap);
