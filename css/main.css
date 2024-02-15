@@ -244,9 +244,8 @@ body {
   --fav-col: calc(var(--items) * var(--kpi-col));
   --col: calc(var(--fav-col) * var(--favs));
   display: grid;
-  gap: calc(var(--l-gap) * 2) var(--l-gap);
+  gap: 0 var(--l-gap);
   grid-template-columns: repeat(var(--col), 1fr);
-  margin: 0 0 calc(var(--l-gap) * 2);
 }
 .compact .favorites {
   --favs: 2;
@@ -254,7 +253,10 @@ body {
 .favorite {
   display: grid;
   grid-column: span var(--fav-col);
+  grid-row: span 5;
   grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  margin-bottom: calc(var(--l-gap) * 2);
 }
 .favorite > * {
   grid-column: 1 / -1;
@@ -264,10 +266,14 @@ body {
 }
 .favorite__title {
   font-weight: bold;
+  grid-row: 2;
 }
 .favorite__id {
   font-size: 0.8rem;
   font-weight: normal;
+}
+.favorite__description {
+  grid-row: 3;
 }
 .favorite__description__text {
   white-space: break-spaces;
@@ -287,6 +293,7 @@ body {
 }
 .favorite__actions {
   display: none;
+  grid-row: 1;
 }
 .edit .favorite__actions {
   display: block;
@@ -295,8 +302,12 @@ body {
 .favorite:last-child .favorite__down {
   visibility: hidden;
 }
+.favorite__status {
+  grid-row: 4;
+}
 .favorite__kpis {
   display: grid;
+  grid-row: 5;
   grid-template-columns: subgrid;
 }
 .favorite__kpi {
@@ -350,6 +361,7 @@ body {
   .favorite__kpi {
     column-gap: var(--l-gap);
   }
+  /* todo: check how the subgrid rows look */
 }
 
 /*=== stations table */
