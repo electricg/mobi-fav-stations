@@ -158,6 +158,31 @@ label, button, input[type=button], input[type=submit], input[type=reset], summar
   z-index: 1;
 }
 
+/*=== button spinner */
+.button-spinner.rotating {
+  pointer-events: none;
+}
+.button-spinner.rotating svg {
+  animation: rotating 2s linear infinite;
+}
+.button-spinner.success svg {
+  color: var(--c-alert-success-dark);
+}
+.button-spinner .icon-clipboard {
+  display: none;
+}
+.button-spinner.success .icon-clipboard {
+  display: unset;
+}
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /*=== grid */
 html, body {
   height: 100%;
@@ -200,31 +225,6 @@ body {
 .main-footer button {
   margin-left: auto;
   position: relative;
-}
-.main-footer button.success {
-  color: var(--c-alert-success-dark);
-}
-.main-footer button.success:after {
-  bottom: 0;
-  content: 'v';
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.main-footer button.rotating {
-  pointer-events: none;
-}
-.main-footer button.rotating svg {
-  animation: rotating 2s linear infinite;
-}
-@keyframes rotating {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /*=== sections */
@@ -468,6 +468,19 @@ td[colspan="12"] {
 /*=== settings */
 .settings {
   margin-top: calc(var(--l-gap) * 2);
+}
+
+/* === button load information */
+.load-information {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.load-information span {
+  margin-right: 0.2em;
+}
+.load-information svg {
+  margin: 0;
 }
 
 /*=== input checkbox with svg icons */

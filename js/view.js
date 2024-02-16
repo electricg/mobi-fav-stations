@@ -126,35 +126,23 @@
             $stationsFilterInput.value = '';
           }
         });
-      } else if (event === 'loadStatus') {
-        $loadStatus.on('click', async function () {
-          $loadStatus.classList.toggle('success', false);
-          $loadStatus.classList.toggle('rotating', true);
-          try {
-            const data = await handler(_filter);
-            $loadStatus.classList.toggle('success', true);
-            _self.render('data', data);
-          } catch (e) {
-            console.log(e);
-            _self.render('error', e);
+      } else if (event === 'loadStatus' || event === 'loadInformation') {
+        (event === 'loadStatus' ? $loadStatus : $loadInformation).on(
+          'click',
+          async function () {
+            this.classList.toggle('success', false);
+            this.classList.toggle('rotating', true);
+            try {
+              const data = await handler(_filter);
+              this.classList.toggle('success', true);
+              _self.render('data', data);
+            } catch (e) {
+              console.log(e);
+              _self.render('error', e);
+            }
+            this.classList.toggle('rotating', false);
           }
-          $loadStatus.classList.toggle('rotating', false);
-        });
-      } else if (event === 'loadInformation') {
-        // TODO show visual
-        $loadInformation.on('click', async function () {
-          try {
-            const data = await handler(_filter);
-            _self.render('data', data);
-            _self.render(
-              'success',
-              'Stations information updated successfully'
-            );
-          } catch (e) {
-            console.log(e);
-            _self.render('error', e);
-          }
-        });
+        );
       } else if (event === 'filterStations') {
         $stationsFilterInput.on('input', function (event) {
           _filter = event.target.value;
