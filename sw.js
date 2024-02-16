@@ -1,10 +1,11 @@
-const VERSION = '0.7.30';
+const VERSION = '0.7.31';
 const cacheName = `v${VERSION}::static`;
 
 const fileList = `
 ./
 css/main.css
 images/logo/icon.svg
+images/logo/favicon.ico
 js/app.js
 js/config.js
 js/controller.js
