@@ -1,0 +1,47 @@
+:root {
+  --l-gap: .5rem;
+}
+.favorites {
+  --favs: 2;
+
+  background: red;
+  display: grid;
+  gap: calc(var(--l-gap) * 2) var(--l-gap);
+  grid-template-columns: repeat(var(--favs), 1fr);
+  row-gap: 0;
+}
+.favorite {
+  background: orange;
+  border: 5px solid black;
+
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+.item {
+
+}
+.item:empty {
+  /* display: none; */
+}
+.item1 {
+  background: yellow;
+  grid-row: 1;
+}
+.item2 {
+  background: green;
+  grid-row: 2;
+}
+.item3 {
+  background: cyan;
+  grid-row: 3;
+}
+.item4 {
+  background: blue;
+  grid-row: 4;
+}
+.item5 {
+  background: fuchsia;
+  grid-row: 5;
+}
