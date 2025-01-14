@@ -7,12 +7,14 @@
    * @param {object} model The model instance
    * @param {object} view The view instance
    * @param {object} config The config instance
+   * @param {object} offline The offline instance
    */
-  const Controller = function (model, view, config) {
+  const Controller = function (model, view, config, offline) {
     const _self = this;
     _self.model = model;
     _self.view = view;
     _self.config = config;
+    _self.offline = offline;
 
     const fetchData = async (url) => {
       return await app.Helpers.fetchData(`${URL_BASE}${url}`);
@@ -100,6 +102,10 @@
       _self.view.bind('settingsUpdate', function (data, search) {
         updateSettings(data);
         return getData(search);
+      });
+
+      _self.view.bind('installOffline', function () {
+        _self.offline.init();
       });
 
       // This goes last for now

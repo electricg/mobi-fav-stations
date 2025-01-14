@@ -9,15 +9,22 @@
     msgInstalled = 'This app is now available offline!',
     msgUpdated = 'This app has an update, please refresh.',
   }) {
-    debug && console.log('debug: on');
     let isSWInstalled = false;
+
+    /**
+     * Print debug messages in the console
+     * @param  {...any} args arguments to print
+     */
+    const printDebug = (...args) => {
+      debug && console.debug('offline debug:', ...args);
+    };
 
     /**
      * Show service worker status
      * @param {boolean} status true if sw is active
      */
     const swUIStatus = (status) => {
-      debug && console.log('debug: sw status', !!status);
+      printDebug('sw status', !!status);
       showOffline(status);
     };
 
@@ -25,7 +32,7 @@
      * Show service worker has been installed for the first time ever
      */
     const swUIFirstTime = () => {
-      debug && console.log('debug: sw first time ever');
+      printDebug('sw first time ever');
       swUIStatus(true);
       swUIMessage(msgInstalled);
     };
@@ -34,7 +41,7 @@
      * Show service worker has been installed
      */
     const swUIInstalled = () => {
-      debug && console.log('debug: sw installed');
+      printDebug('sw installed');
       swUIStatus(true);
     };
 
@@ -42,7 +49,7 @@
      * Show that service worker has a new update to show
      */
     const swUIUpdate = () => {
-      debug && console.log('debug: sw there is a new update, please refresh');
+      printDebug('sw there is a new update, please refresh');
       swUIMessage(msgUpdated);
     };
 
@@ -51,7 +58,7 @@
      * @param {Object} err error
      */
     const swUIError = (err) => {
-      debug && console.error('debug: sw registration failed: ', err);
+      printDebug('sw registration failed: ', err);
     };
 
     /**
@@ -71,7 +78,7 @@
     };
 
     const onStateChange = (newWorker) => {
-      debug && console.log('debug: sw onStateChange', newWorker.state);
+      printDebug('sw onStateChange', newWorker.state);
       if (newWorker.state === 'activated') {
         if (!isSWInstalled) {
           isSWInstalled = swCheckStatus();
@@ -87,7 +94,16 @@
       }
     };
 
+    /**
+     * Send message object to the service worker
+     * @param {object} message
+     */
+    const sendMessage = (message) => {
+      navigator.serviceWorker.controller.postMessage(message);
+    };
+
     this.init = function () {
+      printDebug('installing');
       if ('serviceWorker' in navigator) {
         isSWInstalled = swCheckStatus();
 
@@ -113,14 +129,6 @@
     };
 
     /**
-     * Send message object to the service worker
-     * @param {object} message
-     */
-    const sendMessage = (message) => {
-      navigator.serviceWorker.controller.postMessage(message);
-    };
-
-    /**
      * Unregister service worker and send message to delete all caches
      */
     this.clearSW = async () => {
@@ -133,6 +141,8 @@
         type: 'clear',
       });
     };
+
+    printDebug('sw on');
   };
 
   // export to window

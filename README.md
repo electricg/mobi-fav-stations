@@ -1,6 +1,8 @@
 # Mobi fav stations
 
-Documentation for the API https://gbfs.mobilitydata.org/specification/reference/
+Documentation for the API https://gbfs.org/specification/reference/.
+
+Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 
 #### TODO
 
@@ -13,3 +15,5 @@ Documentation for the API https://gbfs.mobilitydata.org/specification/reference/
 - [x] personal configuration to show/hide classics/ebikes/docks
 - [x] personal configuration for a more compact layout
 - [x] when "show all stations" scroll to put the table to the top
+- [ ] import / export personal data
+- [ ] show station details

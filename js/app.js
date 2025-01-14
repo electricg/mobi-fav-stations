@@ -7,10 +7,16 @@ const App = function (namespace, settings) {
   this.model = new app.Model(this.storage);
   this.template = new app.Template();
   this.view = new app.View(this.template);
-  this.controller = new app.Controller(this.model, this.view, this.config);
   this.offline = new app.Offline({
     showInfo: (msg) => this.view.render('info', msg),
+    debug: false,
   });
+  this.controller = new app.Controller(
+    this.model,
+    this.view,
+    this.config,
+    this.offline
+  );
   this.init = () => {
     this.controller.init();
   };

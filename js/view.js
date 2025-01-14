@@ -35,7 +35,7 @@
 
     const $version = $$('#version');
 
-    const $install = $$('#install');
+    const $installOffline = $$('#install');
 
     let _showStations = false;
     let _filter = '';
@@ -64,11 +64,6 @@
 
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
-
-      $install.on('click', async function () {
-        console.log('install');
-        // window.app.instance.offline.init(); // TODO
-      });
     };
 
     _viewCommands.data = function (data) {
@@ -234,6 +229,10 @@
             _self.render('data', data);
           })
         );
+      } else if (event === 'installOffline') {
+        $installOffline.on('click', async function () {
+          handler();
+        });
       }
     };
   };
