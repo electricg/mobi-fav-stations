@@ -15,5 +15,6 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] personal configuration to show/hide classics/ebikes/docks
 - [x] personal configuration for a more compact layout
 - [x] when "show all stations" scroll to put the table to the top
-- [ ] import / export personal data
+- [x] import / export personal data
+- [ ] cancel data
 - [ ] show station details

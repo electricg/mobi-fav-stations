@@ -11,6 +11,21 @@ NodeList.prototype.forEach = Array.prototype.forEach;
 
 (function (window) {
   const Helpers = function () {
+    const _today = new Date();
+    const yyyy = _today.getFullYear();
+    const mm = (_today.getMonth() + 1 + '').padStart(2, '0');
+    const dd = (_today.getDate() + '').padStart(2, '0');
+    const _todayStr = `${yyyy}-${mm}-${dd}`;
+
+    const _notSupported =
+      'This functionality is not supported in your browser/os/device';
+
+    Object.defineProperty(this, 'todayStr', {
+      get: function () {
+        return _todayStr;
+      },
+    });
+
     /**
      * Prevent default event
      * @param {object} event
@@ -58,6 +73,113 @@ NodeList.prototype.forEach = Array.prototype.forEach;
       const response = await fetch(url);
       const data = await response.json();
       return data;
+    };
+
+    /**
+     * Download a file with the given name and content, this is for old browsers
+     * @param {string} filename - name of the file
+     * @param {string} text - content of the file
+     */
+    const oldDownload = function (filename, text) {
+      var el = document.createElement('a');
+      el.setAttribute(
+        'href',
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+      );
+      el.setAttribute('download', filename);
+
+      el.style.display = 'none';
+      document.body.appendChild(el);
+
+      el.click();
+
+      document.body.removeChild(el);
+    };
+
+    /**
+     * Read content from uploaded file
+     * @param {object} file
+     * @returns {Promise} promise with the content
+     */
+    this.readFromInputFile = async function (file) {
+      if (!('FileReader' in window)) {
+        throw _notSupported;
+      }
+
+      const reader = new FileReader();
+      if (file) {
+        reader.readAsText(file);
+      }
+
+      return new Promise((resolve) => {
+        reader.addEventListener(
+          'load',
+          function () {
+            resolve(reader.result);
+          },
+          false
+        );
+      });
+    };
+
+    /**
+     * Write content into file
+     * @param {string} filename - name of the file
+     * @param {string} text - content of the file
+     * @returns {Promise}
+     */
+    this.writeToFile = async function (filename, text) {
+      if (!('showSaveFilePicker' in window)) {
+        oldDownload(filename, text);
+        return;
+      }
+
+      const options = {
+        suggestedName: filename,
+        types: [{ accept: { 'text/plain': ['.txt'] } }],
+      };
+
+      try {
+        const fileHandle = await window.showSaveFilePicker(options);
+        const writable = await fileHandle.createWritable();
+        await writable.write(text);
+        await writable.close();
+      } catch (e) {
+        // if the user doesn't save the file, swallow the relative browser error
+      }
+    };
+
+    /**
+     * Share content to other apps
+     * @param {string} filename - name of the file
+     * @param {string} text - content of the file
+     * @param {string} title - title of the file
+     */
+    this.shareTo = function (filename, text, title) {
+      const file = new File([text], filename, { type: 'text/plain' });
+      const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1;
+
+      // Firefox has a bug where text is not actually shared, and
+      // sharing of files is not supported at all, so functionality is
+      // totally disabled for it
+      // https://github.com/mozilla-mobile/fenix/issues/11946
+      if (navigator.canShare && !isFirefox) {
+        const sharedObj = {
+          title: title,
+        };
+
+        if (navigator.canShare({ files: [file] })) {
+          sharedObj.files = [file];
+        } else if (navigator.canShare({ text: text })) {
+          sharedObj.text = text;
+        }
+
+        navigator.share(sharedObj).catch(() => {
+          // if the user doesn't share the file, swallow the relative browser error
+        });
+      } else {
+        throw _notSupported;
+      }
     };
   };
 

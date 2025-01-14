@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.7.34';
+const VERSION = '0.7.35';
 const NAMESPACE = 'mobiFavStations';
 
 const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
@@ -17,10 +17,16 @@ const DEFAULT_USER_SETTINGS = {
 };
 
 const FEATURES = {
-  local: false,
+  local: false, // todo need to use it for offline
+};
+
+const FILE = {
+  name: 'mobi-fav-stations_${now}.txt',
+  title: 'Mobi Fav Stations Backup ${now}',
 };
 
 Object.freeze(DEFAULT_USER_SETTINGS);
 Object.freeze(FEATURES);
+Object.freeze(FILE);
 
 const URL_BASE = FEATURES.local ? URL_LOCAL : URL_REMOTE;

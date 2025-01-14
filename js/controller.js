@@ -1,4 +1,4 @@
-/* global app, URL_BASE */
+/* global app, URL_BASE, NAMESPACE, VERSION, FILE */
 (function (window) {
   'use strict';
 
@@ -54,6 +54,46 @@
       _self.config.update(data);
     };
 
+    const importData = async function (file, search) {
+      const res = await app.Helpers.readFromInputFile(file);
+      const data = JSON.parse(res)[NAMESPACE];
+
+      // TODO should check that the data imported is correct
+      _self.config.update(data.config);
+      _self.model.updateStationsUserData({
+        user: data.user,
+        favorites: data.favorites,
+      });
+
+      return getData(search);
+    };
+
+    const prepareDataForExport = function () {
+      const data = JSON.stringify({
+        [NAMESPACE]: {
+          version: VERSION,
+          config: _self.config.getAll(),
+          favorites: _self.model.favorites,
+          user: _self.model.user,
+        },
+      });
+      const now = app.Helpers.todayStr;
+      const filename = FILE.name.replace('${now}', now);
+      const title = FILE.title.replace('${now}', now);
+
+      return { data, filename, title };
+    };
+
+    const exportData = async function () {
+      const { data, filename } = prepareDataForExport();
+      await app.Helpers.writeToFile(filename, data);
+    };
+
+    const shareData = function () {
+      const { data, filename, title } = prepareDataForExport();
+      app.Helpers.shareTo(filename, data, title);
+    };
+
     const bindAll = function () {
       _self.view.bind('toggleStations', function () {
         return _self.model.stations;
@@ -106,6 +146,18 @@
 
       _self.view.bind('installOffline', function () {
         _self.offline.init();
+      });
+
+      _self.view.bind('importData', async function (file, search) {
+        return importData(file, search);
+      });
+
+      _self.view.bind('exportData', function () {
+        return exportData();
+      });
+
+      _self.view.bind('shareData', function () {
+        return shareData();
       });
 
       // This goes last for now

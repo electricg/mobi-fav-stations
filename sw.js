@@ -1,4 +1,4 @@
-const VERSION = '0.7.34';
+const VERSION = '0.7.35';
 const cacheName = `v${VERSION}::static`;
 
 const fileList = `

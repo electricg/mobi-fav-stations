@@ -31,6 +31,10 @@
 
     const $settingsCompactLayout = $$('#settings-compact-layout');
 
+    const $importData = $$('#import-data');
+    const $exportData = $$('#export-data');
+    const $shareData = $$('#share-data');
+
     const $alerts = $$('#alerts');
 
     const $version = $$('#version');
@@ -232,6 +236,42 @@
       } else if (event === 'installOffline') {
         $installOffline.on('click', async function () {
           handler();
+        });
+      } else if (event === 'importData') {
+        $importData.on('click', function (event) {
+          if (
+            !window.confirm(
+              'This will completely overwrite the data. Do you want to continue?'
+            )
+          ) {
+            event.preventDefault();
+          }
+        });
+        $importData.on('change', async function () {
+          try {
+            const [file] = $importData.files;
+            const data = await handler(file, _filter);
+            _self.render('data', data);
+            _self.render('success', 'Data imported successfully');
+          } catch (e) {
+            _self.render('error', e);
+          }
+        });
+      } else if (event === 'exportData') {
+        $exportData.on('click', function () {
+          try {
+            handler();
+          } catch (e) {
+            _self.render('error', e);
+          }
+        });
+      } else if (event === 'shareData') {
+        $shareData.on('click', function () {
+          try {
+            handler();
+          } catch (e) {
+            _self.render('error', e);
+          }
         });
       }
     };

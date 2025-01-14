@@ -23,6 +23,12 @@
       },
     });
 
+    Object.defineProperty(this, 'user', {
+      get: function () {
+        return structuredClone(_user);
+      },
+    });
+
     Object.defineProperty(this, 'lastUpdatedInformation', {
       get: function () {
         return _lastUpdatedInformation;
@@ -139,7 +145,7 @@
     };
 
     /**
-     * Merge all the data (information, status, user) into the station object
+     * Merge all the data (information, status, user, favorites) into the station object
      */
     const updateStations = function () {
       _stations = {};
@@ -203,6 +209,18 @@
     };
 
     /**
+     * Update stations user data and favorites
+     * @param {object} newData
+     * @param {object} newData.user
+     * @param {array} newData.favorites
+     */
+    const updateStationsUserData = function ({ user, favorites }) {
+      _user = user;
+      _favorites = favorites;
+      updateStations();
+    };
+
+    /**
      * Modify occurances
      * @param {string} how - How to change
      * @param {string} id - id of the occurance
@@ -228,6 +246,8 @@
         mod = updateStationsInformation(newList, lastUpdated);
       } else if (how === 'updateStationsStatus') {
         mod = updateStationsStatus(newList, lastUpdated);
+      } else if (how === 'updateStationsUserData') {
+        mod = updateStationsUserData(newData);
       }
 
       if (mod !== -1) {
@@ -347,6 +367,15 @@
      */
     this.updateStationsStatus = function (newList, lastUpdated) {
       return modify('updateStationsStatus', null, null, newList, lastUpdated);
+    };
+
+    /**
+     * Replace user data and favorites
+     * @param {*} newData
+     * @returns
+     */
+    this.updateStationsUserData = function (newData) {
+      return modify('updateStationsUserData', null, newData);
     };
 
     /**
