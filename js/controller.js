@@ -16,30 +16,32 @@
     _self.config = config;
     _self.offline = offline;
 
+    let _search = '';
+
     const fetchData = async (url) => {
       return await app.Helpers.fetchData(`${URL_BASE}${url}`);
     };
 
-    const getData = function (search) {
+    const getData = function () {
       return {
         stations: _self.model.stations,
         favorites: _self.model.favorites,
         lastUpdatedInformation: _self.model.lastUpdatedInformation,
         lastUpdatedStatus: _self.model.lastUpdatedStatus,
-        filteredStations: _self.model.filterStations(search),
+        filteredStations: _self.model.filterStations(_search),
         config: _self.config.getAll(),
       };
     };
 
-    const loadStatus = async function (search) {
+    const loadStatus = async function () {
       const data = await fetchData('station_status.json');
 
       _self.model.updateStationsStatus(data.data.stations, data.last_updated);
 
-      return getData(search);
+      return getData();
     };
 
-    const loadInformation = async function (search) {
+    const loadInformation = async function () {
       const data = await fetchData('station_information.json');
 
       _self.model.updateStationsInformation(
@@ -47,14 +49,14 @@
         data.last_updated
       );
 
-      return getData(search);
+      return getData();
     };
 
     const updateSettings = function (data) {
       _self.config.update(data);
     };
 
-    const importData = async function (file, search) {
+    const importData = async function (file) {
       const res = await app.Helpers.readFromInputFile(file);
       const data = JSON.parse(res)[NAMESPACE];
 
@@ -65,7 +67,7 @@
         favorites: data.favorites,
       });
 
-      return getData(search);
+      return getData();
     };
 
     const prepareDataForExport = function () {
@@ -99,16 +101,17 @@
         return _self.model.stations;
       });
 
-      _self.view.bind('loadStatus', async function (search) {
-        return loadStatus(search);
+      _self.view.bind('loadStatus', async function () {
+        return loadStatus();
       });
 
-      _self.view.bind('loadInformation', async function (search) {
-        return loadInformation(search);
+      _self.view.bind('loadInformation', async function () {
+        return loadInformation();
       });
 
       _self.view.bind('filterStations', function (search) {
-        return _self.model.filterStations(search);
+        _search = search;
+        return _self.model.filterStations(_search);
       });
 
       _self.view.bind('toggleFavorite', function (id, pressed) {
@@ -118,15 +121,15 @@
         return _self.model.removeFavorite(id);
       });
 
-      _self.view.bind('toggleEdit', function (search) {
-        return getData(search);
+      _self.view.bind('toggleEdit', function () {
+        return getData();
       });
 
       _self.view.bind('editDescription', function (id, newDesc) {
         return _self.model.editDescription(id, newDesc);
       });
 
-      _self.view.bind('editFavorite', function (id, action, search) {
+      _self.view.bind('editFavorite', function (id, action) {
         let res;
         if (action === 'remove') {
           res = _self.model.removeFavorite(id);
@@ -136,20 +139,20 @@
         if (res === -1) {
           return res;
         }
-        return getData(search);
+        return getData();
       });
 
-      _self.view.bind('settingsUpdate', function (data, search) {
+      _self.view.bind('settingsUpdate', function (data) {
         updateSettings(data);
-        return getData(search);
+        return getData();
       });
 
       _self.view.bind('installOffline', function () {
         _self.offline.init();
       });
 
-      _self.view.bind('importData', async function (file, search) {
-        return importData(file, search);
+      _self.view.bind('importData', async function (file) {
+        return importData(file);
       });
 
       _self.view.bind('exportData', function () {
@@ -161,8 +164,8 @@
       });
 
       // This goes last for now
-      _self.view.bind('start', function (search) {
-        return getData(search);
+      _self.view.bind('start', function () {
+        return getData();
       });
     };
 

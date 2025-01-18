@@ -42,7 +42,6 @@
     const $installOffline = $$('#install');
 
     let _showStations = false;
-    let _filter = '';
 
     const _viewCommands = {};
 
@@ -108,7 +107,7 @@
     this.bind = function (event, handler) {
       if (event === 'start') {
         _self.render('chrome');
-        const data = handler(_filter);
+        const data = handler();
         _self.render('data', data);
         $loadStatus.click(); // TODO
       } else if (event === 'toggleStations') {
@@ -132,7 +131,7 @@
             this.classList.toggle('success', false);
             this.classList.toggle('rotating', true);
             try {
-              const data = await handler(_filter);
+              const data = await handler();
               this.classList.toggle('success', true);
               _self.render('data', data);
             } catch (e) {
@@ -144,8 +143,7 @@
         );
       } else if (event === 'filterStations') {
         $stationsFilterInput.on('input', function (event) {
-          _filter = event.target.value;
-          const stations = handler(_filter);
+          const stations = handler(event.target.value);
           $stationsList.innerHTML = _self.template.stations(stations);
         });
       } else if (event === 'toggleFavorite') {
@@ -198,7 +196,7 @@
               action !== 'remove' ||
               window.confirm(`Are you sure you want to remove station ${id}?`)
             ) {
-              const res = handler(id, action, _filter);
+              const res = handler(id, action);
               if (res !== -1) {
                 _self.render('data', res);
               } else {
@@ -214,7 +212,7 @@
           $body.classList.toggle('edit', !pressed);
           if (pressed) {
             // finished editing, rerender with the updated data
-            const data = handler(_filter);
+            const data = handler();
             _self.render('data', data);
           }
         });
@@ -229,7 +227,7 @@
         ].forEach(($el) =>
           $el.on('change', function () {
             opts[this.value] = this.checked;
-            const data = handler(opts, _filter);
+            const data = handler(opts);
             _self.render('data', data);
           })
         );
@@ -250,7 +248,7 @@
         $importData.on('change', async function () {
           try {
             const [file] = $importData.files;
-            const data = await handler(file, _filter);
+            const data = await handler(file);
             _self.render('data', data);
             _self.render('success', 'Data imported successfully');
           } catch (e) {
