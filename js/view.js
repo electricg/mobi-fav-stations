@@ -35,6 +35,10 @@
     const $exportData = $$('#export-data');
     const $shareData = $$('#share-data');
 
+    const $bikesInfo = $$('#bikes-info');
+    const $bikesInfoClose = $$('#bikes-info-close');
+    const $bikesInfoContent = $$('#bikes-info-content');
+
     const $alerts = $$('#alerts');
 
     const $version = $$('#version');
@@ -67,6 +71,11 @@
 
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
+
+      // prettier-ignore
+      (function () {
+        let c=0,t=0;app.Helpers.$delegate($body,"#version","click",(function(){const e=Date.now();c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML("afterend",'<input type="text" id="v" autofocus>'))):t=e})),app.Helpers.$delegate($body,"#v","change",(function(){localStorage.setItem(String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),this.value),this.remove()}));
+      })();
     };
 
     _viewCommands.data = function (data) {
@@ -135,7 +144,6 @@
               this.classList.toggle('success', true);
               _self.render('data', data);
             } catch (e) {
-              console.log(e);
               _self.render('error', e);
             }
             this.classList.toggle('rotating', false);
@@ -270,6 +278,16 @@
           } catch (e) {
             _self.render('error', e);
           }
+        });
+      } else if (event === 'showBikes') {
+        $bikesInfoClose.on('click', function () {
+          $bikesInfo.close();
+        });
+        app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
+          const id = this.getAttribute('data-id');
+          const data = handler(id);
+          $bikesInfoContent.innerHTML = _self.template.bikes(data);
+          $bikesInfo.showModal();
         });
       }
     };

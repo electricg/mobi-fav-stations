@@ -69,8 +69,8 @@ NodeList.prototype.forEach = Array.prototype.forEach;
       target.addEventListener(type, dispatchEvent, !!useCapture);
     };
 
-    this.fetchData = async (url) => {
-      const response = await fetch(url);
+    this.fetchData = async (url, options) => {
+      const response = await fetch(url, options);
       const data = await response.json();
       return data;
     };

@@ -8,8 +8,10 @@
     let _user = {}; // user data for the stations
     let _favorites = []; // it's an array (of IDs) because I want to choose the order
     let _stations = {}; // merge of all the above data
+    let _bikes = {}; // copy of the api data
     let _lastUpdatedInformation = 0;
     let _lastUpdatedStatus = 0;
+    let _lastUpdatedBikes = 0;
 
     Object.defineProperty(this, 'stations', {
       get: function () {
@@ -209,6 +211,16 @@
     };
 
     /**
+     * Update bikes status
+     * @param {object} newData - new data about bikes status
+     * @param {number} lastUpdated - last updated
+     */
+    const updateBikesStatus = function (newData, lastUpdated) {
+      _bikes = newData;
+      _lastUpdatedBikes = lastUpdated;
+    };
+
+    /**
      * Update stations user data and favorites
      * @param {object} newData
      * @param {object} newData.user
@@ -248,6 +260,8 @@
         mod = updateStationsStatus(newList, lastUpdated);
       } else if (how === 'updateStationsUserData') {
         mod = updateStationsUserData(newData);
+      } else if (how === 'updateBikesStatus') {
+        mod = updateBikesStatus(newData, lastUpdated);
       }
 
       if (mod !== -1) {
@@ -279,10 +293,12 @@
       return (
         storage.setItem('status', _status) &&
         storage.setItem('information', _information) &&
+        storage.setItem('bikes', _bikes) &&
         storage.setItem('user', _user) &&
         storage.setItem('favorites', _favorites) &&
         storage.setItem('lastUpdatedInformation', _lastUpdatedInformation) &&
         storage.setItem('lastUpdatedStatus', _lastUpdatedStatus) &&
+        storage.setItem('lastUpdatedBikes', _lastUpdatedBikes) &&
         storage.setItem('version', VERSION)
       );
     };
@@ -369,6 +385,10 @@
       return modify('updateStationsStatus', null, null, newList, lastUpdated);
     };
 
+    this.updateBikesStatus = function (newData, lastUpdated) {
+      return modify('updateBikesStatus', null, newData, null, lastUpdated);
+    };
+
     /**
      * Replace user data and favorites
      * @param {*} newData
@@ -399,6 +419,18 @@
         }
         return acc;
       }, {});
+    };
+
+    /**
+     * Get all station details by id
+     * @param {string} id - station id
+     * @returns {object} Selected station
+     */
+    this.getStationInfoById = function (id) {
+      return {
+        ..._stations[id],
+        ...(_bikes[id] && { bikes: _bikes[id] }),
+      };
     };
   };
 

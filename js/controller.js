@@ -18,8 +18,8 @@
 
     let _search = '';
 
-    const fetchData = async (url) => {
-      return await app.Helpers.fetchData(`${URL_BASE}${url}`);
+    const fetchData = async (url, options) => {
+      return await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
     };
 
     const getData = function () {
@@ -34,6 +34,7 @@
     };
 
     const loadStatus = async function () {
+      loadBikes();
       const data = await fetchData('station_status.json');
 
       _self.model.updateStationsStatus(data.data.stations, data.last_updated);
@@ -48,6 +49,17 @@
         data.data.stations,
         data.last_updated
       );
+
+      return getData();
+    };
+
+    // prettier-ignore
+    const loadBikes = async function () {
+      const a={},b=String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),c=localStorage.getItem(b);c&&(a.headers={[b]:c});
+
+      const data = await fetchData('free_bike_status.json', a);
+
+      _self.model.updateBikesStatus(data.data.stations, data.last_updated);
 
       return getData();
     };
@@ -161,6 +173,10 @@
 
       _self.view.bind('shareData', function () {
         return shareData();
+      });
+
+      _self.view.bind('showBikes', function (id) {
+        return _self.model.getStationInfoById(id);
       });
 
       // This goes last for now

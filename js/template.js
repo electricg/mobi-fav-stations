@@ -54,7 +54,7 @@
       const { showClassics, showEbikes, showDocks } = config;
 
       const code = `
-          <div class="favorite">
+          <div class="favorite" data-id="${id}">
             <div class="favorite__actions">
               <input type="button" data-id="${id}" data-action="up" class="favorite__up js-edit-favorites" value="▲" />
               <input type="button" data-id="${id}" data-action="down" class="favorite__down js-edit-favorites" value="▼" />
@@ -229,6 +229,41 @@
             </tbody>
           </table>
         `;
+
+      return code;
+    };
+
+    this.bikes = function (station) {
+      console.log(station);
+      const { bikes, information, status, user } = station;
+
+      let code = ``;
+
+      if (information) {
+        code += `<div>${information.name} - ${information.station_id}</div>`;
+      }
+
+      if (user) {
+        code += `<div>${user.description}</div>`;
+      }
+
+      if (bikes) {
+        code += `<div>`;
+        bikes.forEach((bike) => {
+          code += `<div>`;
+          if (bike.b || bike.c) {
+            code += `<del>`;
+          }
+          for (const key in bike) {
+            code += `<span>${key}:</span> <span>${bike[key]}</span> `;
+          }
+          if (bike.b || bike.c) {
+            code += `<del>`;
+          }
+          code += `</div>`;
+        });
+        code += `</div>`;
+      }
 
       return code;
     };
