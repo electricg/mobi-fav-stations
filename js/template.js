@@ -27,7 +27,7 @@
     };
 
     const formatKpiNumber = (value) => {
-      if (value == null) {
+      if (value === null || value === undefined) {
         return '_';
       }
       return value;

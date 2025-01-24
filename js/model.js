@@ -281,8 +281,10 @@
       _information = storage.getItem('information') || [];
       _user = storage.getItem('user') || {};
       _favorites = storage.getItem('favorites') || [];
+      _bikes = storage.getItem('bikes') || {};
       _lastUpdatedInformation = storage.getItem('lastUpdatedInformation') || 0;
       _lastUpdatedStatus = storage.getItem('lastUpdatedStatus') || 0;
+      _lastUpdatedBikes = storage.getItem('lastUpdatedBikes') || 0;
     };
 
     /**

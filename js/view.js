@@ -45,7 +45,7 @@
 
     const $installOffline = $$('#install');
 
-    let _showStations = false;
+    let _showAllStations = false;
 
     const _viewCommands = {};
 
@@ -97,7 +97,7 @@
       $lastUpdatedInformation.innerHTML = _self.template.lastUpdated(
         lastUpdatedInformation
       );
-      if (_showStations) {
+      if (_showAllStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
       // settings
@@ -121,10 +121,10 @@
         $loadStatus.click(); // TODO
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
-          _showStations = !_showStations;
-          this.setAttribute('aria-pressed', _showStations);
-          $stations.classList.toggle('hide', !_showStations);
-          if (_showStations) {
+          _showAllStations = !_showAllStations;
+          this.setAttribute('aria-pressed', _showAllStations);
+          $stations.classList.toggle('hide', !_showAllStations);
+          if (_showAllStations) {
             const stations = handler();
             $stationsList.innerHTML = _self.template.stations(stations);
             $stations.scrollIntoView({ behavior: 'smooth' });
