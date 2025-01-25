@@ -466,6 +466,12 @@ td[colspan="12"] {
 }
 
 /*=== station detail */
+.detail-dialog {
+  width: 100%;
+}
+.detail-dialog__close {
+  
+}
 .detail {
 
 }
