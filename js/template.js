@@ -33,6 +33,23 @@
       return value;
     };
 
+    const formatDockNumber = (value) => {
+      let str;
+      if (value === null || value === undefined) {
+        str = '';
+      } else {
+        str = value + '';
+      }
+      return str.padStart(2, '0');
+    };
+
+    const formatRangeNumber = (value) => {
+      if (value === null || value === undefined) {
+        return '';
+      }
+      return value;
+    };
+
     const formatStatusSpan = (value, label) => {
       return `<span${
         value ? '' : ' tabindex="0"'
@@ -233,37 +250,57 @@
       return code;
     };
 
-    this.bikes = function (station) {
-      console.log(station);
-      const { bikes, information, status, user } = station;
+    this.bikes = function (item) {
+      console.log(item);
+      const { bikes = [] } = item;
 
-      let code = ``;
+      const {
+        station_id: id,
+        name,
+        is_charging_station: isCharging,
+      } = item?.information || {};
+      const {
+        is_installed: isInstalled,
+        is_renting: isRenting,
+        is_returning: isReturning,
+        num_docks_available: numDocksAvailable,
+        vehicle_types_available: vehicleTypesAvailable,
+      } = item?.status || {};
+      const { favorite, description = '' } = item?.user || {};
 
-      if (information) {
-        code += `<div>${information.name} - ${information.station_id}</div>`;
-      }
-
-      if (user) {
-        code += `<div>${user.description}</div>`;
-      }
-
-      if (bikes) {
-        code += `<div>`;
-        bikes.forEach((bike) => {
-          code += `<div>`;
-          if (bike.b || bike.c) {
-            code += `<del>`;
-          }
-          for (const key in bike) {
-            code += `<span>${key}:</span> <span>${bike[key]}</span> `;
-          }
-          if (bike.b || bike.c) {
-            code += `<del>`;
-          }
-          code += `</div>`;
-        });
-        code += `</div>`;
-      }
+      const code = `
+        <div class="detail">
+          <div class="detail__title"><span class="detail__id">${id}</span> ${
+        name || ''
+      }</div>
+          <div class="detail__description">${description}</div>
+          <div class="detail__status">
+            <span title="Installed">${formatStatus(isInstalled)}</span>
+            <span title="Renting">${formatStatus(isRenting)}</span>
+            <span title="Returning">${formatStatus(isReturning)}</span>
+            <span>charge: ${isCharging}</span>
+            <span>fav: ${favorite}</span>
+          </div>
+          <div>
+            <div>${vehicleTypesAvailable?.[0].count} <span>Classics</span></div>
+            <div>${vehicleTypesAvailable?.[1].count} <span>E-Bikes</span></div>
+            <div>${numDocksAvailable} <span>Docks</span></div>
+          </div>
+          
+          <table class="detail_bikes">
+            ${bikes
+              .map((bike) => {
+                return `
+              <tr${bike?.c ? ` class="detail__bike-disabled"` : ``}>
+                <td>${formatDockNumber(bike?.z)}</td>
+                <td>${bike?.a}</td>
+                <td>${bike?.d}</td>
+                <td>${formatRangeNumber(bike?.e)}</td>
+              </tr>`;
+              })
+              .join('')}
+          </table>
+        </div>`;
 
       return code;
     };

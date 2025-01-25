@@ -465,6 +465,23 @@ td[colspan="12"] {
   margin-bottom: calc(var(--l-gap) * 2);
 }
 
+/*=== station detail */
+.detail {
+
+}
+.detail__bike-disabled td {
+  position: relative;
+
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-bottom: 1px solid var(--c-main-text);
+    width: 100%;
+  }
+}
+
 /*=== settings */
 .settings {
   margin-top: calc(var(--l-gap) * 2);
