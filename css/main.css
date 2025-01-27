@@ -364,6 +364,47 @@ body {
   /* todo: check how the subgrid rows look */
 }
 
+/*=== generic table */
+table {
+  border-spacing: 0;
+  min-width: 100%;
+  position: relative;
+  user-select: none;
+}
+table, th, td {
+  border: .5px solid var(--c-table-border);
+}
+th, td {
+  padding: 2px;
+  vertical-align: top;
+}
+th {
+  background: inherit;
+  position: sticky;
+}
+thead {
+  th {
+    top: 0;
+  }
+  tr {
+    background: var(--c-main-bg);
+  }
+}
+
+tbody {
+  tr {
+    background: var(--c-main-bg);
+  }
+  tr:nth-child(odd) {
+    background: var(--c-table-stripe);
+  }
+  th {
+    font-weight: normal;
+    left: 0;
+    text-align: left;
+  }
+}
+
 /*=== stations table */
 .stations-search {
   margin: calc(var(--l-gap) * 2) 0;
@@ -374,58 +415,37 @@ body {
   width: 100%;
 }
 
-table {
-  border-spacing: 0;
-  margin-left: calc(-1 * var(--l-gap));
-  margin-right: calc(-1 * var(--l-gap));
-  min-width: calc(100% + var(--l-gap) * 2);
-  position: relative;
-  user-select: none;
-}
-table, th, td {
-  border: .5px solid var(--c-table-border);
-}
-th, td {
-  padding: 2px;
-  vertical-align: text-top;
-}
-th {
-  background: inherit;
-  position: sticky;
-}
-thead th {
-  background: var(--c-theme-second);
-  border-color: var(--c-theme-first);
-  top: 0;
-}
-thead th:nth-child(2) {
-  left: 0;
-  z-index: 1;
-}
-tr {
-  background: var(--c-main-bg);
-}
-tr:nth-child(even) {
-  background: var(--c-table-stripe);
-}
-tbody th {
-  font-weight: normal;
-  left: 0;
-  text-align: left;
-}
-td:nth-child(3),
-td:nth-child(6),
-td:nth-child(7),
-td:nth-child(8),
-td:nth-child(9),
-td:nth-child(10) {
-  text-align: right;
-}
-td:nth-child(4) {
-  text-align: center;
-}
-td[colspan="12"] {
-  text-align: center;
+.stations-list {
+  table {
+    margin-left: calc(-1 * var(--l-gap));
+    margin-right: calc(-1 * var(--l-gap));
+    min-width: calc(100% + var(--l-gap) * 2);
+  }
+  thead {
+    th {
+      background: var(--c-theme-second);
+      border-color: var(--c-theme-first);
+    }
+    th:nth-child(2) {
+      left: 0;
+      z-index: 1;
+    }
+  }
+
+  td:nth-child(3),
+  td:nth-child(6),
+  td:nth-child(7),
+  td:nth-child(8),
+  td:nth-child(9),
+  td:nth-child(10) {
+    text-align: right;
+  }
+  td:nth-child(4) {
+    text-align: center;
+  }
+  td[colspan="12"] {
+    text-align: center;
+  }
 }
 
 .station__favorite-toggle {
@@ -467,25 +487,47 @@ td[colspan="12"] {
 
 /*=== station detail */
 .detail-dialog {
+  height: 100%;
   width: 100%;
 }
 .detail-dialog__close {
   
 }
 .detail {
-
+  td:nth-child(3),
+  td:nth-child(4) {
+    text-align: right;
+  }
 }
 .detail__bike-disabled td {
   position: relative;
 
   &:before {
-    content: " ";
+    border-bottom: 1px solid var(--c-main-text);
+    content: "";
+    left: 0;
     position: absolute;
     top: 50%;
-    left: 0;
-    border-bottom: 1px solid var(--c-main-text);
     width: 100%;
   }
+}
+.detail__icon {
+  --l-icon-size: 1.5em;
+}
+.detail__icon--bike {
+  color: var(--c-bike);
+  fill: transparent;
+}
+.detail__icon--ebike {
+  color: var(--c-ebike);
+  fill: var(--c-ebike-strike);
+}
+.detail__icon--dock {
+  --l-icon-size: 1em;
+  color: var(--c-dock);
+  display: inline-block;
+  /* height: 2rem; */
+  vertical-align: sub;
 }
 
 /*=== settings */

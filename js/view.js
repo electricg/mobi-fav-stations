@@ -283,6 +283,9 @@
         $bikesInfoClose.on('click', function () {
           $bikesInfo.close();
         });
+        $bikesInfo.on('close', function () {
+          $bikesInfoContent.innerHTML = '';
+        });
         app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
           const id = this.getAttribute('data-id');
           const data = handler(id);

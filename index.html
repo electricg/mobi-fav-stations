@@ -107,7 +107,7 @@
 
     <div>Information updated: <span id="last-updated-information"></span></div>
 
-    <div id="stations-list"></div>
+    <div id="stations-list" class="stations-list"></div>
   </section>
 
 <!-- SETTINGS -->
@@ -184,8 +184,12 @@
 
 <!-- DIALOG -->
   <dialog id="bikes-info" class="detail-dialog">
-    <button id="bikes-info-close" class="detail-dialog__close">Close</button>
     <div id="bikes-info-content"></div>
+    <div class="detail-dialog__footer">
+      <div>Last updated: <span id="last-updated-bikes"></span></div>
+      <button id="load-status-2" class="button-spinner" title="Update status"><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-spinner"></use><use href="#icon-clipboard" class="icon-clipboard"></use></svg></button>
+      <button id="bikes-info-close" class="detail-dialog__close" autofocus>Close</button>
+    </div>
   </dialog>
 
 <!-- ALERTS -->

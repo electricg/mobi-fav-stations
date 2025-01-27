@@ -47,7 +47,7 @@
       if (value === null || value === undefined) {
         return '';
       }
-      return value;
+      return value / 1000 + ' km';
     };
 
     const formatStatusSpan = (value, label) => {
@@ -287,18 +287,33 @@
             <div>${numDocksAvailable} <span>Docks</span></div>
           </div>
           
-          <table class="detail_bikes">
+          <table>
+            <thead>
+              <th>Dock</th>
+              <th>Type</th>
+              <th>Id</th>
+              <th>Range</th>
+            </thead>
+            <tbody>
             ${bikes
               .map((bike) => {
                 return `
               <tr${bike?.c ? ` class="detail__bike-disabled"` : ``}>
-                <td>${formatDockNumber(bike?.z)}</td>
+                <td>
+                  <svg class="icon detail__icon detail__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                  ${formatDockNumber(bike?.z)}
+                </td>
+                <td>
+                  <svg class="icon detail__icon detail__icon--${
+                    bike?.d === '2' ? `e` : ``
+                  }bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                </td>
                 <td>${bike?.a}</td>
-                <td>${bike?.d}</td>
                 <td>${formatRangeNumber(bike?.e)}</td>
               </tr>`;
               })
               .join('')}
+            </tbody>
           </table>
         </div>`;
 
