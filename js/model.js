@@ -43,6 +43,12 @@
       },
     });
 
+    Object.defineProperty(this, 'lastUpdatedBikes', {
+      get: function () {
+        return _lastUpdatedBikes;
+      },
+    });
+
     /**
      * Find favorite by id
      * @param {string} id - id of the occurance to find

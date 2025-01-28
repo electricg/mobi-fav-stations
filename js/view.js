@@ -9,8 +9,11 @@
     const _self = this;
     _self.template = template;
 
-    const $loadStatus = $$('#load-status');
-    const $loadInformation = $$('#load-information');
+    const $load = {
+      loadStatus: $$('#load-status'),
+      loadInformation: $$('#load-information'),
+      loadBikes: $$('#load-bikes'),
+    };
     const $toggleEdit = $$('#toggle-edit');
     const $toggleStations = $$('#toggle-stations');
 
@@ -38,6 +41,7 @@
     const $bikesInfo = $$('#bikes-info');
     const $bikesInfoClose = $$('#bikes-info-close');
     const $bikesInfoContent = $$('#bikes-info-content');
+    const $lastUpdatedBikes = $$('#last-updated-bikes');
 
     const $alerts = $$('#alerts');
 
@@ -84,6 +88,8 @@
         favorites,
         lastUpdatedInformation,
         lastUpdatedStatus,
+        lastUpdatedBikes,
+        station,
         filteredStations,
         config,
       } = data;
@@ -99,6 +105,11 @@
       );
       if (_showAllStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
+      }
+      if (station) {
+        $bikesInfoContent.innerHTML = _self.template.bikes(station);
+        $lastUpdatedBikes.innerHTML =
+          _self.template.lastUpdated(lastUpdatedBikes);
       }
       // settings
       $settingsShowClassics.checked = config.showClassics;
@@ -118,7 +129,7 @@
         _self.render('chrome');
         const data = handler();
         _self.render('data', data);
-        $loadStatus.click(); // TODO
+        ['loadStatus', 'loadBikes'].forEach((i) => $load[i].click()); // TODO
       } else if (event === 'toggleStations') {
         $toggleStations.on('click', function () {
           _showAllStations = !_showAllStations;
@@ -133,22 +144,23 @@
             $stationsFilterInput.value = '';
           }
         });
-      } else if (event === 'loadStatus' || event === 'loadInformation') {
-        (event === 'loadStatus' ? $loadStatus : $loadInformation).on(
-          'click',
-          async function () {
-            this.classList.toggle('success', false);
-            this.classList.toggle('rotating', true);
-            try {
-              const data = await handler();
-              this.classList.toggle('success', true);
-              _self.render('data', data);
-            } catch (e) {
-              _self.render('error', e);
-            }
-            this.classList.toggle('rotating', false);
+      } else if (
+        event === 'loadStatus' ||
+        event === 'loadInformation' ||
+        event === 'loadBikes'
+      ) {
+        $load[event].on('click', async function () {
+          this.classList.toggle('success', false);
+          this.classList.toggle('rotating', true);
+          try {
+            const data = await handler();
+            this.classList.toggle('success', true);
+            _self.render('data', data);
+          } catch (e) {
+            _self.render('error', e);
           }
-        );
+          this.classList.toggle('rotating', false);
+        });
       } else if (event === 'filterStations') {
         $stationsFilterInput.on('input', function (event) {
           const stations = handler(event.target.value);
@@ -284,12 +296,17 @@
           $bikesInfo.close();
         });
         $bikesInfo.on('close', function () {
+          handler();
           $bikesInfoContent.innerHTML = '';
+          $lastUpdatedBikes.innerHTML = '';
+          $load['loadBikes'].classList.toggle('success', false);
         });
         app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
           const id = this.getAttribute('data-id');
-          const data = handler(id);
-          $bikesInfoContent.innerHTML = _self.template.bikes(data);
+          const { station, lastUpdatedBikes } = handler(id);
+          $bikesInfoContent.innerHTML = _self.template.bikes(station);
+          $lastUpdatedBikes.innerHTML =
+            _self.template.lastUpdated(lastUpdatedBikes);
           $bikesInfo.showModal();
         });
       }

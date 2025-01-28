@@ -251,7 +251,6 @@
     };
 
     this.bikes = function (item) {
-      console.log(item);
       const { bikes = [] } = item;
 
       const {
@@ -270,16 +269,15 @@
 
       const code = `
         <div class="detail">
-          <div class="detail__title"><span class="detail__id">${id}</span> ${
-        name || ''
-      }</div>
+          <div class="detail__title">${
+            favorite && `<span title="Favorite">⭐️ </span>`
+          }<span class="detail__id">${id}</span> ${name || ''}</div>
           <div class="detail__description">${description}</div>
           <div class="detail__status">
-            <span title="Installed">${formatStatus(isInstalled)}</span>
-            <span title="Renting">${formatStatus(isRenting)}</span>
-            <span title="Returning">${formatStatus(isReturning)}</span>
-            <span>charge: ${isCharging}</span>
-            <span>fav: ${favorite}</span>
+            <span>${formatStatus(isInstalled)} Installed</span>
+            <span>${formatStatus(isRenting)} Renting</span>
+            <span>${formatStatus(isReturning)} Returning</span>
+            <span>⚡️ ${isCharging ? '' : 'Not '}Charging</span>
           </div>
           <div>
             <div>${vehicleTypesAvailable?.[0].count} <span>Classics</span></div>

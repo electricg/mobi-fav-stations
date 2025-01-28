@@ -490,8 +490,29 @@ tbody {
   height: 100%;
   width: 100%;
 }
-.detail-dialog__close {
-  
+.detail-dialog__body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.detail-dialog__main {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+.detail__status span:after {
+  content: attr(title);
+  padding-left: 0.1rem;
+}
+.detail-dialog__footer {
+  column-gap: calc(var(--l-gap) * 2);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  > div {
+    flex-basis: 100%;
+    padding: .5em 0;
+  }
 }
 .detail {
   td:nth-child(3),
@@ -538,17 +559,20 @@ tbody {
   margin-left: .5em;
 }
 
-/* === button load information */
+/* === button load */
+.load-bikes,
 .load-information {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-.load-information span {
-  margin-right: 0.2em;
-}
-.load-information svg {
-  margin: 0;
+  & {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  span {
+    margin-right: 0.2em;
+  }
+  svg {
+    margin: 0;
+  }
 }
 
 /*=== input checkbox with svg icons */

@@ -17,6 +17,7 @@
     _self.offline = offline;
 
     let _search = '';
+    let _station = false;
 
     const fetchData = async (url, options) => {
       return await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
@@ -28,13 +29,14 @@
         favorites: _self.model.favorites,
         lastUpdatedInformation: _self.model.lastUpdatedInformation,
         lastUpdatedStatus: _self.model.lastUpdatedStatus,
+        lastUpdatedBikes: _self.model.lastUpdatedBikes,
         filteredStations: _self.model.filterStations(_search),
         config: _self.config.getAll(),
+        ...(_station && { station: _self.model.getStationInfoById(_station) }),
       };
     };
 
     const loadStatus = async function () {
-      loadBikes();
       const data = await fetchData('station_status.json');
 
       _self.model.updateStationsStatus(data.data.stations, data.last_updated);
@@ -53,9 +55,8 @@
       return getData();
     };
 
-    // prettier-ignore
     const loadBikes = async function () {
-      const a={},b=String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),c=localStorage.getItem(b);c&&(a.headers={[b]:c});
+      const a=((a=String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),b=localStorage[a])=>b&&{headers:{[a]:b}})(); // prettier-ignore
 
       const data = await fetchData('free_bike_status.json', a);
 
@@ -121,6 +122,10 @@
         return loadInformation();
       });
 
+      _self.view.bind('loadBikes', async function () {
+        return loadBikes();
+      });
+
       _self.view.bind('filterStations', function (search) {
         _search = search;
         return _self.model.filterStations(_search);
@@ -176,7 +181,15 @@
       });
 
       _self.view.bind('showBikes', function (id) {
-        return _self.model.getStationInfoById(id);
+        if (!id) {
+          _station = false;
+          return;
+        }
+        _station = id;
+        return {
+          station: _self.model.getStationInfoById(id),
+          lastUpdatedBikes: _self.model.lastUpdatedBikes,
+        };
       });
 
       // This goes last for now
