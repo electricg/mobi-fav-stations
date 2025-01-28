@@ -270,7 +270,7 @@
       const code = `
         <div class="detail">
           <div class="detail__title">${
-            favorite && `<span title="Favorite">⭐️ </span>`
+            favorite ? `<span title="Favorite">⭐️ </span>` : ``
           }<span class="detail__id">${id}</span> ${name || ''}</div>
           <div class="detail__description">${description}</div>
           <div class="detail__status">

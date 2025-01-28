@@ -309,6 +309,20 @@
             _self.template.lastUpdated(lastUpdatedBikes);
           $bikesInfo.showModal();
         });
+        app.Helpers.$delegate(
+          // todo better code
+          $stationsList,
+          'tbody td:nth-child(1)',
+          'click',
+          function () {
+            const id = this.innerText;
+            const { station, lastUpdatedBikes } = handler(id);
+            $bikesInfoContent.innerHTML = _self.template.bikes(station);
+            $lastUpdatedBikes.innerHTML =
+              _self.template.lastUpdated(lastUpdatedBikes);
+            $bikesInfo.showModal();
+          }
+        );
       }
     };
   };

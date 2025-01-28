@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.7.42';
+const VERSION = '0.7.43';
 const NAMESPACE = 'mobiFavStations';
 
 const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
