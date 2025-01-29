@@ -188,7 +188,7 @@
         }
         case 'toggleFavorite': {
           app.Helpers.$delegate(
-            $stationsList,
+            $body,
             '.js-toggle-favorite',
             'click',
             function () {
@@ -229,7 +229,7 @@
         }
         case 'editFavorite': {
           app.Helpers.$delegate(
-            $favorites,
+            $body,
             '.js-edit-favorites',
             'click',
             function () {
@@ -345,16 +345,10 @@
           $bikesInfo.on('close', function () {
             const data = handler();
             _self.render('showStation', data);
-            $load['loadBikes'].classList.toggle('success', false);
-          });
-          app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
-            const id = this.getAttribute('data-id');
-            const data = handler(id);
-            _self.render('showStation', data);
           });
           app.Helpers.$delegate(
-            $stationsList,
-            'tbody td[data-id]',
+            $body,
+            '.js-show-station',
             'click',
             function () {
               const id = this.getAttribute('data-id');

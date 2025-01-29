@@ -19,4 +19,4 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] cancel data
 - [ ] show station details
 - [ ] over style for the zebra table
-- [ ] delegate more events to the body
+- [x] delegate more events to the body

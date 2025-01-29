@@ -71,7 +71,7 @@
       const { showClassics, showEbikes, showDocks } = config;
 
       const code = `
-          <div class="favorite" data-id="${id}">
+          <div class="favorite js-show-station" data-id="${id}">
             <div class="favorite__actions">
               <input type="button" data-id="${id}" data-action="up" class="favorite__up js-edit-favorites" value="▲" />
               <input type="button" data-id="${id}" data-action="down" class="favorite__down js-edit-favorites" value="▼" />
@@ -188,7 +188,7 @@
 
       const code = `
           <tr>
-            <td data-id="${id}">${id}</td>
+            <td data-id="${id}" class="js-show-station">${id}</td>
             <th scope="row">${formatUndefined(name)}</th>
             <td>${formatUndefined(capacity)}</td>
             <td>${formatCharging(isCharging)}</td>
