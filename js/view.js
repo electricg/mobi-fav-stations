@@ -31,6 +31,7 @@
     const $settingsShowClassics = $$('#settings-show-classics');
     const $settingsShowEbikes = $$('#settings-show-ebikes');
     const $settingsShowDocks = $$('#settings-show-docks');
+    const $settingsDetails = $$('#settings-details');
 
     const $settingsCompactLayout = $$('#settings-compact-layout');
 
@@ -142,8 +143,8 @@
           if (_showAllStations) {
             const stations = handler();
             $stationsList.innerHTML = _self.template.stations(stations);
-            $stations.scrollIntoView({ behavior: 'smooth' });
             $stationsFilterInput.focus();
+            $toggleStations.scrollIntoView({ behavior: 'smooth' });
           } else {
             $stationsList.innerHTML = '';
             $stationsFilterInput.value = '';
@@ -260,6 +261,12 @@
             _self.render('data', data);
           })
         );
+
+        $settingsDetails.on('toggle', function () {
+          if (this.open) {
+            this.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
       } else if (event === 'installOffline') {
         $installOffline.on('click', async function () {
           handler();

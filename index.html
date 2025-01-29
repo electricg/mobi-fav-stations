@@ -102,7 +102,7 @@
 
   <section id="stations" class="main-section--stations hide">
     <div class="stations-search">
-      <input type="search" id="stations-filter-input" placeholder="Search station by name or number" aria-label="Search station by name or number">
+      <input type="search" id="stations-filter-input" placeholder="Search station by name or number" aria-label="Search station by name or number" autocomplete="off">
     </div>
 
     <div>Information updated: <span id="last-updated-information"></span></div>
@@ -112,7 +112,7 @@
 
 <!-- SETTINGS -->
   <section id="settings" class="main-section main-section--settings">
-    <details>
+    <details id="settings-details">
       <summary>Settings</summary>
       <div class="settings">
       
@@ -160,13 +160,13 @@
 
         <button id="load-information" class="button-spinner load-information"><span>Load information</span><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-spinner"></use><use href="#icon-clipboard" class="icon-clipboard"></use></svg></button>
 
-        <label class="settings__option settings__button" for="import-data">Import from backup<input type="file" id="import-data" accept=".txt"></label>
+        <label class="settings__button" for="import-data">Import from backup<input type="file" id="import-data" accept=".txt"></label>
 
-        <button class="settings__option settings__button" id="export-data">Export to backup</button>
+        <button id="export-data">Export to backup</button>
 
-        <button class="settings__option settings__button" id="share-data">Share data to…</button>
+        <button id="share-data">Share data to…</button>
 
-        <!-- <button class="settings__option settings__button" id="delete-all">Delete all data</button> -->
+        <!-- <button id="delete-all">Delete all data</button> -->
 
         <button id="install" disabled>Install app</button>
       </div>
