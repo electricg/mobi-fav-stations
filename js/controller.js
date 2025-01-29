@@ -17,7 +17,7 @@
     _self.offline = offline;
 
     let _search = '';
-    let _station = false;
+    let _station = undefined;
 
     const fetchData = async (url, options) => {
       return await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
@@ -29,10 +29,18 @@
         favorites: _self.model.favorites,
         lastUpdatedInformation: _self.model.lastUpdatedInformation,
         lastUpdatedStatus: _self.model.lastUpdatedStatus,
-        lastUpdatedBikes: _self.model.lastUpdatedBikes,
         filteredStations: _self.model.filterStations(_search),
         config: _self.config.getAll(),
-        ...(_station && { station: _self.model.getStationInfoById(_station) }),
+      };
+    };
+
+    const getDataStation = function (id) {
+      if (!id) {
+        return;
+      }
+      return {
+        station: _self.model.getStationInfoById(id),
+        lastUpdatedBikes: _self.model.lastUpdatedBikes,
       };
     };
 
@@ -62,7 +70,7 @@
 
       _self.model.updateBikesStatus(data.data.stations, data.last_updated);
 
-      return getData();
+      return getDataStation(_station);
     };
 
     const updateSettings = function (data) {
@@ -181,15 +189,8 @@
       });
 
       _self.view.bind('showBikes', function (id) {
-        if (!id) {
-          _station = false;
-          return;
-        }
         _station = id;
-        return {
-          station: _self.model.getStationInfoById(id),
-          lastUpdatedBikes: _self.model.lastUpdatedBikes,
-        };
+        return getDataStation(id);
       });
 
       // This goes last for now

@@ -88,8 +88,6 @@
         favorites,
         lastUpdatedInformation,
         lastUpdatedStatus,
-        lastUpdatedBikes,
-        station,
         filteredStations,
         config,
       } = data;
@@ -106,11 +104,6 @@
       if (_showAllStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
-      if (station) {
-        $bikesInfoContent.innerHTML = _self.template.bikes(station);
-        $lastUpdatedBikes.innerHTML =
-          _self.template.lastUpdated(lastUpdatedBikes);
-      }
       // settings
       $settingsShowClassics.checked = config.showClassics;
       $settingsShowEbikes.checked = config.showEbikes;
@@ -118,6 +111,17 @@
       $settingsCompactLayout.checked = config.compactLayout;
 
       $body.classList.toggle('compact', config.compactLayout);
+    };
+
+    _viewCommands.showStation = function (data) {
+      const { station, lastUpdatedBikes } = data || {};
+      $bikesInfoContent.innerHTML = data ? _self.template.bikes(station) : '';
+      $lastUpdatedBikes.innerHTML = data
+        ? _self.template.lastUpdated(lastUpdatedBikes)
+        : '';
+      if (data) {
+        $bikesInfo.showModal();
+      }
     };
 
     this.render = function (viewCmd, data) {
@@ -155,7 +159,11 @@
           try {
             const data = await handler();
             this.classList.toggle('success', true);
-            _self.render('data', data);
+            if (event === 'loadBikes') {
+              _self.render('showStation', data);
+            } else {
+              _self.render('data', data);
+            }
           } catch (e) {
             _self.render('error', e);
           }
@@ -296,18 +304,14 @@
           $bikesInfo.close();
         });
         $bikesInfo.on('close', function () {
-          handler();
-          $bikesInfoContent.innerHTML = '';
-          $lastUpdatedBikes.innerHTML = '';
+          const data = handler();
+          _self.render('showStation', data);
           $load['loadBikes'].classList.toggle('success', false);
         });
         app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
           const id = this.getAttribute('data-id');
-          const { station, lastUpdatedBikes } = handler(id);
-          $bikesInfoContent.innerHTML = _self.template.bikes(station);
-          $lastUpdatedBikes.innerHTML =
-            _self.template.lastUpdated(lastUpdatedBikes);
-          $bikesInfo.showModal();
+          const data = handler(id);
+          _self.render('showStation', data);
         });
         app.Helpers.$delegate(
           // todo better code
@@ -316,11 +320,8 @@
           'click',
           function () {
             const id = this.innerText;
-            const { station, lastUpdatedBikes } = handler(id);
-            $bikesInfoContent.innerHTML = _self.template.bikes(station);
-            $lastUpdatedBikes.innerHTML =
-              _self.template.lastUpdated(lastUpdatedBikes);
-            $bikesInfo.showModal();
+            const data = handler(id);
+            _self.render('showStation', data);
           }
         );
       }
