@@ -143,6 +143,7 @@
             const stations = handler();
             $stationsList.innerHTML = _self.template.stations(stations);
             $stations.scrollIntoView({ behavior: 'smooth' });
+            $stationsFilterInput.focus();
           } else {
             $stationsList.innerHTML = '';
             $stationsFilterInput.value = '';
