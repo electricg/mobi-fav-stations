@@ -130,208 +130,238 @@
     };
 
     this.bind = function (event, handler) {
-      if (event === 'start') {
-        _self.render('chrome');
-        const data = handler();
-        _self.render('data', data);
-        ['loadStatus', 'loadBikes'].forEach((i) => $load[i].click()); // TODO
-      } else if (event === 'toggleStations') {
-        $toggleStations.on('click', function () {
-          _showAllStations = !_showAllStations;
-          this.setAttribute('aria-pressed', _showAllStations);
-          $stations.classList.toggle('hide', !_showAllStations);
-          if (_showAllStations) {
-            const stations = handler();
-            $stationsList.innerHTML = _self.template.stations(stations);
-            $stationsFilterInput.focus();
-            $toggleStations.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            $stationsList.innerHTML = '';
-            $stationsFilterInput.value = '';
-          }
-        });
-      } else if (
-        event === 'loadStatus' ||
-        event === 'loadInformation' ||
-        event === 'loadBikes'
-      ) {
-        $load[event].on('click', async function () {
-          this.classList.toggle('success', false);
-          this.classList.toggle('rotating', true);
-          try {
-            const data = await handler();
-            this.classList.toggle('success', true);
-            if (event === 'loadBikes') {
-              _self.render('showStation', data);
+      switch (event) {
+        case 'start': {
+          _self.render('chrome');
+          const data = handler();
+          _self.render('data', data);
+          ['loadStatus', 'loadBikes'].forEach((i) => $load[i].click()); // TODO
+          break;
+        }
+        case 'toggleStations': {
+          $toggleStations.on('click', function () {
+            _showAllStations = !_showAllStations;
+            this.setAttribute('aria-pressed', _showAllStations);
+            $stations.classList.toggle('hide', !_showAllStations);
+            if (_showAllStations) {
+              const stations = handler();
+              $stationsList.innerHTML = _self.template.stations(stations);
+              $stationsFilterInput.focus();
+              $toggleStations.scrollIntoView({ behavior: 'smooth' });
             } else {
-              _self.render('data', data);
+              $stationsList.innerHTML = '';
+              $stationsFilterInput.value = '';
             }
-          } catch (e) {
-            _self.render('error', e);
-          }
-          this.classList.toggle('rotating', false);
-        });
-      } else if (event === 'filterStations') {
-        $stationsFilterInput.on('input', function (event) {
-          const stations = handler(event.target.value);
-          $stationsList.innerHTML = _self.template.stations(stations);
-        });
-      } else if (event === 'toggleFavorite') {
-        app.Helpers.$delegate(
-          $stationsList,
-          '.js-toggle-favorite',
-          'click',
-          function () {
-            const id = this.getAttribute('data-id');
-            const pressed = this.getAttribute('aria-pressed') === 'true';
-            const res = handler(id, pressed);
-
-            if (res === -1) {
-              const msg = pressed
-                ? 'The station you are trying to remove from your favorite is not present in the list'
-                : 'The station you are trying to add to your favorite is already present in the list';
-              _self.render('error', msg);
-            } else {
-              this.setAttribute('aria-pressed', !pressed);
-            }
-          }
-        );
-      } else if (event === 'editDescription') {
-        app.Helpers.$delegate(
-          $body,
-          '.js-edit-description',
-          'input',
-          function () {
-            const id = this.getAttribute('data-id');
-            const value = this.value;
-            const res = handler(id, value);
-            if (res === -1) {
-              _self.render(
-                'error',
-                'Error in updating this station description'
-              );
-            }
-          }
-        );
-      } else if (event === 'editFavorite') {
-        app.Helpers.$delegate(
-          $favorites,
-          '.js-edit-favorites',
-          'click',
-          function () {
-            const id = this.getAttribute('data-id');
-            const action = this.getAttribute('data-action');
-
-            if (
-              action !== 'remove' ||
-              window.confirm(`Are you sure you want to remove station ${id}?`)
-            ) {
-              const res = handler(id, action);
-              if (res !== -1) {
-                _self.render('data', res);
+          });
+          break;
+        }
+        case 'loadStatus':
+        case 'loadInformation':
+        case 'loadBikes': {
+          $load[event].on('click', async function () {
+            this.classList.toggle('success', false);
+            this.classList.toggle('rotating', true);
+            try {
+              const data = await handler();
+              this.classList.toggle('success', true);
+              if (event === 'loadBikes') {
+                _self.render('showStation', data);
               } else {
-                _self.render('error', 'Error in updating the favorites order');
+                _self.render('data', data);
+              }
+            } catch (e) {
+              _self.render('error', e);
+            }
+            this.classList.toggle('rotating', false);
+          });
+          break;
+        }
+        case 'filterStations': {
+          $stationsFilterInput.on('input', function (event) {
+            const stations = handler(event.target.value);
+            $stationsList.innerHTML = _self.template.stations(stations);
+          });
+          break;
+        }
+        case 'toggleFavorite': {
+          app.Helpers.$delegate(
+            $stationsList,
+            '.js-toggle-favorite',
+            'click',
+            function () {
+              const id = this.getAttribute('data-id');
+              const pressed = this.getAttribute('aria-pressed') === 'true';
+              const res = handler(id, pressed);
+
+              if (res === -1) {
+                const msg = pressed
+                  ? 'The station you are trying to remove from your favorite is not present in the list'
+                  : 'The station you are trying to add to your favorite is already present in the list';
+                _self.render('error', msg);
+              } else {
+                this.setAttribute('aria-pressed', !pressed);
               }
             }
-          }
-        );
-      } else if (event === 'toggleEdit') {
-        $toggleEdit.on('click', function () {
-          const pressed = this.getAttribute('aria-pressed') === 'true';
-          this.setAttribute('aria-pressed', !pressed);
-          $body.classList.toggle('edit', !pressed);
-          if (pressed) {
-            // finished editing, rerender with the updated data
+          );
+          break;
+        }
+        case 'editDescription': {
+          app.Helpers.$delegate(
+            $body,
+            '.js-edit-description',
+            'input',
+            function () {
+              const id = this.getAttribute('data-id');
+              const value = this.value;
+              const res = handler(id, value);
+              if (res === -1) {
+                _self.render(
+                  'error',
+                  'Error in updating this station description'
+                );
+              }
+            }
+          );
+          break;
+        }
+        case 'editFavorite': {
+          app.Helpers.$delegate(
+            $favorites,
+            '.js-edit-favorites',
+            'click',
+            function () {
+              const id = this.getAttribute('data-id');
+              const action = this.getAttribute('data-action');
+
+              if (
+                action !== 'remove' ||
+                window.confirm(`Are you sure you want to remove station ${id}?`)
+              ) {
+                const res = handler(id, action);
+                if (res !== -1) {
+                  _self.render('data', res);
+                } else {
+                  _self.render(
+                    'error',
+                    'Error in updating the favorites order'
+                  );
+                }
+              }
+            }
+          );
+          break;
+        }
+        case 'toggleEdit': {
+          $toggleEdit.on('click', function () {
+            const pressed = this.getAttribute('aria-pressed') === 'true';
+            this.setAttribute('aria-pressed', !pressed);
+            $body.classList.toggle('edit', !pressed);
+            if (pressed) {
+              // finished editing, rerender with the updated data
+              const data = handler();
+              _self.render('data', data);
+            }
+          });
+          break;
+        }
+        case 'settingsUpdate': {
+          const opts = {};
+
+          [
+            $settingsShowClassics,
+            $settingsShowEbikes,
+            $settingsShowDocks,
+            $settingsCompactLayout,
+          ].forEach(($el) =>
+            $el.on('change', function () {
+              opts[this.value] = this.checked;
+              const data = handler(opts);
+              _self.render('data', data);
+            })
+          );
+
+          $settingsDetails.on('toggle', function () {
+            if (this.open) {
+              this.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+          break;
+        }
+        case 'installOffline': {
+          $installOffline.on('click', async function () {
+            handler();
+          });
+          break;
+        }
+        case 'importData': {
+          $importData.on('click', function (event) {
+            if (
+              !window.confirm(
+                'This will completely overwrite the data. Do you want to continue?'
+              )
+            ) {
+              event.preventDefault();
+            }
+          });
+          $importData.on('change', async function () {
+            try {
+              const [file] = $importData.files;
+              const data = await handler(file);
+              _self.render('data', data);
+              _self.render('success', 'Data imported successfully');
+            } catch (e) {
+              _self.render('error', e);
+            }
+          });
+          break;
+        }
+        case 'exportData': {
+          $exportData.on('click', function () {
+            try {
+              handler();
+            } catch (e) {
+              _self.render('error', e);
+            }
+          });
+          break;
+        }
+        case 'shareData': {
+          $shareData.on('click', function () {
+            try {
+              handler();
+            } catch (e) {
+              _self.render('error', e);
+            }
+          });
+          break;
+        }
+        case 'showBikes': {
+          $bikesInfoClose.on('click', function () {
+            $bikesInfo.close();
+          });
+          $bikesInfo.on('close', function () {
             const data = handler();
-            _self.render('data', data);
-          }
-        });
-      } else if (event === 'settingsUpdate') {
-        const opts = {};
-
-        [
-          $settingsShowClassics,
-          $settingsShowEbikes,
-          $settingsShowDocks,
-          $settingsCompactLayout,
-        ].forEach(($el) =>
-          $el.on('change', function () {
-            opts[this.value] = this.checked;
-            const data = handler(opts);
-            _self.render('data', data);
-          })
-        );
-
-        $settingsDetails.on('toggle', function () {
-          if (this.open) {
-            this.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      } else if (event === 'installOffline') {
-        $installOffline.on('click', async function () {
-          handler();
-        });
-      } else if (event === 'importData') {
-        $importData.on('click', function (event) {
-          if (
-            !window.confirm(
-              'This will completely overwrite the data. Do you want to continue?'
-            )
-          ) {
-            event.preventDefault();
-          }
-        });
-        $importData.on('change', async function () {
-          try {
-            const [file] = $importData.files;
-            const data = await handler(file);
-            _self.render('data', data);
-            _self.render('success', 'Data imported successfully');
-          } catch (e) {
-            _self.render('error', e);
-          }
-        });
-      } else if (event === 'exportData') {
-        $exportData.on('click', function () {
-          try {
-            handler();
-          } catch (e) {
-            _self.render('error', e);
-          }
-        });
-      } else if (event === 'shareData') {
-        $shareData.on('click', function () {
-          try {
-            handler();
-          } catch (e) {
-            _self.render('error', e);
-          }
-        });
-      } else if (event === 'showBikes') {
-        $bikesInfoClose.on('click', function () {
-          $bikesInfo.close();
-        });
-        $bikesInfo.on('close', function () {
-          const data = handler();
-          _self.render('showStation', data);
-          $load['loadBikes'].classList.toggle('success', false);
-        });
-        app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
-          const id = this.getAttribute('data-id');
-          const data = handler(id);
-          _self.render('showStation', data);
-        });
-        app.Helpers.$delegate(
-          // todo better code
-          $stationsList,
-          'tbody td:nth-child(1)',
-          'click',
-          function () {
-            const id = this.innerText;
+            _self.render('showStation', data);
+            $load['loadBikes'].classList.toggle('success', false);
+          });
+          app.Helpers.$delegate($favorites, '.favorite', 'click', function () {
+            const id = this.getAttribute('data-id');
             const data = handler(id);
             _self.render('showStation', data);
-          }
-        );
+          });
+          app.Helpers.$delegate(
+            // todo better code
+            $stationsList,
+            'tbody td:nth-child(1)',
+            'click',
+            function () {
+              const id = this.innerText;
+              const data = handler(id);
+              _self.render('showStation', data);
+            }
+          );
+          break;
+        }
       }
     };
   };
