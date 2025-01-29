@@ -188,7 +188,7 @@
 
       const code = `
           <tr>
-            <td>${id}</td>
+            <td data-id="${id}">${id}</td>
             <th scope="row">${formatUndefined(name)}</th>
             <td>${formatUndefined(capacity)}</td>
             <td>${formatCharging(isCharging)}</td>

@@ -121,6 +121,9 @@
         ? _self.template.lastUpdated(lastUpdatedBikes)
         : '';
       if (data) {
+        if ($bikesInfo.getAttribute('open') === null) {
+          $load['loadBikes'].classList.toggle('success', false);
+        }
         $bikesInfo.showModal();
       }
     };
@@ -350,12 +353,11 @@
             _self.render('showStation', data);
           });
           app.Helpers.$delegate(
-            // todo better code
             $stationsList,
-            'tbody td:nth-child(1)',
+            'tbody td[data-id]',
             'click',
             function () {
-              const id = this.innerText;
+              const id = this.getAttribute('data-id');
               const data = handler(id);
               _self.render('showStation', data);
             }
