@@ -550,6 +550,14 @@ tbody {
   /* height: 2rem; */
   vertical-align: sub;
 }
+.detail__bike-show {
+  &:has(#detail__bike-show-bike:checked)  ~ table  .detail__bike-ebike {
+    display: none;
+  }
+  &:has(#detail__bike-show-ebike:checked) ~ table  .detail__bike-bike {
+    display: none;
+  }
+}
 
 /*=== settings */
 .settings {

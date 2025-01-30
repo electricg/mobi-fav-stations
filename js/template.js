@@ -284,6 +284,12 @@
             <div>${vehicleTypesAvailable?.[1].count} <span>E-Bikes</span></div>
             <div>${numDocksAvailable} <span>Docks</span></div>
           </div>
+
+          <div class="detail__bike-show">
+            <div><label><input type="radio" id="detail__bike-show-all" name="detail__bike-show" checked><span>All</span></label></div>
+            <div><label><input type="radio" id="detail__bike-show-bike" name="detail__bike-show"><span>Classic</span></label></div>
+            <div><label><input type="radio" id="detail__bike-show-ebike" name="detail__bike-show"><span>E-Bike</span></label></div>
+          </div>
           
           <table>
             <thead>
@@ -296,7 +302,9 @@
             ${bikes
               .map((bike) => {
                 return `
-              <tr${bike?.c ? ` class="detail__bike-disabled"` : ``}>
+              <tr class="detail__bike-${bike?.d === '2' ? `e` : ``}bike${
+                  bike?.c ? ` detail__bike-disabled` : ``
+                }">
                 <td>
                   <svg class="icon detail__icon detail__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
                   ${formatDockNumber(bike?.z)}
