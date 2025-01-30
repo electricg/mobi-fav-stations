@@ -115,8 +115,10 @@
     };
 
     _viewCommands.showStation = function (data) {
-      const { station, lastUpdatedBikes } = data || {};
-      $bikesInfoContent.innerHTML = data ? _self.template.bikes(station) : '';
+      const { station, lastUpdatedBikes, config } = data || {};
+      $bikesInfoContent.innerHTML = data
+        ? _self.template.bikes(station, config)
+        : '';
       $lastUpdatedBikes.innerHTML = data
         ? _self.template.lastUpdated(lastUpdatedBikes)
         : '';

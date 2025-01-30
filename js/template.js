@@ -250,8 +250,9 @@
       return code;
     };
 
-    this.bikes = function (item) {
+    this.bikes = function (item, config) {
       const { bikes = [] } = item;
+      const { showStationDetails } = config;
 
       const {
         station_id: id,
@@ -286,9 +287,15 @@
           </div>
 
           <div class="detail__bike-show">
-            <div><label><input type="radio" id="detail__bike-show-all" name="detail__bike-show" checked><span>All</span></label></div>
-            <div><label><input type="radio" id="detail__bike-show-bike" name="detail__bike-show"><span>Classic</span></label></div>
-            <div><label><input type="radio" id="detail__bike-show-ebike" name="detail__bike-show"><span>E-Bike</span></label></div>
+            <div><label><input type="radio" id="detail__bike-show-all" name="detail__bike-show"${
+              showStationDetails === 0 ? ' checked' : ''
+            }><span>All</span></label></div>
+            <div><label><input type="radio" id="detail__bike-show-bike" name="detail__bike-show"${
+              showStationDetails === 1 ? ' checked' : ''
+            }><span>Classic</span></label></div>
+            <div><label><input type="radio" id="detail__bike-show-ebike" name="detail__bike-show"${
+              showStationDetails === 2 ? ' checked' : ''
+            }><span>E-Bike</span></label></div>
           </div>
           
           <table>

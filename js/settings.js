@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.7.51';
+const VERSION = '0.7.52';
 const NAMESPACE = 'mobiFavStations';
 
 const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
@@ -14,6 +14,7 @@ const DEFAULT_USER_SETTINGS = {
   showEbikes: true,
   showDocks: true,
   compactLayout: false,
+  showStationDetails: 0, // 0 all, 1 classic, 2 ebike
 };
 
 const FEATURES = {

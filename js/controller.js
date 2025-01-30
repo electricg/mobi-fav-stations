@@ -41,6 +41,7 @@
       return {
         station: _self.model.getStationInfoById(id),
         lastUpdatedBikes: _self.model.lastUpdatedBikes,
+        config: _self.config.getAll(),
       };
     };
 
