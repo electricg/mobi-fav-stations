@@ -1,4 +1,4 @@
-/* global $$, app, VERSION */
+/* global $$, $, app, VERSION */
 (function (window) {
   'use strict';
 
@@ -31,9 +31,10 @@
     const $settingsShowClassics = $$('#settings-show-classics');
     const $settingsShowEbikes = $$('#settings-show-ebikes');
     const $settingsShowDocks = $$('#settings-show-docks');
-    const $settingsDetails = $$('#settings-details');
-
     const $settingsCompactLayout = $$('#settings-compact-layout');
+    const $settingsRadios = $('#settings-details input[type=radio]');
+
+    const $settingsDetails = $$('#settings-details');
 
     const $importData = $$('#import-data');
     const $exportData = $$('#export-data');
@@ -110,6 +111,11 @@
       $settingsShowEbikes.checked = config.showEbikes;
       $settingsShowDocks.checked = config.showDocks;
       $settingsCompactLayout.checked = config.compactLayout;
+      $settingsRadios.forEach(($el) => {
+        if (config[$el.name] === $el.value) {
+          $el.checked = true;
+        }
+      });
 
       $body.classList.toggle('compact', config.compactLayout);
     };
@@ -290,6 +296,14 @@
               this.scrollIntoView({ behavior: 'smooth' });
             }
           });
+
+          $settingsRadios.forEach(($el) =>
+            $el.on('change', function () {
+              opts[this.name] = this.value;
+              handler(opts);
+              // no need to render the new data for now
+            })
+          );
           break;
         }
         case 'installOffline': {

@@ -36,6 +36,12 @@
     <symbol id="icon-unchecked" viewBox="0 0 32 32">
       <path d="M28 0h-24c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4v-24c0-2.2-1.8-4-4-4zM28 28h-24v-24h24v24z"></path>
     </symbol>
+    <symbol id="icon-radio-unchecked" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" />
+    </symbol>
+    <symbol id="icon-radio-checked" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5.25" />
+    </symbol>
     <symbol id="icon-bike" viewBox="0 0 24 24">
       <path d="m.939 10.983-.052.368a5.09 5.09 0 0 1 1.054-.737l-.392-.069a.52.52 0 0 0-.61.438zM8.595 16.026H7.571a.122.122 0 0 1-.121-.121v-.184c0-.064.051-.121.12-.121h1.025c.064 0 .121.051.121.12v.185c-.006.063-.057.12-.12.12z" fill="currentColor"/>
       <path d="m8.066 16.008 2.665.104a.293.293 0 0 0 .23-.202.298.298 0 0 0-.19-.385.23.23 0 0 0-.086-.018l-2.602.11a.199.199 0 0 0-.19.132.193.193 0 0 0 .12.248.167.167 0 0 0 .053.011z" fill="currentColor"/>
@@ -130,7 +136,8 @@
           <label for="settings-show-ebikes" class="input-checkbox__label">
             <input type="checkbox" id="settings-show-ebikes" class="input-checkbox__check" value="showEbikes">
             <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
-              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use><use href="#icon-checked" class="input-checkbox__icon__checked"></use>
+              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-checked" class="input-checkbox__icon__checked"></use>
             </svg>
             <span>Show E-Bikes</span>
           </label>
@@ -140,7 +147,8 @@
           <label for="settings-show-docks" class="input-checkbox__label">
             <input type="checkbox" id="settings-show-docks" class="input-checkbox__check" value="showDocks">
             <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
-              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use><use href="#icon-checked" class="input-checkbox__icon__checked"></use>
+              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-checked" class="input-checkbox__icon__checked"></use>
             </svg>
             <span>Show Docks</span>
           </label>
@@ -150,11 +158,40 @@
           <label for="settings-compact-layout" class="input-checkbox__label">
             <input type="checkbox" id="settings-compact-layout" class="input-checkbox__check" value="compactLayout">
             <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
-              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use><use href="#icon-checked" class="input-checkbox__icon__checked"></use>
+              <use href="#icon-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-checked" class="input-checkbox__icon__checked"></use>
             </svg>
             <span>Compact Layout</span>
           </label>
         </div>
+
+        <fieldset>
+          <legend>Station details default view</legend>
+          <label for="showStationDetails-0" class="input-checkbox__label">
+            <input type="radio" id="showStationDetails-0" class="input-checkbox__check" name="showStationDetails" value="0">
+            <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
+              <use href="#icon-radio-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-radio-checked" class="input-checkbox__icon__checked"></use>
+            </svg>
+            <span>All</span>
+          </label>
+          <label for="showStationDetails-1" class="input-checkbox__label">
+            <input type="radio" id="showStationDetails-1" class="input-checkbox__check" name="showStationDetails" value="1">
+            <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
+              <use href="#icon-radio-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-radio-checked" class="input-checkbox__icon__checked"></use>
+            </svg>
+            <span>Classic</span>
+          </label>
+          <label for="showStationDetails-2" class="input-checkbox__label">
+            <input type="radio" id="showStationDetails-2" class="input-checkbox__check" name="showStationDetails" value="2">
+            <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
+              <use href="#icon-radio-unchecked" class="input-checkbox__icon__unchecked"></use>
+              <use href="#icon-radio-checked" class="input-checkbox__icon__checked"></use>
+            </svg>
+            <span>E-Bike</span>
+          </label>
+        </fieldset>
 
         <button id="toggle-edit" aria-pressed="false" class="button-toggle"><span>Start</span><span>Finish</span> editing stations</button>
 
