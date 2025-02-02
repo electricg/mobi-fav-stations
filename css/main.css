@@ -385,6 +385,7 @@ th {
 thead {
   th {
     top: 0;
+    z-index: 1; /* to fix the disabled bike strikethrough */
   }
   tr {
     background: var(--c-main-bg);

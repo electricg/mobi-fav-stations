@@ -25,4 +25,4 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] install offline should show prompt
 - [ ] try IndexedDB API to store data
 - [ ] try to add the search input and the hide button to the sticky header for the station list table
-- [ ] in the station detail dialog, filter the bikes by all, classic, ebikes
+- [x] in the station detail dialog, filter the bikes by all, classic, ebikes
