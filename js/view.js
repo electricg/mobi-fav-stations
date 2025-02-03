@@ -28,10 +28,7 @@
     const $lastUpdatedStatus = $$('#last-updated-status');
     const $lastUpdatedInformation = $$('#last-updated-information');
 
-    const $settingsShowClassics = $$('#settings-show-classics');
-    const $settingsShowEbikes = $$('#settings-show-ebikes');
-    const $settingsShowDocks = $$('#settings-show-docks');
-    const $settingsCompactLayout = $$('#settings-compact-layout');
+    const $settingsCheckboxes = $('#settings-details input[type=checkbox]');
     const $settingsRadios = $('#settings-details input[type=radio]');
 
     const $settingsDetails = $$('#settings-details');
@@ -107,10 +104,9 @@
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
       // settings
-      $settingsShowClassics.checked = config.showClassics;
-      $settingsShowEbikes.checked = config.showEbikes;
-      $settingsShowDocks.checked = config.showDocks;
-      $settingsCompactLayout.checked = config.compactLayout;
+      $settingsCheckboxes.forEach(($el) => {
+        $el.checked = config[$el.value];
+      });
       $settingsRadios.forEach(($el) => {
         if (config[$el.name] === $el.value) {
           $el.checked = true;
@@ -278,12 +274,7 @@
         case 'settingsUpdate': {
           const opts = {};
 
-          [
-            $settingsShowClassics,
-            $settingsShowEbikes,
-            $settingsShowDocks,
-            $settingsCompactLayout,
-          ].forEach(($el) =>
+          $settingsCheckboxes.forEach(($el) =>
             $el.on('change', function () {
               opts[this.value] = this.checked;
               const data = handler(opts);
