@@ -100,20 +100,39 @@
 <!-- HOME -->
   <section id="home" class="main-section main-section--home">
     <div id="favorites"></div>
-
-    <div class="actions">
-      <button id="toggle-stations" aria-pressed="false" class="button-toggle"><span>Show</span><span>Hide</span> all stations</button>
-    </div>
   </section>
 
-  <section id="stations" class="main-section--stations hide">
-    <div class="stations-search">
-      <input type="search" id="stations-filter-input" placeholder="Search station by name or number" aria-label="Search station by name or number" autocomplete="off">
-    </div>
+  <section id="stations" class="main-section--stations stations-list">
+    <table>
+      <thead>
+        <tr>
+          <td colspan="12">
+            <div class="stations-header-container">
+              <button id="toggle-stations" aria-pressed="false" class="button-toggle"><span>Show</span><span>Hide</span> all stations</button>
 
-    <div>Information updated: <span id="last-updated-information"></span></div>
+              <input type="search" id="stations-filter-input" placeholder="Search station by name or number" aria-label="Search station by name or number" autocomplete="off" class="stations-search">
 
-    <div id="stations-list" class="stations-list"></div>
+              <div class="stations-last-updated">Information updated: <span id="last-updated-information"></span></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">N&deg;</th>
+          <th scope="col">Name</th>
+          <th scope="col" tabindex="0" title="Capacity">C</th>
+          <th scope="col" tabindex="0" title="Charging">⚡️</th>
+          <th scope="col">Status</th>
+          <th scope="col" tabindex="0" title="Bikes Available Total">BA</th>
+          <th scope="col" tabindex="0" title="Bikes Disabled">BD</th>
+          <th scope="col" tabindex="0" title="Docks Available">DA</th>
+          <th scope="col" tabindex="0" title="Bikes Available">1</th>
+          <th scope="col" tabindex="0" title="E-bikes Available">2</th>
+          <th scope="col" tabindex="0" title="Favorites">⭐️</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody id="stations-list"></tbody>
+    </table>
   </section>
 
 <!-- SETTINGS -->

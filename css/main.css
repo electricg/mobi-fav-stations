@@ -371,10 +371,8 @@ table {
   position: relative;
   user-select: none;
 }
-table, th, td {
-  border: .5px solid var(--c-table-border);
-}
 th, td {
+  border: .5px solid var(--c-table-border);
   padding: 2px;
   vertical-align: top;
 }
@@ -387,7 +385,6 @@ thead {
     background: var(--c-main-bg);
   }
 }
-
 tbody {
   tr {
     background: var(--c-main-bg);
@@ -405,20 +402,34 @@ tbody {
 }
 
 /*=== stations table */
-.stations-search {
-  margin: calc(var(--l-gap) * 2) 0;
+.stations-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--l-gap);
+  left: 0;
+  margin: 0 var(--l-gap);
+  position: sticky;
+  width: calc(100vw - var(--l-gap) * 2);
 }
-.stations-search input {
-  display: block;
+.stations-search {
   line-height: 1.6;
-  width: 100%;
 }
 
 .stations-list {
   table {
+    margin-bottom: calc(var(--l-gap) * 2);
     margin-left: calc(-1 * var(--l-gap));
     margin-right: calc(-1 * var(--l-gap));
     min-width: calc(100% + var(--l-gap) * 2);
+
+    &:has(#toggle-stations[aria-pressed=false]) {
+      thead tr:nth-child(2),
+      .stations-search,
+      .stations-last-updated,
+      tbody {
+        display: none;
+      }
+    }
   }
   thead {
     th {
@@ -427,7 +438,16 @@ tbody {
     }
     th:nth-child(2) {
       left: 0;
-      z-index: 1;
+      position: sticky;
+    }
+    tr:nth-child(1) {
+      td {
+        background: unset;
+        border: unset;
+        padding: unset;
+        text-align: unset;
+        vertical-align: unset;
+      }
     }
   }
 
@@ -474,14 +494,6 @@ tbody {
   border-color: revert;
   pointer-events: revert;
   resize: revert;
-}
-
-/*=== actions */
-.actions, .settings {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--l-gap) * 2);
-  margin-bottom: calc(var(--l-gap) * 2);
 }
 
 /*=== station detail */
@@ -560,7 +572,10 @@ tbody {
 
 /*=== settings */
 .settings {
-  margin-top: calc(var(--l-gap) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--l-gap) * 2);
+  margin: calc(var(--l-gap) * 2) 0;
 }
 #import-data {
   margin-left: .5em;

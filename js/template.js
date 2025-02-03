@@ -224,27 +224,7 @@
         : `<tr><td colspan="12">No station found</td></tr>`;
 
       const code = `
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">N&deg;</th>
-                <th scope="col">Name</th>
-                <th scope="col" tabindex="0" title="Capacity">C</th>
-                <th scope="col" tabindex="0" title="Charging">⚡️</th>
-                <th scope="col">Status</th>
-                <th scope="col" tabindex="0" title="Bikes Available Total">BA</th>
-                <th scope="col" tabindex="0" title="Bikes Disabled">BD</th>
-                <th scope="col" tabindex="0" title="Docks Available">DA</th>
-                <th scope="col" tabindex="0" title="Bikes Available">1</th>
-                <th scope="col" tabindex="0" title="E-bikes Available">2</th>
-                <th scope="col" tabindex="0" title="Favorites">⭐️</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${body}
-            </tbody>
-          </table>
+          ${body}
         `;
 
       return code;

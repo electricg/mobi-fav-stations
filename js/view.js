@@ -21,7 +21,6 @@
 
     const $favorites = $$('#favorites');
 
-    const $stations = $$('#stations');
     const $stationsFilterInput = $$('#stations-filter-input');
     const $stationsList = $$('#stations-list');
 
@@ -149,7 +148,6 @@
           $toggleStations.on('click', function () {
             _showAllStations = !_showAllStations;
             this.setAttribute('aria-pressed', _showAllStations);
-            $stations.classList.toggle('hide', !_showAllStations);
             if (_showAllStations) {
               const stations = handler();
               $stationsList.innerHTML = _self.template.stations(stations);
