@@ -18,7 +18,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] import / export personal data
 - [ ] cancel data
 - [x] show station details
-- [ ] over style for the zebra table
+- [x] over style for the zebra table
 - [x] delegate more events to the body
 - [ ] fix bug when tapping on edit favorite station
 - [ ] better style for station details

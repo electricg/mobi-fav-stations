@@ -301,7 +301,7 @@
                     bike?.d === '2' ? `e` : ``
                   }bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
                 </td>
-                <td>${bike?.a}</td>
+                <td><span class="detail__bike-id">${bike?.a}</span></td>
                 <td>${formatRangeNumber(bike?.e)}</td>
               </tr>`;
               })

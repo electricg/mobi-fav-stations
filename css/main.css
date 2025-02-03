@@ -399,6 +399,9 @@ tbody {
     position: sticky;
     text-align: left;
   }
+  tr:hover {
+    background: aqua;
+  }
 }
 
 /*=== stations table */
@@ -542,6 +545,12 @@ tbody {
     top: 50%;
     width: 100%;
   }
+}
+.detail__bike-id {
+  display: inline-block;
+  max-width: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .detail__icon {
   --l-icon-size: 1.5em;
