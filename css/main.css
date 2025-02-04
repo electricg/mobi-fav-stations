@@ -632,6 +632,12 @@ tbody {
 }
 
 /*=== settings */
+.settings-summary {
+  background: var(--c-main-bg);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
 .settings {
   display: flex;
   flex-direction: column;
