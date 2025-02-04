@@ -76,7 +76,7 @@
 
       // prettier-ignore
       (function () {
-        let c=0,t=0;app.Helpers.$delegate($body,"#version","click",(function(){const e=Date.now();c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML("afterend",'<input type="text" id="v" autofocus>'))):t=e})),app.Helpers.$delegate($body,"#v","change",(function(){localStorage.setItem(String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),this.value),this.remove()}));
+        let c=0,t=0;app.Helpers.$delegate($body,'#version','click',(function(){const e=Date.now();c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input type=text id=v autofocus>'))):t=e})),app.Helpers.$delegate($body,'#v','change',(function(){localStorage.setItem(String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),this.value),this.remove()}));
       })();
     };
 
@@ -200,8 +200,8 @@
 
               if (res === -1) {
                 const msg = pressed
-                  ? 'The station you are trying to remove from your favourite is not present in the list'
-                  : 'The station you are trying to add to your favourite is already present in the list';
+                  ? _self.template.strings('0005')
+                  : _self.template.strings('0006');
                 _self.render('error', msg);
               } else {
                 this.setAttribute('aria-pressed', !pressed);
@@ -220,10 +220,7 @@
               const value = this.value;
               const res = handler(id, value);
               if (res === -1) {
-                _self.render(
-                  'error',
-                  'Error in updating this station description'
-                );
+                _self.render('error', _self.template.strings('0004'));
               }
             }
           );
@@ -240,16 +237,13 @@
 
               if (
                 action !== 'remove' ||
-                window.confirm(`Are you sure you want to remove station ${id}?`)
+                window.confirm(_self.template.strings('0007', id))
               ) {
                 const res = handler(id, action);
                 if (res !== -1) {
                   _self.render('data', res);
                 } else {
-                  _self.render(
-                    'error',
-                    'Error in updating the favourites order'
-                  );
+                  _self.render('error', _self.template.strings('0003'));
                 }
               }
             }
@@ -303,11 +297,7 @@
         }
         case 'importData': {
           $importData.on('click', function (event) {
-            if (
-              !window.confirm(
-                'This will completely overwrite the data. Do you want to continue?'
-              )
-            ) {
+            if (!window.confirm(_self.template.strings('0002'))) {
               event.preventDefault();
             }
           });
@@ -316,7 +306,7 @@
               const [file] = $importData.files;
               const data = await handler(file);
               _self.render('data', data);
-              _self.render('success', 'Data imported successfully');
+              _self.render('success', _self.template.strings('0001'));
             } catch (e) {
               _self.render('error', e);
             }

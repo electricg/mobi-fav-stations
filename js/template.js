@@ -344,6 +344,24 @@
 
       return code;
     };
+
+    const strings = {
+      '0001': 'Data imported successfully',
+      '0002':
+        'This will completely overwrite the data. Do you want to continue?',
+      '0003': 'Error in updating the favourites order',
+      '0004': 'Error in updating this station description',
+      '0005':
+        'The station you are trying to remove from your favourite is not present in the list',
+      '0006':
+        'The station you are trying to add to your favourite is already present in the list',
+      '0007': 'Are you sure you want to remove station ${a}?',
+    };
+
+    // todo: make it more generic
+    this.strings = function (id, a) {
+      return strings[id].replace('${a}', a) || '';
+    };
   };
 
   window.app = window.app || {};
