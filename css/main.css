@@ -58,6 +58,13 @@ label, button, input[type=button], input[type=submit], input[type=reset], summar
   cursor: pointer;
   user-select: none;
 }
+button:disabled {
+  cursor: not-allowed;
+}
+fieldset {
+  border: 1px dotted var(--c-theme-first);
+  border-radius: 3px;
+}
 
 .icon {
   display: block;
@@ -632,8 +639,23 @@ tbody {
 }
 
 /*=== settings */
+.settings-details {
+  border: 1px solid var(--c-theme-first);
+  border-radius: 3px;
+  padding: 0 var(--l-gap);
+
+  &[open] {
+    .settings-summary {
+      border-bottom: 1px solid var(--c-theme-first);
+      margin: 0 calc(-1 * var(--l-gap));
+      padding-left: var(--l-gap);
+    }
+  }
+}
 .settings-summary {
   background: var(--c-main-bg);
+  line-height: 1.4;
+  padding: 2px 0;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -644,8 +666,10 @@ tbody {
   gap: calc(var(--l-gap) * 2);
   margin: calc(var(--l-gap) * 2) 0;
 }
-#import-data {
-  margin-left: .5em;
+label[for="import-data"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 .5em;
 }
 
 /* === button load */
