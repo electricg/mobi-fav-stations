@@ -502,6 +502,7 @@ tbody {
 
 /*=== station detail */
 .detail-dialog {
+  background: var(--c-main-bg);
   height: 100%;
   width: 100%;
 }
