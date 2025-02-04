@@ -27,3 +27,5 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] try to add the search input and the hide button to the sticky header for the station list table
 - [x] in the station detail dialog, filter the bikes by all, classic, ebikes
 - [x] new line in description in station dialog
+- [ ] better style for the input file
+- [ ] check why the offline "new update" message doesn't work
