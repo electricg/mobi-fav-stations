@@ -390,9 +390,6 @@ tbody {
   tr {
     background: var(--c-main-bg);
   }
-  tr:nth-child(odd) {
-    background: var(--c-table-stripe);
-  }
   th {
     background: inherit;
     font-weight: normal;
@@ -401,7 +398,7 @@ tbody {
     text-align: left;
   }
   tr:hover {
-    background: aqua;
+    background: aqua !important;
   }
 }
 
@@ -454,7 +451,11 @@ tbody {
       }
     }
   }
-
+  tbody {
+    tr:nth-child(odd) {
+      background: var(--c-table-stripe);
+    }
+  }
   td:nth-child(3),
   td:nth-child(6),
   td:nth-child(7),
@@ -607,11 +608,26 @@ tbody {
     }
   }
 
-  &:has(#detail__bike-show-bike:checked)  ~ table  .detail__bike-ebike {
-    display: none;
+  &:has(#detail__bike-show-all:checked)  ~ table tbody {
+    tr:nth-child(odd) {
+      background: var(--c-table-stripe);
+    }
   }
-  &:has(#detail__bike-show-ebike:checked) ~ table  .detail__bike-bike {
-    display: none;
+  &:has(#detail__bike-show-bike:checked)  ~ table tbody {
+    .detail__bike-ebike {
+      display: none;
+    }
+    tr:nth-child(odd of .detail__bike-bike) {
+      background: var(--c-table-stripe);
+    }
+  }
+  &:has(#detail__bike-show-ebike:checked) ~ table tbody {
+    .detail__bike-bike {
+      display: none;
+    }
+    tr:nth-child(odd of .detail__bike-ebike) {
+      background: var(--c-table-stripe);
+    }
   }
 }
 
