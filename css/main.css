@@ -72,11 +72,11 @@ label, button, input[type=button], input[type=submit], input[type=reset], summar
 }
 
 .button-toggle span:first-child,
-.button-toggle[aria-pressed='true'] span:last-child {
+.button-toggle[aria-pressed=true] span:last-child {
   display: revert;
 }
 .button-toggle span:last-child,
-.button-toggle[aria-pressed='true'] span:first-child {
+.button-toggle[aria-pressed=true] span:first-child {
   display: none;
 }
 

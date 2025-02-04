@@ -116,9 +116,9 @@
     };
 
     _viewCommands.showStation = function (data) {
-      const { station, lastUpdatedBikes, config } = data || {};
+      const { id, station, lastUpdatedBikes, config } = data || {};
       $bikesInfoContent.innerHTML = data
-        ? _self.template.bikes(station, config)
+        ? _self.template.bikes(id, station, config)
         : '';
       $lastUpdatedBikes.innerHTML = data
         ? _self.template.lastUpdated(lastUpdatedBikes)
@@ -200,8 +200,8 @@
 
               if (res === -1) {
                 const msg = pressed
-                  ? 'The station you are trying to remove from your favorite is not present in the list'
-                  : 'The station you are trying to add to your favorite is already present in the list';
+                  ? 'The station you are trying to remove from your favourite is not present in the list'
+                  : 'The station you are trying to add to your favourite is already present in the list';
                 _self.render('error', msg);
               } else {
                 this.setAttribute('aria-pressed', !pressed);
@@ -248,7 +248,7 @@
                 } else {
                   _self.render(
                     'error',
-                    'Error in updating the favorites order'
+                    'Error in updating the favourites order'
                   );
                 }
               }

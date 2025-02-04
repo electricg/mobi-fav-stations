@@ -20,7 +20,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] show station details
 - [x] over style for the zebra table
 - [x] delegate more events to the body
-- [ ] fix bug when tapping on edit favorite station
+- [ ] fix bug when tapping on edit favourite station
 - [x] better style for station details
 - [ ] install offline should show prompt
 - [ ] try IndexedDB API to store data

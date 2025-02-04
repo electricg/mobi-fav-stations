@@ -152,7 +152,7 @@
               .join('')}
           </div>
         `;
-      const noFavs = `<p>Add your favorites from the stations list below</p>`;
+      const noFavs = `<p>Add your favourites from the stations list below</p>`;
 
       return favorites.length ? favs : noFavs;
     };
@@ -204,9 +204,9 @@
             <td>
               <button type="button" aria-pressed="${
                 favorite ? 'true' : 'false'
-              }" data-id="${id}" class="button-toggle station__favorite-toggle js-toggle-favorite" aria-label="Add to favorites">
-                <span aria-hidden="true" title="Add to favorites">☆</span>
-                <span aria-hidden="true" title="Remove from favorites">★</span>
+              }" data-id="${id}" class="button-toggle station__favorite-toggle js-toggle-favorite" aria-label="Add to favourites">
+                <span aria-hidden="true" title="Add to favourites">☆</span>
+                <span aria-hidden="true" title="Remove from favourites">★</span>
               </button>
             </td>
             <td><textarea class="station__description js-edit-description" data-id="${id}" aria-label="Description">${description}</textarea></td>
@@ -230,15 +230,11 @@
       return code;
     };
 
-    this.bikes = function (item, config) {
+    this.bikes = function (id, item, config) {
       const { bikes = [] } = item;
       const { showStationDetails } = config;
 
-      const {
-        station_id: id,
-        name,
-        is_charging_station: isCharging,
-      } = item?.information || {};
+      const { name, is_charging_station: isCharging } = item?.information || {};
       const {
         is_installed: isInstalled,
         is_renting: isRenting,
@@ -251,7 +247,7 @@
       const code = `
         <div class="detail">
           <div class="detail__title">${
-            favorite ? `<span title="Favorite">⭐️ </span>` : ``
+            favorite ? `<span title="Favourite">⭐️ </span>` : ``
           }<span class="detail__id">${id}</span> ${name || ''}</div>
           <div class="detail__description">${description}</div>
           <div class="detail__status">
@@ -265,21 +261,23 @@
 
           <div class="detail__kpi-container">
             <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${
+              <span class="favorite__kpi__count">${formatKpiNumber(
                 vehicleTypesAvailable?.[0].count
-              }</span>
+              )}</span>
               <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
               <span class="favorite__kpi__type">Classics</span>
             </div>
             <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${
+              <span class="favorite__kpi__count">${formatKpiNumber(
                 vehicleTypesAvailable?.[1].count
-              }</span>
+              )}</span>
               <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
               <span class="favorite__kpi__type">E-Bikes</span>
             </div>
             <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${numDocksAvailable}</span>
+              <span class="favorite__kpi__count">${formatKpiNumber(
+                numDocksAvailable
+              )}</span>
               <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
               <span class="favorite__kpi__type">Docks</span>
             </div>
