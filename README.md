@@ -16,7 +16,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] personal configuration for a more compact layout
 - [x] when "show all stations" scroll to put the table to the top
 - [x] import / export personal data
-- [ ] cancel data
+- [x] cancel personal data
 - [x] show station details
 - [x] over style for the zebra table
 - [x] delegate more events to the body

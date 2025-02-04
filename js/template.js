@@ -356,6 +356,8 @@
       '0006':
         'The station you are trying to add to your favourite is already present in the list',
       '0007': 'Are you sure you want to remove station ${a}?',
+      '0008': 'Are you sure you want to delete your personal settings?',
+      '0009': 'Data deleted successfully',
     };
 
     // todo: make it more generic

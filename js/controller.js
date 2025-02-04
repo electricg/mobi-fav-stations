@@ -119,6 +119,17 @@
       app.Helpers.shareTo(filename, data, title);
     };
 
+    // TODO should make a function in the model
+    const deleteData = function () {
+      _self.config.reset();
+      _self.model.updateStationsUserData({
+        user: {},
+        favorites: [],
+      });
+
+      return getData();
+    };
+
     const bindAll = function () {
       _self.view.bind('toggleStations', function () {
         return _self.model.stations;
@@ -188,6 +199,10 @@
 
       _self.view.bind('shareData', function () {
         return shareData();
+      });
+
+      _self.view.bind('deleteData', function () {
+        return deleteData();
       });
 
       _self.view.bind('showBikes', function (id) {

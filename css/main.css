@@ -677,6 +677,11 @@ label[for="import-data"] {
   flex-wrap: wrap;
   gap: 0 .5em;
 }
+.settings__fieldset-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--l-gap);
+}
 
 /* === button load */
 .load-bikes,

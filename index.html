@@ -220,13 +220,16 @@
 
         <button id="load-information" class="button-spinner load-information"><span>Load information</span><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-spinner"></use><use href="#icon-clipboard" class="icon-clipboard"></use></svg></button>
 
-        <label for="import-data">Import settings from backup<input type="file" id="import-data" accept=".txt"></label>
+        <fieldset class="settings__fieldset-block">
+          <legend>User data</legend>
+          <label for="import-data">Import from backup:<input type="file" id="import-data" accept=".txt"></label>
 
-        <button id="export-data">Export settings to backup</button>
+          <button id="export-data">Export to backup</button>
 
-        <button id="share-data">Share settings to…</button>
+          <button id="share-data">Share to…</button>
 
-        <button id="delete-all" disabled>Delete all data</button>
+          <button id="delete-data">Delete</button>
+        </fieldset>
 
         <button id="install" disabled>Install app</button>
       </div>

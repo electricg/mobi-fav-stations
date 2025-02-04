@@ -35,6 +35,7 @@
     const $importData = $$('#import-data');
     const $exportData = $$('#export-data');
     const $shareData = $$('#share-data');
+    const $deleteData = $$('#delete-data');
 
     const $bikesInfo = $$('#bikes-info');
     const $bikesInfoClose = $$('#bikes-info-close');
@@ -329,6 +330,20 @@
               handler();
             } catch (e) {
               _self.render('error', e);
+            }
+          });
+          break;
+        }
+        case 'deleteData': {
+          $deleteData.on('click', function () {
+            if (window.confirm(_self.template.strings('0008'))) {
+              try {
+                const data = handler();
+                _self.render('data', data);
+                _self.render('success', _self.template.strings('0009'));
+              } catch (e) {
+                _self.render('error', e);
+              }
             }
           });
           break;
