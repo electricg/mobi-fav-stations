@@ -164,7 +164,7 @@ fieldset {
   position: absolute;
   top: -90%;
   width: max-content;
-  z-index: 1;
+  z-index: 0;
 }
 
 /*=== button spinner */
@@ -382,7 +382,6 @@ table {
 th, td {
   border: .5px solid var(--c-table-border);
   padding: 2px;
-  vertical-align: top;
 }
 thead {
   position: sticky;
@@ -461,6 +460,9 @@ tbody {
   tbody {
     tr:nth-child(odd) {
       background: var(--c-table-stripe);
+    }
+    td, th {
+      vertical-align: top;
     }
   }
   td:nth-child(3),
@@ -550,6 +552,9 @@ tbody {
   font-size: 0.8rem;
   font-weight: normal;
 }
+.detail__description {
+  white-space: break-spaces;
+}
 .detail__status {
   span {
     white-space: nowrap;
@@ -583,6 +588,7 @@ tbody {
   max-width: 5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
 }
 .detail__icon {
   --l-icon-size: 1.5em;
