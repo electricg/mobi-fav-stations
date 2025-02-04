@@ -21,7 +21,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] over style for the zebra table
 - [x] delegate more events to the body
 - [ ] fix bug when tapping on edit favorite station
-- [ ] better style for station details
+- [x] better style for station details
 - [ ] install offline should show prompt
 - [ ] try IndexedDB API to store data
 - [x] try to add the search input and the hide button to the sticky header for the station list table

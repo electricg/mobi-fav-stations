@@ -255,15 +255,34 @@
           }<span class="detail__id">${id}</span> ${name || ''}</div>
           <div class="detail__description">${description}</div>
           <div class="detail__status">
-            <span>${formatStatus(isInstalled)} Installed</span>
-            <span>${formatStatus(isRenting)} Renting</span>
-            <span>${formatStatus(isReturning)} Returning</span>
-            <span>⚡️ ${isCharging ? '' : 'Not '}Charging</span>
+            <span>${formatStatus(isInstalled)}<small> Installed</small></span>
+            <span>${formatStatus(isRenting)}<small> Renting</small></span>
+            <span>${formatStatus(isReturning)}<small> Returning</small></span>
+            <span><b${
+              isCharging ? '' : ' class="not-charging"'
+            }>⚡️</b> <small>${isCharging ? '' : 'Not '}Charging</small></span>
           </div>
-          <div>
-            <div>${vehicleTypesAvailable?.[0].count} <span>Classics</span></div>
-            <div>${vehicleTypesAvailable?.[1].count} <span>E-Bikes</span></div>
-            <div>${numDocksAvailable} <span>Docks</span></div>
+
+          <div class="detail__kpi-container">
+            <div class="favorite__kpi">
+              <span class="favorite__kpi__count">${
+                vehicleTypesAvailable?.[0].count
+              }</span>
+              <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+              <span class="favorite__kpi__type">Classics</span>
+            </div>
+            <div class="favorite__kpi">
+              <span class="favorite__kpi__count">${
+                vehicleTypesAvailable?.[1].count
+              }</span>
+              <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+              <span class="favorite__kpi__type">E-Bikes</span>
+            </div>
+            <div class="favorite__kpi">
+              <span class="favorite__kpi__count">${numDocksAvailable}</span>
+              <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+              <span class="favorite__kpi__type">Docks</span>
+            </div>
           </div>
 
           <div class="detail__bike-show">
