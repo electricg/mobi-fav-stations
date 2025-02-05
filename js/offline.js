@@ -143,6 +143,11 @@
     };
 
     printDebug('sw on');
+
+    if (swCheckStatus()) {
+      printDebug('sw is installed, auto init');
+      this.init();
+    }
   };
 
   // export to window
