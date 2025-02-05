@@ -50,6 +50,9 @@
 
     let _showAllStations = false;
 
+    // Initialize deferredPrompt for use later to show browser install prompt.
+    let _deferredPrompt;
+
     const _viewCommands = {};
 
     _viewCommands.alert = function (type, msg) {
@@ -291,8 +294,20 @@
           break;
         }
         case 'installOffline': {
+          window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            _deferredPrompt = e;
+          });
+
           $installOffline.on('click', async function () {
-            handler();
+            _deferredPrompt.prompt();
+            const res = await _deferredPrompt.userChoice;
+            if (res?.outcome === 'accepted') {
+              handler();
+            }
+            _deferredPrompt = null;
           });
           break;
         }

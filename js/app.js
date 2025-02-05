@@ -9,7 +9,7 @@ const App = function (namespace, settings) {
   this.view = new app.View(this.template);
   this.offline = new app.Offline({
     showInfo: (msg) => this.view.render('info', msg),
-    debug: true,
+    debug: false,
   });
   this.controller = new app.Controller(
     this.model,
