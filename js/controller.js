@@ -185,6 +185,10 @@
         return getData();
       });
 
+      _self.view.bind('showOffline', function () {
+        return _self.offline.isInstalled();
+      });
+
       _self.view.bind('installOffline', function () {
         _self.offline.init();
       });

@@ -142,9 +142,21 @@
       });
     };
 
+    /**
+     * Check if is already installed
+     * @returns {boolean}
+     */
+    this.isInstalled = () => {
+      isSWInstalled = swCheckStatus();
+      printDebug('check if is installed:', isSWInstalled);
+      return isSWInstalled;
+    };
+
     printDebug('sw on');
 
-    if (swCheckStatus()) {
+    isSWInstalled = swCheckStatus();
+
+    if (isSWInstalled) {
       printDebug('sw is installed, auto init');
       this.init();
     }
