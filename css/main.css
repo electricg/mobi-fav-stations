@@ -110,6 +110,10 @@ fieldset {
   width: 100%;
   background: var(--c-bg-alert);
   color: var(--c-fg-alert);
+
+  a {
+    text-decoration: underline;
+  }
 }
 .alert__close {
   background: transparent;

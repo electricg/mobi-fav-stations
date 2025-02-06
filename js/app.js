@@ -10,6 +10,7 @@ const App = function (namespace, settings) {
   this.offline = new app.Offline({
     showInfo: (msg) => this.view.render('info', msg),
     msgInstalled: 'This app is now installed!',
+    msgUpdated: 'This app has an update, please <a href="./">refresh</a>.',
     debug: true,
   });
   this.controller = new app.Controller(
