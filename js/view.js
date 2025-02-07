@@ -132,6 +132,10 @@
       }
     };
 
+    _viewCommands.installedOffline = function (status) {
+      $installOffline.classList.toggle('hide', status);
+    };
+
     this.render = function (viewCmd, data) {
       _viewCommands[viewCmd](data);
     };
@@ -290,12 +294,6 @@
           );
           break;
         }
-        case 'showOffline': {
-          const isInstalled = handler();
-          $installOffline.classList.toggle('hide', isInstalled);
-
-          break;
-        }
         case 'installOffline': {
           // Initialize deferredPrompt for use later to show browser install prompt.
           let _deferredPrompt;
@@ -310,7 +308,6 @@
           }
 
           $installOffline.on('click', async function () {
-            console.log(_deferredPrompt);
             if (_deferredPrompt !== undefined) {
               _deferredPrompt.prompt();
               const res = await _deferredPrompt.userChoice;

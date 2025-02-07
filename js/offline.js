@@ -103,7 +103,7 @@
     };
 
     this.init = function () {
-      printDebug('installing');
+      printDebug('sw installing');
       if ('serviceWorker' in navigator) {
         isSWInstalled = swCheckStatus();
 
@@ -132,6 +132,7 @@
      * Unregister service worker and send message to delete all caches
      */
     this.clearSW = async () => {
+      printDebug('sw clearing');
       const registrations = await navigator.serviceWorker.getRegistrations();
       const unregisterPromises = registrations.map((registration) =>
         registration.unregister()
@@ -140,16 +141,6 @@
       sendMessage({
         type: 'clear',
       });
-    };
-
-    /**
-     * Check if is already installed
-     * @returns {boolean}
-     */
-    this.isInstalled = () => {
-      isSWInstalled = swCheckStatus();
-      printDebug('check if is installed:', isSWInstalled);
-      return isSWInstalled;
     };
 
     printDebug('sw on');

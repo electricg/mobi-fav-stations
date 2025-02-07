@@ -9,6 +9,7 @@ const App = function (namespace, settings) {
   this.view = new app.View(this.template);
   this.offline = new app.Offline({
     showInfo: (msg) => this.view.render('info', msg),
+    showOffline: (status) => this.view.render('installedOffline', status),
     msgInstalled: 'This app is now installed!',
     msgUpdated: 'This app has an update, please <a href="./">refresh</a>.',
     debug: true,
