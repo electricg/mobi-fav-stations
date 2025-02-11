@@ -47,6 +47,7 @@
     const $version = $$('#version');
 
     const $installOffline = $$('#install');
+    const $uninstallOffline = $$('#uninstall');
 
     let _showAllStations = false;
 
@@ -134,6 +135,7 @@
 
     _viewCommands.installedOffline = function (status) {
       $installOffline.classList.toggle('hide', status);
+      $uninstallOffline.classList.toggle('hide', !status);
     };
 
     this.render = function (viewCmd, data) {
@@ -312,13 +314,20 @@
               _deferredPrompt.prompt();
               const res = await _deferredPrompt.userChoice;
               if (res?.outcome === 'accepted') {
-                handler();
+                handler(true);
               }
               _deferredPrompt = null;
             } else {
-              handler();
+              handler(true);
             }
           });
+
+          $uninstallOffline.on('click', async function () {
+            if (window.confirm(_self.template.strings('0010'))) {
+              handler(false);
+            }
+          });
+
           break;
         }
         case 'importData': {

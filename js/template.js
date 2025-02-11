@@ -358,6 +358,7 @@
       '0007': 'Are you sure you want to remove station ${a}?',
       '0008': 'Are you sure you want to delete your personal settings?',
       '0009': 'Data deleted successfully',
+      '0010': 'Uninstall this app?',
     };
 
     // todo: make it more generic

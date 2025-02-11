@@ -1,7 +1,10 @@
-const VERSION = '0.8.10';
-const cacheName = `v${VERSION}::static`;
+const VERSION = '0.8.11';
+const NAMESPACE = 'mobiFavStations';
 
-const fileList = `
+const CACHE_NAMESPACE = `::${NAMESPACE}::`;
+const CACHE_NAME = `v${VERSION}${CACHE_NAMESPACE}`;
+
+const FILE_LIST = `
 ./
 css/main.css
 images/logo/icon.svg
@@ -27,9 +30,9 @@ self.addEventListener('install', (e) => {
   // to make this work offline
   e.waitUntil(
     caches
-      .open(cacheName)
+      .open(CACHE_NAME)
       .then((cache) => {
-        return cache.addAll(fileList).then(() => {
+        return cache.addAll(FILE_LIST).then(() => {
           self.skipWaiting();
         });
       })
@@ -43,7 +46,7 @@ self.addEventListener('fetch', (event) => {
   // when the browser fetches a url, either response with the cached object
   // or go ahead and fetch the actual url and add it to the cache at the same time
   event.respondWith(
-    caches.open(cacheName).then((cache) => {
+    caches.open(CACHE_NAME).then((cache) => {
       const url = event.request;
       return cache
         .match(url)
@@ -71,25 +74,70 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-const clearOldCaches = () => {
-  return caches.keys().then((keys) => {
-    return Promise.all(
-      keys.filter((key) => key !== cacheName).map((key) => caches.delete(key))
+/**
+ * Clear all old caches in the same namespace except the current one
+ * @param {string} currentCache Name of the current cache
+ * @param {string} cacheNamespace Text the cache name must include to be cleared
+ * @returns {Array<Promise>} Fulfilled when all of selected the caches are cleared
+ */
+const clearOldCaches = (currentCache, cacheNamespace) =>
+  caches
+    .keys()
+    .then((keys) =>
+      Promise.all(
+        keys
+          .filter(
+            (key) => key !== currentCache && key.indexOf(cacheNamespace) !== -1
+          )
+          .map((key) => caches.delete(key))
+      )
     );
+
+/**
+ * Clear all caches in the same namespace
+ * @param {string} cacheNamespace Text the cache name must include to be cleared
+ * @returns {Array<Promise>} Fulfilled when all of the selected caches are cleared
+ */
+const clearAllCaches = (cacheNamespace) =>
+  caches
+    .keys()
+    .then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key.indexOf(cacheNamespace) !== -1)
+          .map((key) => caches.delete(key))
+      )
+    );
+
+/**
+ * Send message object to the clients
+ * @param {object} message
+ */
+const sendMessage = (message) => {
+  // obtain an array of Window client objects
+  self.clients.matchAll().then((clients) => {
+    clients.forEach((client) => {
+      client.postMessage(message);
+    });
   });
 };
 
-const clearAllCaches = () =>
-  caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)));
-
 self.addEventListener('activate', (event) => {
-  event.waitUntil(clearOldCaches().then(() => self.clients.claim()));
+  event.waitUntil(
+    clearOldCaches(CACHE_NAME, CACHE_NAMESPACE).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('message', (event) => {
   console.log('sw received message:', event);
-  if (event.data.type === 'clear') {
-    console.log('delete all caches');
-    clearAllCaches();
+
+  switch (event?.data?.type) {
+    case 'clearAll': {
+      clearAllCaches(CACHE_NAMESPACE).then((res) => {
+        // send message to the client
+        sendMessage({ type: 'clearAllResponse', res: res });
+      });
+      break;
+    }
   }
 });

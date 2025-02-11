@@ -102,6 +102,28 @@
       navigator.serviceWorker.controller.postMessage(message);
     };
 
+    /**
+     * Unregister all service workers in the same domain - not used for now
+     * @returns {Promise<boolean>}
+     */
+    // eslint-disable-next-line no-unused-vars
+    const swUnregisterAll = async () => {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      const unregisterPromises = registrations.map((registration) =>
+        registration.unregister()
+      );
+      return await Promise.all([...unregisterPromises]);
+    };
+
+    /**
+     * Unregister current service worker
+     * @returns {Promise<boolean>}
+     */
+    const swUnregisterCurrent = async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      return await registration.unregister();
+    };
+
     this.init = function () {
       printDebug('sw installing');
       if ('serviceWorker' in navigator) {
@@ -125,6 +147,19 @@
           .catch((err) => {
             swUIError(err);
           });
+
+        //listen to messages
+        navigator.serviceWorker.addEventListener('message', (message) => {
+          printDebug('sw msg received', message);
+
+          switch (message?.data?.type) {
+            // message from service worker about clear caches result
+            case 'clearAllResponse': {
+              swUIStatus(false);
+              break;
+            }
+          }
+        });
       }
     };
 
@@ -133,13 +168,13 @@
      */
     this.clearSW = async () => {
       printDebug('sw clearing');
-      const registrations = await navigator.serviceWorker.getRegistrations();
-      const unregisterPromises = registrations.map((registration) =>
-        registration.unregister()
-      );
-      await Promise.all([...unregisterPromises]);
+
+      // unregister current service worker
+      await swUnregisterCurrent();
+
+      // send message to service worker to clear caches
       sendMessage({
-        type: 'clear',
+        type: 'clearAll',
       });
     };
 

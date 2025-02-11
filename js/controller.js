@@ -185,8 +185,12 @@
         return getData();
       });
 
-      _self.view.bind('installOffline', function () {
-        _self.offline.init();
+      _self.view.bind('installOffline', function (install) {
+        if (install) {
+          _self.offline.init();
+        } else {
+          _self.offline.clearSW();
+        }
       });
 
       _self.view.bind('importData', async function (file) {

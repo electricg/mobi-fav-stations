@@ -29,3 +29,5 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] new line in description in station dialog
 - [ ] better style for the input file
 - [ ] check why the offline "new update" message doesn't work
+- [ ] fix svg sprite a11y
+- [ ] reduce font size footer
