@@ -166,7 +166,7 @@
     /**
      * Unregister service worker and send message to delete all caches
      */
-    this.clearSW = async () => {
+    this.clearSW = async function () {
       printDebug('sw clearing');
 
       // unregister current service worker

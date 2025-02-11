@@ -77,9 +77,7 @@
       $version.innerHTML = VERSION;
 
       // prettier-ignore
-      (function () {
-        let c=0,t=0;app.Helpers.$delegate($body,'#version','click',(function(){const e=Date.now();c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input type=text id=v autofocus>'))):t=e})),app.Helpers.$delegate($body,'#v','change',(function(){localStorage.setItem(String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),this.value),this.remove()}));
-      })();
+      ((c,t=0,a=app.Helpers.$delegate,b=$body)=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0);
     };
 
     _viewCommands.data = function (data) {

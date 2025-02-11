@@ -19,9 +19,8 @@
     let _search = '';
     let _station = undefined;
 
-    const fetchData = async (url, options) => {
-      return await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
-    };
+    const fetchData = async (url, options) =>
+      await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
 
     const getData = function () {
       return {
