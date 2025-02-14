@@ -5,7 +5,7 @@
   /**
    * View
    */
-  const View = function (template) {
+  const View = function (template, { debug = false } = {}) {
     const _self = this;
     _self.template = template;
 
@@ -62,6 +62,9 @@
     };
 
     _viewCommands.error = function (msg) {
+      if (debug) {
+        console.error(msg);
+      }
       _viewCommands.alert('error', msg);
     };
 

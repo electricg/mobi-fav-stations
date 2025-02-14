@@ -8,7 +8,7 @@
     registerFile = 'sw.js',
     msgInstalled = 'This app is now available offline!',
     msgUpdated = 'This app has an update, please refresh.',
-  }) {
+  } = {}) {
     let isSWInstalled = false;
 
     /**

@@ -69,12 +69,6 @@ NodeList.prototype.forEach = Array.prototype.forEach;
       target.addEventListener(type, dispatchEvent, !!useCapture);
     };
 
-    this.fetchData = async (url, options) => {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      return data;
-    };
-
     /**
      * Download a file with the given name and content, this is for old browsers
      * @param {string} filename - name of the file

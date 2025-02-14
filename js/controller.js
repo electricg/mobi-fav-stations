@@ -19,8 +19,17 @@
     let _search = '';
     let _station = undefined;
 
-    const fetchData = async (url, options) =>
-      await app.Helpers.fetchData(`${URL_BASE}${url}`, options);
+    const fetchData = async (url, options) => {
+      const response = await fetch(`${URL_BASE}${url}`, options);
+      const data = await response.json();
+      if (response.ok) {
+        return data;
+      } else {
+        throw new Error(
+          `Fetch of '${url}' returned: '${data?.error || response?.status}'`
+        );
+      }
+    };
 
     const getData = function () {
       return {
