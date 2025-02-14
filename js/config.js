@@ -1,6 +1,6 @@
-'use strict';
-
 (function (window) {
+  'use strict';
+
   const Config = function (defaultOpts, storage) {
     const _options = { ...defaultOpts };
 

@@ -1,13 +1,14 @@
-/* global $$, $, app, VERSION */
+/* global $$, $, VERSION */
 (function (window) {
   'use strict';
 
   /**
    * View
    */
-  const View = function (template, { debug = false } = {}) {
+  const View = function (template, helpers, { debug = false } = {}) {
     const _self = this;
     _self.template = template;
+    _self.helpers = helpers;
 
     const $load = {
       loadStatus: $$('#load-status'),
@@ -79,8 +80,7 @@
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
 
-      // prettier-ignore
-      ((c,t=0,a=app.Helpers.$delegate,b=$body)=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0);
+      ((c,t=0,a=_self.helpers.$delegate,b=$body)=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0); // prettier-ignore
     };
 
     _viewCommands.data = function (data) {
@@ -197,7 +197,7 @@
           break;
         }
         case 'toggleFavorite': {
-          app.Helpers.$delegate(
+          _self.helpers.$delegate(
             $body,
             '.js-toggle-favorite',
             'click',
@@ -219,7 +219,7 @@
           break;
         }
         case 'editDescription': {
-          app.Helpers.$delegate(
+          _self.helpers.$delegate(
             $body,
             '.js-edit-description',
             'input',
@@ -235,7 +235,7 @@
           break;
         }
         case 'editFavorite': {
-          app.Helpers.$delegate(
+          _self.helpers.$delegate(
             $body,
             '.js-edit-favorites',
             'click',
@@ -391,7 +391,7 @@
             const data = handler();
             _self.render('showStation', data);
           });
-          app.Helpers.$delegate(
+          _self.helpers.$delegate(
             $body,
             '.js-show-station',
             'click',

@@ -1,4 +1,4 @@
-const VERSION = '0.8.15';
+const VERSION = '0.8.19';
 const NAMESPACE = 'mobiFavStations';
 
 const CACHE_NAMESPACE = `::${NAMESPACE}::`;
@@ -68,7 +68,7 @@ self.addEventListener('fetch', (event) => {
           );
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     })
   );

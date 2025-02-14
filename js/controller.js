@@ -1,4 +1,4 @@
-/* global app, URL_BASE, NAMESPACE, VERSION, FILE */
+/* global URL_BASE, NAMESPACE, VERSION, FILE */
 (function (window) {
   'use strict';
 
@@ -8,13 +8,15 @@
    * @param {object} view The view instance
    * @param {object} config The config instance
    * @param {object} offline The offline instance
+   * @param {object} helpers The helpers instance
    */
-  const Controller = function (model, view, config, offline) {
+  const Controller = function (model, view, config, offline, helpers) {
     const _self = this;
     _self.model = model;
     _self.view = view;
     _self.config = config;
     _self.offline = offline;
+    _self.helpers = helpers;
 
     let _search = '';
     let _station = undefined;
@@ -88,7 +90,7 @@
     };
 
     const importData = async function (file) {
-      const res = await app.Helpers.readFromInputFile(file);
+      const res = await _self.helpers.readFromInputFile(file);
       const data = JSON.parse(res)[NAMESPACE];
 
       // TODO should check that the data imported is correct
@@ -110,7 +112,7 @@
           user: _self.model.user,
         },
       });
-      const now = app.Helpers.todayStr;
+      const now = _self.helpers.todayStr;
       const filename = FILE.name.replace('${now}', now);
       const title = FILE.title.replace('${now}', now);
 
@@ -119,12 +121,12 @@
 
     const exportData = async function () {
       const { data, filename } = prepareDataForExport();
-      await app.Helpers.writeToFile(filename, data);
+      await _self.helpers.writeToFile(filename, data);
     };
 
     const shareData = function () {
       const { data, filename, title } = prepareDataForExport();
-      app.Helpers.shareTo(filename, data, title);
+      _self.helpers.shareTo(filename, data, title);
     };
 
     const deleteData = function () {

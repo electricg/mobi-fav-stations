@@ -7,11 +7,8 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 #### TODO
 
 - [x] zebra table
-- [ ] better style for the edit description in the table
 - [x] show loading visual in the "load information" button
-- [ ] better "first time" experience
-- [ ] check all the "empties"
-- [ ] install offline sw only when clicking the "install" button
+- [x] install offline sw only when clicking the "install" button
 - [x] personal configuration to show/hide classics/ebikes/docks
 - [x] personal configuration for a more compact layout
 - [x] when "show all stations" scroll to put the table to the top
@@ -20,14 +17,22 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] show station details
 - [x] over style for the zebra table
 - [x] delegate more events to the body
-- [ ] fix bug when tapping on edit favourite station
 - [x] better style for station details
-- [ ] install offline should show prompt
-- [ ] try IndexedDB API to store data
+- [x] install offline should show prompt
 - [x] try to add the search input and the hide button to the sticky header for the station list table
 - [x] in the station detail dialog, filter the bikes by all, classic, ebikes
 - [x] new line in description in station dialog
+- [x] check why the offline "new update" message doesn't work
+- [x] fix svg sprite a11y
+- [ ] fix bug when tapping on edit favourite station
+- [ ] a11y check
 - [ ] better style for the input file
-- [ ] check why the offline "new update" message doesn't work
-- [ ] fix svg sprite a11y
 - [ ] reduce font size footer
+- [ ] better style for the edit description in the table
+- [ ] error created from the dialog is not rendered on top of the dialog
+- [ ] search station should also use the user description
+- [ ] better "first time" experience
+- [ ] check all the "empties"
+- [ ] try IndexedDB API to store data
+- [ ] check the todos around the code
+- [ ] add code to check if service worker is supported

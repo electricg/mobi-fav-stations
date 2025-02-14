@@ -1,46 +1,36 @@
-/* global */
-/* exported $, $$ */
-'use strict';
-
-const $ = document.querySelectorAll.bind(document);
-const $$ = document.querySelector.bind(document);
-Element.prototype.on = Element.prototype.addEventListener;
-
-// https://developer.mozilla.org/en/docs/Web/API/NodeList
-NodeList.prototype.forEach = Array.prototype.forEach;
-
 (function (window) {
+  'use strict';
+
   const Helpers = function () {
-    const _today = new Date();
-    const yyyy = _today.getFullYear();
-    const mm = (_today.getMonth() + 1 + '').padStart(2, '0');
-    const dd = (_today.getDate() + '').padStart(2, '0');
-    const _todayStr = `${yyyy}-${mm}-${dd}`;
+    // keep these global
+    window.$ = document.querySelectorAll.bind(document);
+    window.$$ = document.querySelector.bind(document);
+    Element.prototype.on = Element.prototype.addEventListener;
 
     const _notSupported =
       'This functionality is not supported in your browser/os/device';
 
+    /**
+     * Get today date in the YYYY-MM-DD format
+     */
     Object.defineProperty(this, 'todayStr', {
       get: function () {
-        return _todayStr;
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = (today.getMonth() + 1 + '').padStart(2, '0');
+        const dd = (today.getDate() + '').padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        return todayStr;
       },
     });
 
     /**
-     * Prevent default event
-     * @param {object} event
-     */
-    this.prev = function (event) {
-      if (event.preventDefault) {
-        event.preventDefault();
-      } else {
-        event.returnValue = false;
-      }
-    };
-
-    /**
-     * Attach a handler to event for all elements that match the selector,
+     * Attach a handler to an event for all elements that match the selector,
      * now or in the future, based on a root element
+     * @param {Element} target Root element, it has to exist
+     * @param {string} selector Elements that should trigger the event, no need to exist yet
+     * @param {string} type Type of event (click, change, input, etc...)
+     * @param {Function} handler Function to run
      */
     this.$delegate = function (target, selector, type, handler) {
       function dispatchEvent(event) {
@@ -92,12 +82,12 @@ NodeList.prototype.forEach = Array.prototype.forEach;
 
     /**
      * Read content from uploaded file
-     * @param {object} file
-     * @returns {Promise} promise with the content
+     * @param {File} file File object
+     * @returns {Promise<string>} Promise with the content of the file
      */
     this.readFromInputFile = async function (file) {
       if (!('FileReader' in window)) {
-        throw _notSupported;
+        throw new Error(_notSupported);
       }
 
       const reader = new FileReader();
@@ -120,7 +110,6 @@ NodeList.prototype.forEach = Array.prototype.forEach;
      * Write content into file
      * @param {string} filename - name of the file
      * @param {string} text - content of the file
-     * @returns {Promise}
      */
     this.writeToFile = async function (filename, text) {
       if (!('showSaveFilePicker' in window)) {
@@ -172,11 +161,12 @@ NodeList.prototype.forEach = Array.prototype.forEach;
           // if the user doesn't share the file, swallow the relative browser error
         });
       } else {
-        throw _notSupported;
+        throw new Error(_notSupported);
       }
     };
   };
 
+  // export to window
   window.app = window.app || {};
-  window.app.Helpers = new Helpers();
+  window.app.Helpers = Helpers;
 })(window);
