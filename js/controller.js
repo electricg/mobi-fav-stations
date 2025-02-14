@@ -127,13 +127,9 @@
       app.Helpers.shareTo(filename, data, title);
     };
 
-    // TODO should make a function in the model
     const deleteData = function () {
       _self.config.reset();
-      _self.model.updateStationsUserData({
-        user: {},
-        favorites: [],
-      });
+      _self.model.resetStationsUserData();
 
       return getData();
     };

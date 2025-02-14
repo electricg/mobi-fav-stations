@@ -250,24 +250,43 @@
     const modify = function (how, id, newData, newList, lastUpdated) {
       let mod = -1;
 
-      if (how === 'addFavorite') {
-        mod = addFavorite(id);
-      } else if (how === 'removeFavorite') {
-        mod = removeFavorite(id);
-      } else if (how === 'orderFavorite') {
-        mod = orderFavorite(id, newData);
-      } else if (how === 'editStation') {
-        mod = editStation(id, newData);
-      } else if (how === 'editDescription') {
-        mod = editDescription(id, newData);
-      } else if (how === 'updateStationsInformation') {
-        mod = updateStationsInformation(newList, lastUpdated);
-      } else if (how === 'updateStationsStatus') {
-        mod = updateStationsStatus(newList, lastUpdated);
-      } else if (how === 'updateStationsUserData') {
-        mod = updateStationsUserData(newData);
-      } else if (how === 'updateBikesStatus') {
-        mod = updateBikesStatus(newData, lastUpdated);
+      switch (how) {
+        case 'addFavorite': {
+          mod = addFavorite(id);
+          break;
+        }
+        case 'removeFavorite': {
+          mod = removeFavorite(id);
+          break;
+        }
+        case 'orderFavorite': {
+          mod = orderFavorite(id, newData);
+          break;
+        }
+        case 'editStation': {
+          mod = editStation(id, newData);
+          break;
+        }
+        case 'editDescription': {
+          mod = editDescription(id, newData);
+          break;
+        }
+        case 'updateStationsInformation': {
+          mod = updateStationsInformation(newList, lastUpdated);
+          break;
+        }
+        case 'updateStationsStatus': {
+          mod = updateStationsStatus(newList, lastUpdated);
+          break;
+        }
+        case 'updateStationsUserData': {
+          mod = updateStationsUserData(newData);
+          break;
+        }
+        case 'updateBikesStatus': {
+          mod = updateBikesStatus(newData, lastUpdated);
+          break;
+        }
       }
 
       if (mod !== -1) {
@@ -403,6 +422,18 @@
      * @returns
      */
     this.updateStationsUserData = function (newData) {
+      return modify('updateStationsUserData', null, newData);
+    };
+
+    /**
+     * Reset user data and favorites
+     * @returns
+     */
+    this.resetStationsUserData = function () {
+      const newData = {
+        user: {},
+        favorites: [],
+      };
       return modify('updateStationsUserData', null, newData);
     };
 
