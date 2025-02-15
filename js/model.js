@@ -438,8 +438,8 @@
     };
 
     /**
-     * Filter stations by name or id
-     * @param {string} search - name or id
+     * Filter stations by name or id or user description
+     * @param {string} search - name or id or user description
      * @returns {object} Stations that match the search
      */
     this.filterStations = function (search) {
@@ -454,6 +454,11 @@
           const name = _stations[key]?.information?.name;
           if (name && name.toLowerCase().includes(sanitizedSearch)) {
             acc[key] = _stations[key];
+          } else {
+            const desc = _stations[key]?.user?.description;
+            if (desc && desc.toLowerCase().includes(sanitizedSearch)) {
+              acc[key] = _stations[key];
+            }
           }
         }
         return acc;

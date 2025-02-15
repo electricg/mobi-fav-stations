@@ -30,7 +30,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] reduce font size footer
 - [ ] better style for the edit description in the table
 - [ ] error created from the dialog is not rendered on top of the dialog
-- [ ] search station should also use the user description
+- [x] search station should also use the user description
 - [ ] better "first time" experience
 - [ ] check all the "empties"
 - [ ] try IndexedDB API to store data
