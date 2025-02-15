@@ -2,12 +2,11 @@
   'use strict';
 
   const Offline = function ({
-    showOffline = (status) => status,
-    showInfo = (msg) => msg,
     debug = false,
     registerFile = 'sw.js',
-    msgInstalled = 'This app is now available offline!',
-    msgUpdated = 'This app has an update, please refresh.',
+    UIInstalled = () => {},
+    UIUpdated = () => {},
+    UIStatus = (status) => status,
   } = {}) {
     let isSWInstalled = false;
 
@@ -25,7 +24,7 @@
      */
     const swUIStatus = (status) => {
       printDebug('sw status', !!status);
-      showOffline(status);
+      UIStatus(status);
     };
 
     /**
@@ -34,7 +33,7 @@
     const swUIFirstTime = () => {
       printDebug('sw first time ever');
       swUIStatus(true);
-      swUIMessage(msgInstalled);
+      UIInstalled();
     };
 
     /**
@@ -50,7 +49,7 @@
      */
     const swUIUpdate = () => {
       printDebug('sw there is a new update, please refresh');
-      swUIMessage(msgUpdated);
+      UIUpdated();
     };
 
     /**
@@ -59,14 +58,6 @@
      */
     const swUIError = (err) => {
       printDebug('sw registration failed: ', err);
-    };
-
-    /**
-     * Change the sw message
-     * @param {string} msg
-     */
-    const swUIMessage = (msg) => {
-      showInfo(msg);
     };
 
     /**
@@ -178,13 +169,19 @@
       });
     };
 
-    printDebug('sw on');
+    if ('serviceWorker' in navigator) {
+      printDebug('sw supported');
 
-    isSWInstalled = swCheckStatus();
+      isSWInstalled = swCheckStatus();
 
-    if (isSWInstalled) {
-      printDebug('sw is installed, auto init');
-      this.init();
+      if (isSWInstalled) {
+        printDebug('sw is installed, auto init');
+        this.init();
+      } else {
+        swUIStatus(isSWInstalled);
+      }
+    } else {
+      printDebug('sw not supported');
     }
   };
 

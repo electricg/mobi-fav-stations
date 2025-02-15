@@ -35,4 +35,4 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] check all the "empties"
 - [ ] try IndexedDB API to store data
 - [ ] check the todos around the code
-- [ ] add code to check if service worker is supported
+- [x] add code to check if service worker is supported

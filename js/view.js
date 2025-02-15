@@ -134,9 +134,17 @@
       }
     };
 
-    _viewCommands.installedOffline = function (status) {
+    _viewCommands.offlineStatus = function (status) {
       $installOffline.classList.toggle('hide', status);
       $uninstallOffline.classList.toggle('hide', !status);
+    };
+
+    _viewCommands.offlineInstalled = function () {
+      _self.render('info', _self.template.strings('0011'));
+    };
+
+    _viewCommands.offlineUpdated = function () {
+      _self.render('info', _self.template.strings('0012'));
     };
 
     this.render = function (viewCmd, data) {

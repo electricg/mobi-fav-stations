@@ -12,11 +12,10 @@
       debug: true,
     });
     this.offline = new app.Offline({
-      showInfo: (msg) => this.view.render('info', msg),
-      showOffline: (status) => this.view.render('installedOffline', status),
-      msgInstalled: 'This app is now installed!',
-      msgUpdated: 'This app has an update, please <a href="./">refresh</a>.',
       debug: true,
+      UIInstalled: () => this.view.render('offlineInstalled'),
+      UIUpdated: () => this.view.render('offlineUpdated'),
+      UIStatus: (status) => this.view.render('offlineStatus', status),
     });
     this.controller = new app.Controller(
       this.model,
