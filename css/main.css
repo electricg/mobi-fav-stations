@@ -205,8 +205,13 @@ body {
   flex-direction: column;
 }
 .main-content {
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
   overflow: auto;
+}
+.main-section--settings {
+  margin-top: auto;
 }
 
 /*=== header */
@@ -685,6 +690,15 @@ label[for="import-data"] {
   display: flex;
   flex-direction: column;
   gap: var(--l-gap);
+}
+
+/* === info */
+.main-section--info {
+  p {
+    border-top: 1px solid var(--c-theme-first);
+    font-size: 0.9rem;
+    padding-top: .5em;
+  }
 }
 
 /* === button load */

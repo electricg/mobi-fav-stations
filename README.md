@@ -27,7 +27,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] fix bug when tapping on edit favourite station
 - [ ] a11y check
 - [ ] better style for the input file
-- [ ] reduce font size footer
+- [x] reduce font size info
 - [ ] better style for the edit description in the table
 - [ ] error created from the dialog is not rendered on top of the dialog
 - [x] search station should also use the user description
