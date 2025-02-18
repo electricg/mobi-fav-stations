@@ -142,6 +142,17 @@
       <summary class="settings-summary">Settings</summary>
 
       <div class="settings">
+        <fieldset class="settings__fieldset-block">
+          <legend>Actions</legend>
+
+          <button id="toggle-edit" aria-pressed="false" class="button-toggle"><span>Start</span><span>Finish</span> editing favourite stations</button>
+
+          <button id="load-information" class="button-spinner load-information"><span>Load information</span><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-spinner"></use><use href="#icon-clipboard" class="icon-clipboard"></use></svg></button>
+
+          <button id="install" class="hide">Install app</button>
+          <button id="uninstall" class="hide">Uninstall app</button>
+        </fieldset>
+
         <fieldset>
           <legend>Favourite stations view</legend>
 
@@ -191,6 +202,7 @@
 
         <fieldset>
           <legend>Station details default view</legend>
+
           <label for="showStationDetails-0" class="input-checkbox__label">
             <input type="radio" id="showStationDetails-0" class="input-checkbox__check" name="showStationDetails" value="0">
             <svg class="icon input-checkbox__icon" focusable="false" aria-hidden="true">
@@ -217,10 +229,6 @@
           </label>
         </fieldset>
 
-        <button id="toggle-edit" aria-pressed="false" class="button-toggle"><span>Start</span><span>Finish</span> editing favourite stations</button>
-
-        <button id="load-information" class="button-spinner load-information"><span>Load information</span><svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-spinner"></use><use href="#icon-clipboard" class="icon-clipboard"></use></svg></button>
-
         <fieldset class="settings__fieldset-block">
           <legend>User data</legend>
 
@@ -235,16 +243,13 @@
 
           <button id="delete-data">Delete</button>
         </fieldset>
-
-        <button id="install" class="hide">Install app</button>
-
-        <button id="uninstall" class="hide">Uninstall app</button>
       </div>
     </details>
   </section>
 
 <!-- INFO -->
   <section id="info" class="main-section main-section--info">
+    <hr>
     <p>
       Developed by <a href="https://github.com/electricg" target="_blank">Giulia Alfonsi</a>.<br>
       This is just a personal app with minimal functionalities.<br>
