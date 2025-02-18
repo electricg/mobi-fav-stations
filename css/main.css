@@ -681,11 +681,6 @@ tbody {
   gap: calc(var(--l-gap) * 2);
   margin: calc(var(--l-gap) * 2) 0;
 }
-label[for="import-data"] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 .5em;
-}
 .settings__fieldset-block {
   display: flex;
   flex-direction: column;
@@ -733,7 +728,6 @@ label[for="import-data"] {
   opacity: 0;
   padding: 0;
   position: absolute;
-  right: 1em;
   width: var(--l-icon-size);
 }
 .input-checkbox__icon {
@@ -754,6 +748,12 @@ label[for="import-data"] {
 }
 .input-checkbox__check:checked ~ .input-checkbox__icon .input-checkbox__icon__checked {
   display: block;
+}
+
+/* === input file */
+.input-file__label,
+.input-file__input {
+  display: none;
 }
 
 /* === debug */

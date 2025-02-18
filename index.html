@@ -102,6 +102,7 @@
     <div id="favorites"></div>
   </section>
 
+<!-- STATIONS-->
   <section id="stations" class="main-section--stations stations-list">
     <table>
       <thead>
@@ -138,7 +139,7 @@
 <!-- SETTINGS -->
   <section id="settings" class="main-section main-section--settings">
     <details id="settings-details" class="settings-details">
-      <summary class="settings-summary">h Settings</summary>
+      <summary class="settings-summary">Settings</summary>
 
       <div class="settings">
         <fieldset>
@@ -222,7 +223,11 @@
 
         <fieldset class="settings__fieldset-block">
           <legend>User data</legend>
-          <label for="import-data">Import from backup:<input type="file" id="import-data" accept=".txt"></label>
+
+          <label for="import-data" class="input-file__label">Import from backup
+            <input type="file" id="import-data" class="input-file__input" accept=".txt">
+          </label>
+          <button id="import-data-button">Import from backup</button>
 
           <button id="export-data">Export to backup</button>
 

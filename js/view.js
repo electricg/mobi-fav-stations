@@ -34,6 +34,7 @@
     const $settingsDetails = $$('#settings-details');
 
     const $importData = $$('#import-data');
+    const $importDataBtn = $$('#import-data-button');
     const $exportData = $$('#export-data');
     const $shareData = $$('#share-data');
     const $deleteData = $$('#delete-data');
@@ -340,6 +341,10 @@
           break;
         }
         case 'importData': {
+          // $importDataBtn is just for stylistic reasons
+          $importDataBtn.on('click', function () {
+            $importData.click();
+          });
           $importData.on('click', function (event) {
             if (!window.confirm(_self.template.strings('0002'))) {
               event.preventDefault();
