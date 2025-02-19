@@ -80,12 +80,8 @@
         name || ''
       }</div>
             <div class="favorite__description">
-              ${
-                description
-                  ? `<span class="favorite__description__text">${description}</span>`
-                  : ``
-              }
-              <label class="favorite__description__form">Description: <textarea data-id="${id}" class="js-edit-description">${description}</textarea></label>
+              <span class="favorite__description__label">Description:</span>
+              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="plaintext-only">${description}</div>
             </div>
             ${
               !(isInstalled && isRenting && isReturning)
@@ -208,7 +204,9 @@
                 <span aria-hidden="true" title="Remove from favourites">★</span>
               </button>
             </td>
-            <td><textarea class="station__description js-edit-description" data-id="${id}" aria-label="Description">${description}</textarea></td>
+            <td>
+              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="plaintext-only">${description}</div>
+            </td>
           </tr>
         `;
 

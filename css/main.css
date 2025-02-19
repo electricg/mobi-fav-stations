@@ -33,6 +33,9 @@
   --s-border: 1px dotted var(--c-theme-first);
 
   --kpi-col: 2;
+
+  /* --c-button-border: buttonborder; */
+  /* --c-button-bg: buttonface; */
 }
 *, *:after, *:before {
   -webkit-box-sizing: border-box;
@@ -299,21 +302,31 @@ body {
 .favorite__description {
   grid-row: 3;
 }
-.favorite__description__text {
-  white-space: break-spaces;
-}
-.edit .favorite__description__text {
+.favorite__description__label {
   display: none;
+
+  .edit & {
+    display: block;
+  }
 }
-.favorite__description__form {
-  display: none;
-  flex-direction: column;
-}
-.edit .favorite__description__form {
-  display: flex;
-}
-.favorite__description__form textarea {
-  flex: 1;
+.description__textarea {
+  pointer-events: none;
+
+  &:empty {
+    display: none;
+  }
+
+  .edit & {
+    background: field;
+    border: 1px solid var(--c-main-text);
+    border-radius: var(--l-border-radius);
+    padding: 2px;
+    pointer-events: unset;
+
+    &:empty {
+      display: revert;
+    }
+  }
 }
 .favorite__actions {
   display: none;
@@ -500,30 +513,20 @@ tbody {
 .station__favorite-toggle {
   background: transparent;
   border-color: transparent;
+  border-top-width: 0;
+  padding-top: 0;
   pointer-events: none;
 }
 .edit .station__favorite-toggle {
   background: revert;
   border-color: revert;
+  border-top-width: revert;
+  padding-top: revert;
   pointer-events: revert;
 }
 .station__favorite-toggle span {
   font-size: 1.2rem;
   line-height: 1;
-}
-
-.station__description {
-  background: transparent;
-  border-color: transparent;
-  display: block;
-  pointer-events: none;
-  resize: none;
-}
-.edit .station__description {
-  background: revert;
-  border-color: revert;
-  pointer-events: revert;
-  resize: revert;
 }
 
 /*=== station detail */

@@ -28,7 +28,7 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] a11y check
 - [x] better style for the input file
 - [x] reduce font size info
-- [ ] better style for the edit description in the table
+- [x] better style for the edit description in the table
 - [ ] error created from the dialog is not rendered on top of the dialog
 - [x] search station should also use the user description
 - [ ] better "first time" experience

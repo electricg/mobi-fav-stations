@@ -234,7 +234,7 @@
             'input',
             function () {
               const id = this.getAttribute('data-id');
-              const value = this.value;
+              const value = this.innerHTML;
               const res = handler(id, value);
               if (res === -1) {
                 _self.render('error', _self.template.strings('0004'));
