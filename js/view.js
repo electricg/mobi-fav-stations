@@ -8,7 +8,7 @@
   const View = function (template, helpers, { debug = false } = {}) {
     const _self = this;
     _self.template = template;
-    _self.helpers = helpers;
+    const { $delegate } = helpers;
 
     const $load = {
       loadStatus: $$('#load-status'),
@@ -81,7 +81,7 @@
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
 
-      ((c,t=0,a=_self.helpers.$delegate,b=$body)=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0); // prettier-ignore
+      ((c,t=0,a=$delegate,b=$$('h1'))=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0); // prettier-ignore
     };
 
     _viewCommands.data = function (data) {
@@ -206,9 +206,9 @@
           break;
         }
         case 'toggleFavorite': {
-          _self.helpers.$delegate(
-            $body,
-            '.js-toggle-favorite',
+          $delegate(
+            $stationsList,
+            '.js-edit .js-toggle-favorite',
             'click',
             function () {
               const id = this.getAttribute('data-id');
@@ -228,25 +228,27 @@
           break;
         }
         case 'editDescription': {
-          _self.helpers.$delegate(
-            $body,
-            '.js-edit-description',
-            'input',
-            function () {
-              const id = this.getAttribute('data-id');
-              const value = this.innerHTML;
-              const res = handler(id, value);
-              if (res === -1) {
-                _self.render('error', _self.template.strings('0004'));
+          [$favorites, $stationsList].forEach(($el) => {
+            $delegate(
+              $el,
+              '.js-edit .js-edit-description',
+              'input',
+              function () {
+                const id = this.getAttribute('data-id');
+                const value = this.innerHTML;
+                const res = handler(id, value);
+                if (res === -1) {
+                  _self.render('error', _self.template.strings('0004'));
+                }
               }
-            }
-          );
+            );
+          });
           break;
         }
         case 'editFavorite': {
-          _self.helpers.$delegate(
-            $body,
-            '.js-edit-favorites',
+          $delegate(
+            $favorites,
+            '.js-edit .js-edit-favorites',
             'click',
             function () {
               const id = this.getAttribute('data-id');
@@ -272,6 +274,7 @@
             const pressed = this.getAttribute('aria-pressed') === 'true';
             this.setAttribute('aria-pressed', !pressed);
             $body.classList.toggle('edit', !pressed);
+            $body.classList.toggle('js-edit', !pressed);
             if (pressed) {
               // finished editing, rerender with the updated data
               const data = handler();
@@ -404,16 +407,18 @@
             const data = handler();
             _self.render('showStation', data);
           });
-          _self.helpers.$delegate(
-            $body,
-            '.js-show-station',
-            'click',
-            function () {
-              const id = this.getAttribute('data-id');
-              const data = handler(id);
-              _self.render('showStation', data);
-            }
-          );
+          [$favorites, $stationsList].forEach(($el) => {
+            $delegate(
+              $el,
+              'body:not(.js-edit) .js-show-station',
+              'click',
+              function () {
+                const id = this.getAttribute('data-id');
+                const data = handler(id);
+                _self.render('showStation', data);
+              }
+            );
+          });
           break;
         }
       }
