@@ -391,15 +391,6 @@ body {
   font-size: 0.6rem;
   padding-left: 0.1rem;
 }
-@supports not (grid-template-columns: subgrid) {
-  .favorite__kpis {
-    grid-template-columns: repeat(var(--fav-col), 1fr);
-  }
-  .favorite__kpi {
-    column-gap: var(--l-gap);
-  }
-  /* todo: check how the subgrid rows look */
-}
 
 /*=== generic table */
 table {
