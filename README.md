@@ -24,15 +24,18 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] new line in description in station dialog
 - [x] check why the offline "new update" message doesn't work
 - [x] fix svg sprite a11y
-- [ ] fix bug when tapping on edit favourite station
-- [ ] a11y check
+- [x] fix bug when tapping on edit favourite station
 - [x] better style for the input file
 - [x] reduce font size info
 - [x] better style for the edit description in the table
-- [ ] error created from the dialog is not rendered on top of the dialog
 - [x] search station should also use the user description
-- [ ] better "first time" experience
-- [ ] check all the "empties"
-- [ ] try IndexedDB API to store data
-- [ ] check the todos around the code
 - [x] add code to check if service worker is supported
+- [x] in station details add link to google maps location
+- [ ] better "first time" experience
+- [ ] try IndexedDB API to store data
+- [ ] check all the "empties"
+- [ ] check the todos around the code
+- [ ] check a11y
+- [ ] check all the browsers
+- [ ] error created from the dialog is not rendered on top of the dialog
+- [ ] in firefox android the description textarea is too small and not clickable

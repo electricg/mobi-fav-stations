@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.8.29';
+const VERSION = '0.8.30';
 const NAMESPACE = 'mobiFavStations';
 
 const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
@@ -17,7 +17,7 @@ const DEFAULT_USER_SETTINGS = {
 };
 
 const FEATURES = {
-  local: false, // todo need to use it for offline
+  local: false,
 };
 
 const FILE = {

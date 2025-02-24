@@ -231,7 +231,12 @@
       const { bikes = [] } = item;
       const { showStationDetails } = config;
 
-      const { name, is_charging_station: isCharging } = item?.information || {};
+      const {
+        name,
+        is_charging_station: isCharging,
+        lat,
+        lon,
+      } = item?.information || {};
       const {
         is_installed: isInstalled,
         is_renting: isRenting,
@@ -245,7 +250,9 @@
         <div class="detail">
           <div class="detail__title">${
             favorite ? `<span title="Favourite">⭐️ </span>` : ``
-          }<span class="detail__id">${id}</span> ${name || ''}</div>
+          }<span class="detail__id">${id}</span> ${
+        name || ''
+      } <a href="https://www.google.com/maps/search/?api=1&query=${lat}%2C${lon}" target="_blank" title="Open location on Google Maps">📍</a></div>
           <div class="detail__description">${description}</div>
           <div class="detail__status">
             <span>${formatStatus(isInstalled)}<small> Installed</small></span>
