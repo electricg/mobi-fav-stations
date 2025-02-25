@@ -81,7 +81,7 @@
       }</div>
             <div class="favorite__description">
               <span class="favorite__description__label">Description:</span>
-              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="plaintext-only">${description}</div>
+              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
             </div>
             ${
               !(isInstalled && isRenting && isReturning)
@@ -205,7 +205,7 @@
               </button>
             </td>
             <td>
-              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="plaintext-only">${description}</div>
+              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
             </td>
           </tr>
         `;
