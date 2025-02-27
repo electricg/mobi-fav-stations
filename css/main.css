@@ -1,6 +1,28 @@
-:root {
+:root[data-theme=os] {
+  @media (prefers-color-scheme: light) {
+    --c-main-text: #3B3F45;
+    --c-main-bg: #F8FAFC;
+    color-scheme: light;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    --c-main-text: #F8FAFC;
+    --c-main-bg: #1B1B1B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme=light] {
   --c-main-text: #3B3F45;
   --c-main-bg: #F8FAFC;
+  color-scheme: light;
+}
+:root[data-theme=dark] {
+  --c-main-text: #F8FAFC;
+  --c-main-bg: #1B1B1B;
+  color-scheme: dark;
+}
+:root {
+  /* color-scheme: light dark; */
   --c-theme-first: #0075B0;
   --c-theme-second: #00ABDF;
   --c-bike: #0075B0;

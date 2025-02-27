@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.8.31';
+const VERSION = '0.8.32';
 const NAMESPACE = 'mobiFavStations';
 
 const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
@@ -14,6 +14,7 @@ const DEFAULT_USER_SETTINGS = {
   showDocks: true,
   compactLayout: false,
   showStationDetails: '0', // 0 all, 1 classic, 2 ebike, has to be a string
+  theme: 'os', // 'os', 'light', 'dark'
 };
 
 const FEATURES = {

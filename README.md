@@ -40,3 +40,4 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] error created from the dialog is not rendered on top of the dialog
 - [x] in firefox android the description textarea is too small and not clickable
 - [ ] revert to `contenteditable="plaintext-only"` when it's supported in firefox
+- [x] implement dark mode

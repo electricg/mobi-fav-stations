@@ -93,19 +93,26 @@
         filteredStations,
         config,
       } = data;
+
+      $body.classList.toggle('compact', config.compactLayout);
+      document.documentElement.setAttribute('data-theme', config.theme);
+
       $favorites.innerHTML = _self.template.favorites(
         favorites,
         stations,
         config
       );
+
       $lastUpdatedStatus.innerHTML =
         _self.template.lastUpdated(lastUpdatedStatus);
       $lastUpdatedInformation.innerHTML = _self.template.lastUpdated(
         lastUpdatedInformation
       );
+
       if (_showAllStations) {
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
+
       // settings
       $settingsCheckboxes.forEach(($el) => {
         $el.checked = config[$el.value];
@@ -115,8 +122,6 @@
           $el.checked = true;
         }
       });
-
-      $body.classList.toggle('compact', config.compactLayout);
     };
 
     _viewCommands.showStation = function (data) {
@@ -305,6 +310,10 @@
               opts[this.name] = this.value;
               handler(opts);
               // no need to render the new data for now
+
+              if (this.name === 'theme') {
+                document.documentElement.setAttribute('data-theme', this.value);
+              }
             })
           );
           break;
