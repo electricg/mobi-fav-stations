@@ -148,6 +148,7 @@ hr {
   }
 }
 .alert__close {
+  --l-icon-size: 2em;
   background: transparent;
   border: 0 none;
   border-radius: 100%;
@@ -156,9 +157,6 @@ hr {
   height: 2em;
   margin-left: var(--l-gap);
   padding: 0;
-}
-.alert__close__icon {
-  --l-icon-size: 2em;
 }
 .alert .alert__close:hover,
 .alert .alert__close:focus,
@@ -324,7 +322,7 @@ body {
 .favorite__description {
   grid-row: 3;
 }
-.favorite__description__label {
+.description__label {
   display: none;
 
   .edit & {

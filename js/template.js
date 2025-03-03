@@ -57,6 +57,11 @@
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
+    const elDescriptionTextarea = (id, description, showLabel = false) => `
+      ${showLabel ? `<span class="description__label">Description:</span>` : ``}
+      <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
+    `;
+
     const favorite = function (id, item, config) {
       const { name } = item?.information || {};
       const {
@@ -72,61 +77,71 @@
       const code = `
           <div class="favorite js-show-station" data-id="${id}">
             <div class="favorite__actions">
-              <input type="button" data-id="${id}" data-action="up" class="favorite__up js-edit-favorites" value="▲" />
-              <input type="button" data-id="${id}" data-action="down" class="favorite__down js-edit-favorites" value="▼" />
-              <input type="button" data-id="${id}" data-action="remove" class="favorite__remove js-edit-favorites" value="✕" />
+              ${[
+                ['up', '▲'],
+                ['down', '▼'],
+                ['remove', '✕'],
+              ]
+                .map(
+                  ([name, value]) =>
+                    `<input type="button" data-id="${id}" data-action="${name}" class="favorite__${name} js-edit-favorites" value="${value}" />`
+                )
+                .join('')}
             </div>
-            <div class="favorite__title"><span class="favorite__id">${id}</span> ${
-        name || ''
-      }</div>
+            <div class="favorite__title">
+              <span class="favorite__id">${id}</span> ${name || ''}
+            </div>
             <div class="favorite__description">
-              <span class="favorite__description__label">Description:</span>
-              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
+              ${elDescriptionTextarea(id, description, true)}
             </div>
             ${
               !(isInstalled && isRenting && isReturning)
-                ? `<div class="favorite__status">
-                <span title="Installed">${formatStatus(isInstalled)}</span>
-                <span title="Renting">${formatStatus(isRenting)}</span>
-                <span title="Returning">${formatStatus(isReturning)}</span>
-              </div>`
+                ? `
+                <div class="favorite__status">
+                  <span title="Installed">${formatStatus(isInstalled)}</span>
+                  <span title="Renting">${formatStatus(isRenting)}</span>
+                  <span title="Returning">${formatStatus(isReturning)}</span>
+                </div>`
                 : ``
             }
             <div class="favorite__kpis">
 
             ${
               showClassics
-                ? `<div class="favorite__kpi">
-                <span class="favorite__kpi__count">${formatKpiNumber(
-                  vehicleTypesAvailable?.[0].count
-                )}</span>
-                <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
-                <span class="favorite__kpi__type">Classics</span>
-              </div>`
+                ? `
+                <div class="favorite__kpi">
+                  <span class="favorite__kpi__count">${formatKpiNumber(
+                    vehicleTypesAvailable?.[0].count
+                  )}</span>
+                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                  <span class="favorite__kpi__type">Classics</span>
+                </div>`
                 : ``
             }
 
             ${
               showEbikes
-                ? `<div class="favorite__kpi">
-                <span class="favorite__kpi__count">${formatKpiNumber(
-                  vehicleTypesAvailable?.[1].count
-                )}</span>
-                <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
-                <span class="favorite__kpi__type">E-Bikes</span>
-              </div>`
+                ? `
+                <div class="favorite__kpi">
+                  <span class="favorite__kpi__count">${formatKpiNumber(
+                    vehicleTypesAvailable?.[1].count
+                  )}</span>
+                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                  <span class="favorite__kpi__type">E-Bikes</span>
+                </div>`
                 : ``
             }
 
             ${
               showDocks
-                ? `<div class="favorite__kpi">
-                <span class="favorite__kpi__count">${formatKpiNumber(
-                  numDocksAvailable
-                )}</span>
-                <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
-                <span class="favorite__kpi__type">Docks</span>
-              </div>`
+                ? `
+                <div class="favorite__kpi">
+                  <span class="favorite__kpi__count">${formatKpiNumber(
+                    numDocksAvailable
+                  )}</span>
+                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                  <span class="favorite__kpi__type">Docks</span>
+                </div>`
                 : ``
             }
             </div>
@@ -205,7 +220,7 @@
               </button>
             </td>
             <td>
-              <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
+            ${elDescriptionTextarea(id, description)}
             </td>
           </tr>
         `;
@@ -339,9 +354,7 @@
           <div class="alert alert--${type}">
             <span>${msg}</span>
             <button class="alert__close js-close" title="Close" aria-label="Close" onClick="this.parentNode.remove()">
-              <svg class="icon alert__close__icon" focusable="false" aria-hidden="true">
-                <use href="#icon-cancel-circle"></use>
-              </svg>
+              <svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-cancel-circle"></use></svg>
             </button>
           </div>
         `;
