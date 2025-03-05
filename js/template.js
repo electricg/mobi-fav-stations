@@ -275,7 +275,7 @@
               .map(
                 ([value, label]) => `
                   <div>
-                    <label tabindex="0">
+                    <label>
                       <input type="radio" id="detail__bike-show-${value}" name="detail__bike-show"${
                   showStationDetails === value ? ' checked' : ''
                 }>

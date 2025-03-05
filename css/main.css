@@ -643,7 +643,22 @@ tbody {
   gap: var(--l-gap);
 
   input[type=radio] {
-    display: none;
+    cursor: inherit;
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    width: 0;
+
+    &:focus ~ span {
+      outline: 2px solid var(--c-theme-first);
+      outline-offset: 2px;
+      border-radius: 1px;
+    }
+
+    &:focus:not(:focus-visible) ~ span {
+      outline: none;
+    }
 
     &:checked ~ span {
       border-bottom: 3px solid var(--c-theme-first);
