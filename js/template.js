@@ -64,6 +64,14 @@
     const elIconSvg = (name) =>
       `<svg class="icon icon--${name}" focusable="false" aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 
+    const kpi = (name, value, label) => `
+      <div class="kpi">
+        <span class="kpi__count">${formatKpiNumber(value)}</span>
+        ${elIconSvg(name)}
+        <span class="kpi__type">${label}</span>
+      </div>
+    `;
+
     const favorite = function (id, item, config) {
       const { name } = item?.information || {};
       const {
@@ -107,45 +115,17 @@
                 : ``
             }
             <div class="favorite__kpis">
-
-            ${
-              showClassics
-                ? `
-                <div class="favorite__kpi">
-                  <span class="favorite__kpi__count">${formatKpiNumber(
-                    vehicleTypesAvailable?.[0].count
-                  )}</span>
-                  ${elIconSvg('bike')}
-                  <span class="favorite__kpi__type">Classics</span>
-                </div>`
-                : ``
-            }
-
-            ${
-              showEbikes
-                ? `
-                <div class="favorite__kpi">
-                  <span class="favorite__kpi__count">${formatKpiNumber(
-                    vehicleTypesAvailable?.[1].count
-                  )}</span>
-                  ${elIconSvg('ebike')}
-                  <span class="favorite__kpi__type">E-Bikes</span>
-                </div>`
-                : ``
-            }
-
-            ${
-              showDocks
-                ? `
-                <div class="favorite__kpi">
-                  <span class="favorite__kpi__count">${formatKpiNumber(
-                    numDocksAvailable
-                  )}</span>
-                  ${elIconSvg('dock')}
-                  <span class="favorite__kpi__type">Docks</span>
-                </div>`
-                : ``
-            }
+              ${
+                showClassics
+                  ? kpi('bike', vehicleTypesAvailable?.[0].count, 'Classics')
+                  : ``
+              }
+              ${
+                showEbikes
+                  ? kpi('ebike', vehicleTypesAvailable?.[1].count, 'E-Bikes')
+                  : ``
+              }
+              ${showDocks ? kpi('dock', numDocksAvailable, 'Docks') : ``}
             </div>
           </div>
         `;
@@ -280,28 +260,10 @@
             }>⚡️</b> <small>${isCharging ? '' : 'Not '}Charging</small></span>
           </div>
 
-          <div class="detail__kpi-container">
-            <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${formatKpiNumber(
-                vehicleTypesAvailable?.[0].count
-              )}</span>
-              ${elIconSvg('bike')}
-              <span class="favorite__kpi__type">Classics</span>
-            </div>
-            <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${formatKpiNumber(
-                vehicleTypesAvailable?.[1].count
-              )}</span>
-              ${elIconSvg('ebike')}
-              <span class="favorite__kpi__type">E-Bikes</span>
-            </div>
-            <div class="favorite__kpi">
-              <span class="favorite__kpi__count">${formatKpiNumber(
-                numDocksAvailable
-              )}</span>
-              ${elIconSvg('dock')}
-              <span class="favorite__kpi__type">Docks</span>
-            </div>
+          <div class="detail__kpis">
+            ${kpi('bike', vehicleTypesAvailable?.[0].count, 'Classics')}
+            ${kpi('ebike', vehicleTypesAvailable?.[1].count, 'E-Bikes')}
+            ${kpi('dock', numDocksAvailable, 'Docks')}
           </div>
 
           <div class="detail__bike-show">

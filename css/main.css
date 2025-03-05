@@ -298,6 +298,34 @@ body {
   padding-right: var(--l-gap);
 }
 
+/* === kpi */
+.kpi {
+  display: grid;
+  grid-column: span var(--kpi-col);
+  grid-template-areas:
+  "count icon" 
+  "type  type";
+  grid-template-columns: subgrid;
+  justify-items: center;
+}
+.kpi__count {
+  font-size: 1.8rem;
+  font-weight: bold;
+  grid-area: count;
+  justify-self: right;
+  line-height: 2rem;
+}
+.kpi .icon {
+  --l-icon-size: 2em;
+  grid-area: icon;
+  justify-self: left;
+  margin: 0;
+}
+.kpi__type {
+  font-size: 0.6rem;
+  grid-area: type;
+}
+
 /*=== favorite */
 .favorites {
   --favs: 1;
@@ -383,32 +411,6 @@ body {
   display: grid;
   grid-row: 5;
   grid-template-columns: subgrid;
-}
-.favorite__kpi {
-  display: grid;
-  grid-column: span var(--kpi-col);
-  grid-template-areas:
-  "count icon" 
-  "type  type";
-  grid-template-columns: subgrid;
-  justify-items: center;
-}
-.favorite__kpi__count {
-  font-size: 1.8rem;
-  font-weight: bold;
-  grid-area: count;
-  justify-self: right;
-  line-height: 2rem;
-}
-.favorite__kpi .icon {
-  --l-icon-size: 2em;
-  grid-area: icon;
-  justify-self: left;
-  margin: 0;
-}
-.favorite__kpi__type {
-  font-size: 0.6rem;
-  grid-area: type;
 }
 .favorite__status span:after {
   content: attr(title);
@@ -603,7 +605,7 @@ tbody {
     filter: grayscale(1);
   }
 }
-.detail__kpi-container {
+.detail__kpis {
   display: grid;
   gap: 0 var(--l-gap);
   grid-template-columns: repeat(calc(var(--kpi-col) * 3), 1fr);
