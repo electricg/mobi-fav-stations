@@ -49,11 +49,10 @@
       return value / 1000 + ' km';
     };
 
-    const formatStatusSpan = (value, label) => {
-      return `<span${
-        value ? '' : ' tabindex="0"'
-      } title="${label}">${formatStatus(value)}</span>`;
-    };
+    const formatStatusSpan = (value, label) =>
+      `<span${value ? '' : ' tabindex="0"'} title="${label}">${formatStatus(
+        value
+      )}</span>`;
 
     const formatCharging = (value) => (value ? 'Y' : '');
 
@@ -61,6 +60,9 @@
       ${showLabel ? `<span class="description__label">Description:</span>` : ``}
       <div data-id="${id}" class="description__textarea js-edit-description" contenteditable="true">${description}</div>
     `;
+
+    const elIconSvg = (name) =>
+      `<svg class="icon icon--${name}" focusable="false" aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 
     const favorite = function (id, item, config) {
       const { name } = item?.information || {};
@@ -113,7 +115,7 @@
                   <span class="favorite__kpi__count">${formatKpiNumber(
                     vehicleTypesAvailable?.[0].count
                   )}</span>
-                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                  ${elIconSvg('bike')}
                   <span class="favorite__kpi__type">Classics</span>
                 </div>`
                 : ``
@@ -126,7 +128,7 @@
                   <span class="favorite__kpi__count">${formatKpiNumber(
                     vehicleTypesAvailable?.[1].count
                   )}</span>
-                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                  ${elIconSvg('ebike')}
                   <span class="favorite__kpi__type">E-Bikes</span>
                 </div>`
                 : ``
@@ -139,7 +141,7 @@
                   <span class="favorite__kpi__count">${formatKpiNumber(
                     numDocksAvailable
                   )}</span>
-                  <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                  ${elIconSvg('dock')}
                   <span class="favorite__kpi__type">Docks</span>
                 </div>`
                 : ``
@@ -283,21 +285,21 @@
               <span class="favorite__kpi__count">${formatKpiNumber(
                 vehicleTypesAvailable?.[0].count
               )}</span>
-              <svg class="icon favorite__kpi__icon favorite__kpi__icon--bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+              ${elIconSvg('bike')}
               <span class="favorite__kpi__type">Classics</span>
             </div>
             <div class="favorite__kpi">
               <span class="favorite__kpi__count">${formatKpiNumber(
                 vehicleTypesAvailable?.[1].count
               )}</span>
-              <svg class="icon favorite__kpi__icon favorite__kpi__icon--ebike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+              ${elIconSvg('ebike')}
               <span class="favorite__kpi__type">E-Bikes</span>
             </div>
             <div class="favorite__kpi">
               <span class="favorite__kpi__count">${formatKpiNumber(
                 numDocksAvailable
               )}</span>
-              <svg class="icon favorite__kpi__icon favorite__kpi__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+              ${elIconSvg('dock')}
               <span class="favorite__kpi__type">Docks</span>
             </div>
           </div>
@@ -314,7 +316,7 @@
             }><span>E-Bike</span></label></div>
           </div>
           
-          <table>
+          <table class="detail__table">
             <thead>
               <th scope="col">Dock</th>
               <th scope="col">Type</th>
@@ -329,13 +331,11 @@
                   bike?.c ? ` detail__bike-disabled` : ``
                 }">
                 <td>
-                  <svg class="icon detail__icon detail__icon--dock" focusable="false" aria-hidden="true"><use href="#icon-dock"></use></svg>
+                  ${elIconSvg('dock')}
                   ${formatDockNumber(bike?.z)}
                 </td>
                 <td>
-                  <svg class="icon detail__icon detail__icon--${
-                    bike?.d === '2' ? `e` : ``
-                  }bike" focusable="false" aria-hidden="true"><use href="#icon-bike"></use></svg>
+                  ${elIconSvg(`${bike?.d === '2' ? `e` : ``}bike`)}
                 </td>
                 <td><span class="detail__bike-id">${bike?.a}</span></td>
                 <td>${formatRangeNumber(bike?.e)}</td>
@@ -354,7 +354,7 @@
           <div class="alert alert--${type}">
             <span>${msg}</span>
             <button class="alert__close js-close" title="Close" aria-label="Close" onClick="this.parentNode.remove()">
-              <svg class="icon" focusable="false" aria-hidden="true"><use href="#icon-cancel-circle"></use></svg>
+              ${elIconSvg('cancel-circle')}
             </button>
           </div>
         `;
