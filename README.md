@@ -41,3 +41,4 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [x] in firefox android the description textarea is too small and not clickable
 - [ ] revert to `contenteditable="plaintext-only"` when it's supported in firefox
 - [x] implement dark mode
+- [ ] better dark mode

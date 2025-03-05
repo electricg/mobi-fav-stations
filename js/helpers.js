@@ -146,6 +146,7 @@
       // sharing of files is not supported at all, so functionality is
       // totally disabled for it
       // https://github.com/mozilla-mobile/fenix/issues/11946
+      // todo: check if firefox android works and maybe don't display the button at all
       if (navigator.canShare && !isFirefox) {
         const sharedObj = {
           title: title,
