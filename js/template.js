@@ -305,15 +305,23 @@
           </div>
 
           <div class="detail__bike-show">
-            <div><label for="detail__bike-show-all" tabindex="0"><input type="radio" id="detail__bike-show-all" name="detail__bike-show"${
-              showStationDetails === '0' ? ' checked' : ''
-            }><span>All</span></label></div>
-            <div><label for="detail__bike-show-bike" tabindex="0"><input type="radio" id="detail__bike-show-bike" name="detail__bike-show"${
-              showStationDetails === '1' ? ' checked' : ''
-            }><span>Classic</span></label></div>
-            <div><label for="detail__bike-show-ebike" tabindex="0"><input type="radio" id="detail__bike-show-ebike" name="detail__bike-show"${
-              showStationDetails === '2' ? ' checked' : ''
-            }><span>E-Bike</span></label></div>
+            ${[
+              ['0', 'All'],
+              ['1', 'Classic'],
+              ['2', 'E-bike'],
+            ]
+              .map(
+                ([value, label]) => `
+                  <div>
+                    <label tabindex="0">
+                      <input type="radio" id="detail__bike-show-${value}" name="detail__bike-show"${
+                  showStationDetails === value ? ' checked' : ''
+                }>
+                      <span>${label}</span>
+                    </label>
+                  </div>`
+              )
+              .join('')}
           </div>
           
           <table class="detail__table">
