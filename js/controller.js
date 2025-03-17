@@ -22,7 +22,10 @@
     let _station = undefined;
 
     const fetchData = async (url, options) => {
-      const response = await fetch(`${URL_BASE}${url}`, options);
+      const response = await fetch(`${URL_BASE}${url}`, {
+        ...options,
+        credentials: 'include',
+      });
       const data = await response.json();
       if (response.ok) {
         return data;
