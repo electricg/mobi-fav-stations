@@ -21,9 +21,8 @@
     let _search = '';
     let _station = undefined;
 
-    const fetchData = async (url, options) => {
+    const fetchData = async (url) => {
       const response = await fetch(`${URL_BASE}${url}`, {
-        ...options,
         credentials: 'include',
       });
       const data = await response.json();
@@ -79,9 +78,7 @@
     };
 
     const loadBikes = async function () {
-      const a=((a=String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115),b=localStorage[a])=>b&&{headers:{[a]:b}})(); // prettier-ignore
-
-      const data = await fetchData('free_bike_status.json', a);
+      const data = await fetchData('free_bike_status.json');
 
       _self.model.updateBikesStatus(data.data.stations, data.last_updated);
 

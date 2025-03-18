@@ -80,8 +80,6 @@
 
     _viewCommands.chrome = function () {
       $version.innerHTML = VERSION;
-
-      ((c,t=0,a=$delegate,b=$$('h1'))=>a(b,'#version','click',function(e=Date.now()){c++,1!==c?(e-t>2e3&&(c=0),t=e,5===c&&(c=0,this.insertAdjacentHTML('afterend','<input id=v>'))):t=e})-a(b,'#v','change',function(){this.remove(localStorage[String.fromCharCode(83,104,111,119,45,69,98,105,107,101,115)]=this.value)}))(0); // prettier-ignore
     };
 
     _viewCommands.data = function (data) {
