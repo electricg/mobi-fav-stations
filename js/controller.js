@@ -19,7 +19,7 @@
     _self.helpers = helpers;
 
     let _search = '';
-    let _station = undefined;
+    let _stationId = null;
 
     const fetchData = async (url) => {
       const response = await fetch(`${URL_BASE}${url}`, {
@@ -41,17 +41,18 @@
         favorites: _self.model.favorites,
         lastUpdatedInformation: _self.model.lastUpdatedInformation,
         lastUpdatedStatus: _self.model.lastUpdatedStatus,
+        lastUpdatedBikes: _self.model.lastUpdatedBikes,
         filteredStations: _self.model.filterStations(_search),
+        station: _stationId ? _self.model.getStationInfoById(_stationId) : null,
         config: _self.config.getAll(),
       };
     };
 
     const getDataStation = function (id) {
       if (!id) {
-        return;
+        return null;
       }
       return {
-        id,
         station: _self.model.getStationInfoById(id),
         lastUpdatedBikes: _self.model.lastUpdatedBikes,
         config: _self.config.getAll(),
@@ -82,7 +83,7 @@
 
       _self.model.updateBikesStatus(data.data.stations, data.last_updated);
 
-      return getDataStation(_station);
+      return getData();
     };
 
     const updateSettings = function (data) {
@@ -142,7 +143,8 @@
       });
 
       _self.view.bind('loadStatus', async function () {
-        return loadStatus();
+        const res = await Promise.all([loadStatus(), loadBikes()]);
+        return res[0];
       });
 
       _self.view.bind('loadInformation', async function () {
@@ -150,7 +152,8 @@
       });
 
       _self.view.bind('loadBikes', async function () {
-        return loadBikes();
+        const res = await Promise.all([loadStatus(), loadBikes()]);
+        return res[1];
       });
 
       _self.view.bind('filterStations', function (search) {
@@ -216,8 +219,8 @@
       });
 
       _self.view.bind('showBikes', function (id) {
-        _station = id;
-        return getDataStation(id);
+        _stationId = id;
+        return getDataStation(_stationId);
       });
 
       // This goes last for now

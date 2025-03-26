@@ -52,6 +52,7 @@
     const $uninstallOffline = $$('#uninstall');
 
     let _showAllStations = false;
+    let _showStationId = null;
 
     const _viewCommands = {};
 
@@ -88,7 +89,9 @@
         favorites,
         lastUpdatedInformation,
         lastUpdatedStatus,
+        lastUpdatedBikes,
         filteredStations,
+        station,
         config,
       } = data;
 
@@ -111,6 +114,10 @@
         $stationsList.innerHTML = _self.template.stations(filteredStations);
       }
 
+      if (_showStationId) {
+        _self.render('showStation', { station, lastUpdatedBikes, config });
+      }
+
       // settings
       $settingsCheckboxes.forEach(($el) => {
         $el.checked = config[$el.value];
@@ -123,9 +130,9 @@
     };
 
     _viewCommands.showStation = function (data) {
-      const { id, station, lastUpdatedBikes, config } = data || {};
+      const { station, lastUpdatedBikes, config } = data || {};
       $bikesInfoContent.innerHTML = data
-        ? _self.template.bikes(id, station, config)
+        ? _self.template.bikes(station, config)
         : '';
       $lastUpdatedBikes.innerHTML = data
         ? _self.template.lastUpdated(lastUpdatedBikes)
@@ -161,7 +168,7 @@
           _self.render('chrome');
           const data = handler();
           _self.render('data', data);
-          ['loadStatus', 'loadBikes'].forEach((i) => $load[i].click()); // TODO
+          ['loadStatus'].forEach((i) => $load[i].click()); // TODO
           break;
         }
         case 'toggleStations': {
@@ -189,11 +196,7 @@
             try {
               const data = await handler();
               this.classList.toggle('success', true);
-              if (event === 'loadBikes') {
-                _self.render('showStation', data);
-              } else {
-                _self.render('data', data);
-              }
+              _self.render('data', data);
             } catch (e) {
               _self.render('error', e);
             }
@@ -411,7 +414,8 @@
             $bikesInfo.close();
           });
           $bikesInfo.on('close', function () {
-            const data = handler();
+            _showStationId = null;
+            const data = handler(_showStationId);
             _self.render('showStation', data);
           });
           [$favorites, $stationsList].forEach(($el) => {
@@ -420,8 +424,8 @@
               'body:not(.js-edit) .js-show-station',
               'click',
               function () {
-                const id = this.getAttribute('data-id');
-                const data = handler(id);
+                _showStationId = this.getAttribute('data-id');
+                const data = handler(_showStationId);
                 _self.render('showStation', data);
               }
             );

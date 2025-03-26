@@ -1,10 +1,10 @@
 /* eslint no-unused-vars: "off" */
 'use strict';
 
-const VERSION = '0.8.43';
+const VERSION = '0.8.44';
 const NAMESPACE = 'mobiFavStations';
 
-const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json/';
+const URL_LOCAL = 'http://localhost:8080/mobi-fav-stations/json-fake/';
 const URL_REMOTE = 'https://mobi-api.giulia.dev/2/';
 const URL_BAD = 'https://vancouver-gbfs.smoove.pro/gbfs/2/en/';
 
@@ -18,7 +18,7 @@ const DEFAULT_USER_SETTINGS = {
 };
 
 const FEATURES = {
-  local: false,
+  local: true,
 };
 
 const FILE = {

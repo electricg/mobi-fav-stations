@@ -224,7 +224,7 @@
       return code;
     };
 
-    this.bikes = function (id, item, config) {
+    this.bikes = function (item, config) {
       const { bikes = [] } = item;
       const { showStationDetails } = config;
 
@@ -235,6 +235,7 @@
         lon,
       } = item?.information || {};
       const {
+        station_id: id,
         is_installed: isInstalled,
         is_renting: isRenting,
         is_returning: isReturning,
