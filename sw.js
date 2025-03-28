@@ -1,4 +1,4 @@
-const VERSION = '0.8.45';
+const VERSION = '0.8.46';
 const NAMESPACE = 'mobiFavStations';
 
 const CACHE_NAMESPACE = `::${NAMESPACE}::`;

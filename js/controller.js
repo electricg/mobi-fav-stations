@@ -63,8 +63,6 @@
       const data = await fetchData('station_status.json');
 
       _self.model.updateStationsStatus(data.data.stations, data.last_updated);
-
-      return getData();
     };
 
     const loadInformation = async function () {
@@ -74,16 +72,12 @@
         data.data.stations,
         data.last_updated
       );
-
-      return getData();
     };
 
     const loadBikes = async function () {
       const data = await fetchData('free_bike_status.json');
 
       _self.model.updateBikesStatus(data.data.stations, data.last_updated);
-
-      return getData();
     };
 
     const updateSettings = function (data) {
@@ -100,8 +94,6 @@
         user: data.user,
         favorites: data.favorites,
       });
-
-      return getData();
     };
 
     const prepareDataForExport = function () {
@@ -133,8 +125,6 @@
     const deleteData = function () {
       _self.config.reset();
       _self.model.resetStationsUserData();
-
-      return getData();
     };
 
     const bindAll = function () {
@@ -143,17 +133,18 @@
       });
 
       _self.view.bind('loadStatus', async function () {
-        const res = await Promise.all([loadStatus(), loadBikes()]);
-        return res[0];
+        await Promise.all([loadStatus(), loadBikes()]);
+        return getData();
       });
 
       _self.view.bind('loadInformation', async function () {
-        return loadInformation();
+        await loadInformation();
+        return getData();
       });
 
       _self.view.bind('loadBikes', async function () {
-        const res = await Promise.all([loadStatus(), loadBikes()]);
-        return res[1];
+        await Promise.all([loadStatus(), loadBikes()]);
+        return getData();
       });
 
       _self.view.bind('filterStations', function (search) {
@@ -203,7 +194,8 @@
       });
 
       _self.view.bind('importData', async function (file) {
-        return importData(file);
+        await importData(file);
+        return getData();
       });
 
       _self.view.bind('exportData', function () {
@@ -215,7 +207,8 @@
       });
 
       _self.view.bind('deleteData', function () {
-        return deleteData();
+        deleteData();
+        return getData();
       });
 
       _self.view.bind('showBikes', function (id) {
