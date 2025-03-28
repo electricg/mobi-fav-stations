@@ -74,6 +74,14 @@
       );
     };
 
+    const loadInformationIfOld = async function () {
+      // if not loaded in the last 7 days
+      const span = Date.now() - 1000 * 60 * 60 * 24 * 7;
+      if (_self.model.lastUpdatedInformation * 1000 < span) {
+        await loadInformation();
+      }
+    };
+
     const loadBikes = async function () {
       const data = await fetchData('free_bike_status.json');
 
@@ -134,6 +142,7 @@
 
       _self.view.bind('loadStatus', async function () {
         await Promise.all([loadStatus(), loadBikes()]);
+        loadInformationIfOld(); // don't need to wait for it
         return getData();
       });
 
@@ -144,6 +153,7 @@
 
       _self.view.bind('loadBikes', async function () {
         await Promise.all([loadStatus(), loadBikes()]);
+        loadInformationIfOld(); // don't need to wait for it
         return getData();
       });
 
