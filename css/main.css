@@ -2,23 +2,51 @@
   @media (prefers-color-scheme: light) {
     --c-main-text: #3B3F45;
     --c-main-bg: #F8FAFC;
+
+    --c-ebike: #000;
+
+    --c-table-stripe: #FFF;
+    --c-table-border: #DDD;
+    --c-table-hover: #0FF;
+
     color-scheme: light;
   }
   
   @media (prefers-color-scheme: dark) {
     --c-main-text: #F8FAFC;
     --c-main-bg: #1B1B1B;
+
+    --c-ebike: #FFF;
+
+    --c-table-stripe: #000;
+    --c-table-border: #444;
+    --c-table-hover: #000080;
+
     color-scheme: dark;
   }
 }
 :root[data-theme=light] {
   --c-main-text: #3B3F45;
   --c-main-bg: #F8FAFC;
+
+  --c-ebike: #000;
+
+  --c-table-stripe: #FFF;
+  --c-table-border: #DDD;
+  --c-table-hover: #0FF;
+
   color-scheme: light;
 }
 :root[data-theme=dark] {
   --c-main-text: #F8FAFC;
   --c-main-bg: #1B1B1B;
+
+  --c-ebike: #FFF;
+
+  --c-table-stripe: #000;
+  --c-table-border: #444;
+  --c-table-hover: #000080;
+
   color-scheme: dark;
 }
 :root {
@@ -26,12 +54,8 @@
   --c-theme-first: #0075B0;
   --c-theme-second: #00ABDF;
   --c-bike: #0075B0;
-  --c-ebike: #000;
   --c-ebike-strike: #FFE074;
   --c-dock: #1E4B70;
-
-  --c-table-stripe: #FFF;
-  --c-table-border: #DDD;
 
   --c-tooltip-bg: #FFF;
 
@@ -450,7 +474,7 @@ tbody {
     text-align: left;
   }
   tr:hover {
-    background: aqua !important;
+    background: var(--c-table-hover) !important;
   }
 }
 
