@@ -1,0 +1,21 @@
+{
+  "last_updated":	1743202609,
+  "ttl":	0,
+  "version": "2.3",
+  "data": {
+    "stations": [
+      {
+				"station_id": "0001",
+				"name": "10th & Cambie",
+				"lat": 49.262487,
+				"lon": -123.114397,
+				"capacity": 36,
+				"vehicle_type_capacity": {
+					"1": 36,
+					"2": 0
+				},
+				"is_charging_station": false
+			}
+    ]
+  }
+}
