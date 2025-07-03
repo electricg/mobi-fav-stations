@@ -42,3 +42,5 @@ Original API https://vancouver-gbfs.smoove.pro/gbfs/2/en/gbfs_versions.json.
 - [ ] revert to `contenteditable="plaintext-only"` when it's supported in firefox
 - [x] implement dark mode
 - [ ] better dark mode
+- [ ] fix bug station dialog view update reset tab view
+- [ ] fix css problems in firefox mobile
